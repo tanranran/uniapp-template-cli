@@ -47,7 +47,7 @@ export default defineConfig({
     {'flex-col-center': 'flex justify-center items-center flex-col'}
   ],
   // 动态图标需要在这里配置，或者写在vue页面中注释掉
-  safelist: ['i-carbon-code'],
+  // safelist: ['i-carbon-code'],
   rules: [
     [
       'p-safe',
