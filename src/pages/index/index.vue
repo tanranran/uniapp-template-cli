@@ -1,6 +1,5 @@
 <template>
   <view class="content flex-center">
-    <!--    <image class="logo" src="/static/logo.png" />-->
     <view class="text-area">
       <text class="title">{{ title }}</text>
     </view>
@@ -8,24 +7,15 @@
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
+import { ref } from 'vue';
 
-const title = ref('Hello')
+const title = ref('Hello');
 </script>
 
 <style>
 .content {
   width: 100%;
   height: 100vh;
-}
-
-.logo {
-  height: 200rpx;
-  width: 200rpx;
-  margin-top: 200rpx;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 50rpx;
 }
 
 .text-area {

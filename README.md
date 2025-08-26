@@ -21,8 +21,6 @@
 - TypeScript>=5.0
 
 ## &#x1F4C2; 快速开始
-
-执行 `pnpm create unibest` 创建项目
 执行 `pnpm i` 安装依赖
 执行 `pnpm dev` 运行 `H5`
 执行 `pnpm dev:mp` 运行 `微信小程序`
