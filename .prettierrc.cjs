@@ -1,6 +1,6 @@
 // Prettier配置文档：https://prettier.io/docs/en/options.html
 module.exports = {
-  printWidth: 180, //指定每行的最大长度。当代码超过 180 个字符时，Prettier 会尝试将其换行
+  printWidth: 400, //指定每行的最大长度。当代码超过 180 个字符时，Prettier 会尝试将其换行
   tabWidth: 2, //指定一个制表符（Tab）等于多少个空格。这里设置为 2。
   useTabs: false, //使用空格进行缩进，而不是使用制表符。
   semi: true, //在语句末尾打印分号。
