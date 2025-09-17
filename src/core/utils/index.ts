@@ -56,3 +56,27 @@ export function parseUrlToObj(url: string) {
   });
   return { path, query };
 }
+
+
+// 防抖 在一段时间内函数被多次触发，防抖让函数在一段时间后最终只执行一次
+export function debounce(fun: (height: number) => void, delay?: number) {
+  let timer: number;
+  return (height: number) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      fun(height);
+    }, delay ? delay : 100);
+  };
+}
+
+// 节流 在规定的时间内，只执行一次
+export function throttle(fun: (height: number) => void, delay?: number) {
+  let inThrottle: boolean;
+  return (height: number) => {
+    if (!inThrottle) {
+      fun(height);
+      inThrottle = true;
+      setTimeout(() => inThrottle = false, delay ? delay : 1000);
+    }
+  };
+}
