@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import Uni from '@uni-helper/plugin-uni';
+import Components from '@uni-helper/vite-plugin-uni-components';
 import UnoCSS from 'unocss/vite';
 import AutoImport from 'unplugin-auto-import/vite';
 /**
@@ -9,6 +10,7 @@ import AutoImport from 'unplugin-auto-import/vite';
 import Optimization from '@uni-ku/bundle-optimizer';
 import { visualizer } from 'rollup-plugin-visualizer';
 import ViteRestart from 'vite-plugin-restart';
+import { WotResolver } from '@uni-helper/vite-plugin-uni-components/resolvers';
 import dayjs from 'dayjs';
 import process from 'node:process';
 import path from 'node:path';
@@ -34,10 +36,20 @@ export default async ({ command, mode }) => {
         }
       },
       UnoCSS(),
+      Components({
+        resolvers: [WotResolver()]
+      }),
       AutoImport({
-        imports: ['vue', 'uni-app'],
+        imports: [
+          'vue',
+          'uni-app',
+          {
+            from: 'wot-design-uni',
+            imports: ['useToast', 'useMessage', 'useNotify', 'CommonUtil']
+          }
+        ],
         dts: 'src/types/auto-import.d.ts',
-        dirs: ['src/hooks'], // 自动导入 hooks
+        dirs: ['src/composables', 'src/store', 'src/utils', 'src/hooks'], // 自动导入 hooks
         eslintrc: { enabled: true },
         vueTemplate: true // default false
       }),

@@ -1,8 +1,8 @@
-import { createPinia } from 'pinia'
-import { createPersistedState } from 'pinia-plugin-persistedstate' // 数据持久化
+import type { App } from 'vue';
+import { createPinia } from 'pinia';
+import { createPersistedState } from 'pinia-plugin-persistedstate';
 
-// 持久化把数据放在本地存储中
-const store = createPinia()
+const store = createPinia();
 store.use(
   createPersistedState({
     storage: {
@@ -10,9 +10,8 @@ store.use(
       setItem: uni.setStorageSync
     }
   })
-)
+);
 
-export default store
-
-// 模块统一导出
-export * from './user'
+export function setupStore(app: App<Element>) {
+  app.use(store);
+}
