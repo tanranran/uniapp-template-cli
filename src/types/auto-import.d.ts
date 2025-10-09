@@ -6,18 +6,30 @@
 // biome-ignore lint: disable
 export {}
 declare global {
+  const CommonUtil: typeof import('wot-design-uni')['CommonUtil']
   const EffectScope: typeof import('vue')['EffectScope']
   const computed: typeof import('vue')['computed']
   const createApp: typeof import('vue')['createApp']
+  const currRoute: typeof import('../utils/index')['currRoute']
   const customRef: typeof import('vue')['customRef']
+  const debounce: typeof import('../utils/index')['debounce']
   const defineAsyncComponent: typeof import('vue')['defineAsyncComponent']
   const defineComponent: typeof import('vue')['defineComponent']
   const effectScope: typeof import('vue')['effectScope']
+  const ensureDecodeURIComponent: typeof import('../utils/index')['ensureDecodeURIComponent']
   const getCurrentInstance: typeof import('vue')['getCurrentInstance']
   const getCurrentScope: typeof import('vue')['getCurrentScope']
   const getCurrentWatcher: typeof import('vue')['getCurrentWatcher']
+  const getLastPage: typeof import('../utils/index')['getLastPage']
   const h: typeof import('vue')['h']
   const inject: typeof import('vue')['inject']
+  const isApp: typeof import('../utils/platform')['isApp']
+  const isH5: typeof import('../utils/platform')['isH5']
+  const isHarmony: typeof import('../utils/platform')['isHarmony']
+  const isMp: typeof import('../utils/platform')['isMp']
+  const isMpAplipay: typeof import('../utils/platform')['isMpAplipay']
+  const isMpToutiao: typeof import('../utils/platform')['isMpToutiao']
+  const isMpWeixin: typeof import('../utils/platform')['isMpWeixin']
   const isProxy: typeof import('vue')['isProxy']
   const isReactive: typeof import('vue')['isReactive']
   const isReadonly: typeof import('vue')['isReadonly']
@@ -63,14 +75,18 @@ declare global {
   const onUnmounted: typeof import('vue')['onUnmounted']
   const onUpdated: typeof import('vue')['onUpdated']
   const onWatcherCleanup: typeof import('vue')['onWatcherCleanup']
+  const parseUrlToObj: typeof import('../utils/index')['parseUrlToObj']
+  const platform: typeof import('../utils/platform')['default']
   const provide: typeof import('vue')['provide']
   const reactive: typeof import('vue')['reactive']
   const readonly: typeof import('vue')['readonly']
   const ref: typeof import('vue')['ref']
   const resolveComponent: typeof import('vue')['resolveComponent']
+  const setupStore: typeof import('../store/index')['setupStore']
   const shallowReactive: typeof import('vue')['shallowReactive']
   const shallowReadonly: typeof import('vue')['shallowReadonly']
   const shallowRef: typeof import('vue')['shallowRef']
+  const throttle: typeof import('../utils/index')['throttle']
   const toRaw: typeof import('vue')['toRaw']
   const toRef: typeof import('vue')['toRef']
   const toRefs: typeof import('vue')['toRefs']
@@ -80,14 +96,15 @@ declare global {
   const useAttrs: typeof import('vue')['useAttrs']
   const useCssModule: typeof import('vue')['useCssModule']
   const useCssVars: typeof import('vue')['useCssVars']
-  const useEcharts: typeof import('../hooks/useEcharts')['useEcharts']
-  const useI18n: typeof import('../hooks/useI18n')['useI18n']
   const useId: typeof import('vue')['useId']
+  const useMessage: typeof import('wot-design-uni')['useMessage']
   const useModel: typeof import('vue')['useModel']
-  const useRequest: typeof import('../hooks/useRequest')['default']
+  const useNotify: typeof import('wot-design-uni')['useNotify']
+  const useScroll: typeof import('../hooks/useScroll')['useScroll']
   const useSlots: typeof import('vue')['useSlots']
   const useTemplateRef: typeof import('vue')['useTemplateRef']
-  const useTheme: typeof import('../hooks/useTheme')['useTheme']
+  const useToast: typeof import('wot-design-uni')['useToast']
+  const useUserStore: typeof import('../store/user')['useUserStore']
   const watch: typeof import('vue')['watch']
   const watchEffect: typeof import('vue')['watchEffect']
   const watchPostEffect: typeof import('vue')['watchPostEffect']
@@ -98,6 +115,9 @@ declare global {
   // @ts-ignore
   export type { Component, Slot, Slots, ComponentPublicInstance, ComputedRef, DirectiveBinding, ExtractDefaultPropTypes, ExtractPropTypes, ExtractPublicPropTypes, InjectionKey, PropType, Ref, ShallowRef, MaybeRef, MaybeRefOrGetter, VNode, WritableComputedRef } from 'vue'
   import('vue')
+  // @ts-ignore
+  export type { PageInstance } from '../utils/index'
+  import('../utils/index')
 }
 
 // for vue template auto import
@@ -105,18 +125,30 @@ import { UnwrapRef } from 'vue'
 declare module 'vue' {
   interface GlobalComponents {}
   interface ComponentCustomProperties {
+    readonly CommonUtil: UnwrapRef<typeof import('wot-design-uni')['CommonUtil']>
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly createApp: UnwrapRef<typeof import('vue')['createApp']>
+    readonly currRoute: UnwrapRef<typeof import('../utils/index')['currRoute']>
     readonly customRef: UnwrapRef<typeof import('vue')['customRef']>
+    readonly debounce: UnwrapRef<typeof import('../utils/index')['debounce']>
     readonly defineAsyncComponent: UnwrapRef<typeof import('vue')['defineAsyncComponent']>
     readonly defineComponent: UnwrapRef<typeof import('vue')['defineComponent']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
+    readonly ensureDecodeURIComponent: UnwrapRef<typeof import('../utils/index')['ensureDecodeURIComponent']>
     readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
     readonly getCurrentWatcher: UnwrapRef<typeof import('vue')['getCurrentWatcher']>
+    readonly getLastPage: UnwrapRef<typeof import('../utils/index')['getLastPage']>
     readonly h: UnwrapRef<typeof import('vue')['h']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
+    readonly isApp: UnwrapRef<typeof import('../utils/platform')['isApp']>
+    readonly isH5: UnwrapRef<typeof import('../utils/platform')['isH5']>
+    readonly isHarmony: UnwrapRef<typeof import('../utils/platform')['isHarmony']>
+    readonly isMp: UnwrapRef<typeof import('../utils/platform')['isMp']>
+    readonly isMpAplipay: UnwrapRef<typeof import('../utils/platform')['isMpAplipay']>
+    readonly isMpToutiao: UnwrapRef<typeof import('../utils/platform')['isMpToutiao']>
+    readonly isMpWeixin: UnwrapRef<typeof import('../utils/platform')['isMpWeixin']>
     readonly isProxy: UnwrapRef<typeof import('vue')['isProxy']>
     readonly isReactive: UnwrapRef<typeof import('vue')['isReactive']>
     readonly isReadonly: UnwrapRef<typeof import('vue')['isReadonly']>
@@ -162,14 +194,18 @@ declare module 'vue' {
     readonly onUnmounted: UnwrapRef<typeof import('vue')['onUnmounted']>
     readonly onUpdated: UnwrapRef<typeof import('vue')['onUpdated']>
     readonly onWatcherCleanup: UnwrapRef<typeof import('vue')['onWatcherCleanup']>
+    readonly parseUrlToObj: UnwrapRef<typeof import('../utils/index')['parseUrlToObj']>
+    readonly platform: UnwrapRef<typeof import('../utils/platform')['default']>
     readonly provide: UnwrapRef<typeof import('vue')['provide']>
     readonly reactive: UnwrapRef<typeof import('vue')['reactive']>
     readonly readonly: UnwrapRef<typeof import('vue')['readonly']>
     readonly ref: UnwrapRef<typeof import('vue')['ref']>
     readonly resolveComponent: UnwrapRef<typeof import('vue')['resolveComponent']>
+    readonly setupStore: UnwrapRef<typeof import('../store/index')['setupStore']>
     readonly shallowReactive: UnwrapRef<typeof import('vue')['shallowReactive']>
     readonly shallowReadonly: UnwrapRef<typeof import('vue')['shallowReadonly']>
     readonly shallowRef: UnwrapRef<typeof import('vue')['shallowRef']>
+    readonly throttle: UnwrapRef<typeof import('../utils/index')['throttle']>
     readonly toRaw: UnwrapRef<typeof import('vue')['toRaw']>
     readonly toRef: UnwrapRef<typeof import('vue')['toRef']>
     readonly toRefs: UnwrapRef<typeof import('vue')['toRefs']>
@@ -180,9 +216,14 @@ declare module 'vue' {
     readonly useCssModule: UnwrapRef<typeof import('vue')['useCssModule']>
     readonly useCssVars: UnwrapRef<typeof import('vue')['useCssVars']>
     readonly useId: UnwrapRef<typeof import('vue')['useId']>
+    readonly useMessage: UnwrapRef<typeof import('wot-design-uni')['useMessage']>
     readonly useModel: UnwrapRef<typeof import('vue')['useModel']>
+    readonly useNotify: UnwrapRef<typeof import('wot-design-uni')['useNotify']>
+    readonly useScroll: UnwrapRef<typeof import('../hooks/useScroll')['useScroll']>
     readonly useSlots: UnwrapRef<typeof import('vue')['useSlots']>
     readonly useTemplateRef: UnwrapRef<typeof import('vue')['useTemplateRef']>
+    readonly useToast: UnwrapRef<typeof import('wot-design-uni')['useToast']>
+    readonly useUserStore: UnwrapRef<typeof import('../store/user')['useUserStore']>
     readonly watch: UnwrapRef<typeof import('vue')['watch']>
     readonly watchEffect: UnwrapRef<typeof import('vue')['watchEffect']>
     readonly watchPostEffect: UnwrapRef<typeof import('vue')['watchPostEffect']>

@@ -27,7 +27,9 @@
     "types": [
       "@dcloudio/types",
       "@uni-helper/uni-types",
-      "miniprogram-api-typings"
+      "miniprogram-api-typings",
+      "wot-design-uni/global",
+      "z-paging/types"
     ]
   },
   "vueCompilerOptions": {
@@ -45,5 +47,7 @@
     "src/**/*.vue",
     "src/**/*.json"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }
