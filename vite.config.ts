@@ -8,6 +8,7 @@ import AutoImport from 'unplugin-auto-import/vite';
  * @see https://github.com/uni-ku/bundle-optimizer
  */
 import Optimization from '@uni-ku/bundle-optimizer';
+import CompressJson from '@binbinji/unplugin-compress-json/vite';
 import { visualizer } from 'rollup-plugin-visualizer';
 import ViteRestart from 'vite-plugin-restart';
 import { WotResolver } from '@uni-helper/vite-plugin-uni-components/resolvers';
@@ -65,6 +66,7 @@ export default async ({ command, mode }) => {
         },
         logger: false
       }),
+      CompressJson(),
       ViteRestart({
         // 通过这个插件，在修改vite.config.js文件则不需要重新运行也生效配置
         restart: ['vite.config.js']
