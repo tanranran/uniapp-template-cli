@@ -1,5 +1,5 @@
 <template>
-  <base-layout ref="pages" class="bg-green">
+  <base-layout ref="pages" :autoLoading=true class="bg-green">
     <z-paging ref="paging" v-model="dataList" @query="queryList">
       <text v-for="i in dataList" :key="i" class="title">{{ i }}</text>
     </z-paging>

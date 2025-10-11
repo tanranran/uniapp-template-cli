@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import Uni from '@uni-helper/plugin-uni';
 import Components from '@uni-helper/vite-plugin-uni-components';
+import { WotResolver } from '@uni-helper/vite-plugin-uni-components/resolvers';
 import UnoCSS from 'unocss/vite';
 import AutoImport from 'unplugin-auto-import/vite';
 /**
@@ -11,7 +12,6 @@ import Optimization from '@uni-ku/bundle-optimizer';
 import CompressJson from '@binbinji/unplugin-compress-json/vite';
 import { visualizer } from 'rollup-plugin-visualizer';
 import ViteRestart from 'vite-plugin-restart';
-import { WotResolver } from '@uni-helper/vite-plugin-uni-components/resolvers';
 import dayjs from 'dayjs';
 import process from 'node:process';
 import path from 'node:path';
@@ -38,7 +38,11 @@ export default async ({ command, mode }) => {
       },
       UnoCSS(),
       Components({
-        resolvers: [WotResolver()]
+        resolvers: [WotResolver()],
+        extensions: ['vue'],
+        deep: true, // 是否递归扫描子目录，
+        directoryAsNamespace: false, // 是否把目录名作为命名空间前缀，true 时组件名为 目录名+组件名，
+        dts: 'src/types/components.d.ts' // 自动生成的组件类型声明文件路径（用于 TypeScript 支持）
       }),
       AutoImport({
         imports: [
@@ -71,6 +75,7 @@ export default async ({ command, mode }) => {
         // 通过这个插件，在修改vite.config.js文件则不需要重新运行也生效配置
         restart: ['vite.config.js']
       }),
+      Uni(),
       // h5环境增加 BUILD_TIME 和 BUILD_BRANCH
       UNI_PLATFORM === 'h5' && {
         name: 'html-transform',
@@ -86,8 +91,7 @@ export default async ({ command, mode }) => {
           open: true,
           gzipSize: true,
           brotliSize: true
-        }),
-      Uni()
+        })
     ],
     define: {
       __UNI_PLATFORM__: JSON.stringify(UNI_PLATFORM)
@@ -100,7 +104,7 @@ export default async ({ command, mode }) => {
     },
     build: {
       sourcemap: false,
-      target: 'es6',
+      target: 'es2015',
       cssTarget: 'chrome61',
       // 开发环境不用压缩
       minify: mode === 'development' ? false : 'esbuild'

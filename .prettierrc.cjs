@@ -7,7 +7,7 @@ module.exports = {
   singleQuote: true, //使用单引号（'）而不是双引号（"）。
   quoteProps: 'as-needed', //仅在对象属性名需要时（例如属性名包含特殊字符）才为其添加引号。
   jsxSingleQuote: false, //在 JSX 中使用双引号而不是单引号。
-  trailingComma: 'none', //不在多行结构的末尾（如数组、对象）添加尾随逗号。
+  trailingComma: 'none', //仅在ES5 中需要的位置添加逗号
   bracketSpacing: true, //在对象字面量的大括号 {} 内侧打印空格。例如 { foo: bar } 而不是 {foo:bar}。
   bracketSameLine: true, //将多行 HTML (HTML, JSX, Vue, Angular) 元素的 > 放在新的一行。
   arrowParens: 'always', //总是在箭头函数的单个参数周围加上括号。例如 (x) => x 而不是 x => x。

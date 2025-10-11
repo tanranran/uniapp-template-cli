@@ -1,12 +1,19 @@
 {
+  "extends": "@vue/tsconfig/tsconfig.json",
   "compilerOptions": {
     "composite": true,
     "lib": [
-      "esnext",
-      "dom"
+      "ESNext",
+      "DOM",
+      "DOM.Iterable"
     ],
     "module": "ESNext",
-    "moduleResolution": "Node",
+    "moduleResolution": "Bundler",
+    // 更适合 Vite 的模块解析策略
+    "allowImportingTsExtensions": true,
+    // 允许导入 .ts 扩展名
+    "isolatedModules": true,
+    // 与 Vite 的 esbuild 兼容
     "resolveJsonModule": true,
     "jsx": "preserve",
     "jsxImportSource": "vue",
@@ -18,6 +25,22 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    // 允许默认导入
+    "experimentalDecorators": true,
+    // 支持装饰器语法
+    "sourceMap": true,
+    // 生成 source map 文件
+    "removeComments": false,
+    // 保留注释
+    "noUnusedLocals": true,
+    // 检查未使用的局部变量
+    "noUnusedParameters": true,
+    // 检查未使用的参数
+    "noImplicitReturns": true,
+    // 检查隐式返回
+    "noFallthroughCasesInSwitch": true,
+    // switch 语句需要 break
     "baseUrl": ".",
     "paths": {
       "@/*": [
@@ -25,14 +48,19 @@
       ]
     },
     "types": [
+      "node",
+      "@types/node",
+      "vitest/jsdom",
       "@dcloudio/types",
+      "mini-types",
       "@uni-helper/uni-types",
       "miniprogram-api-typings",
-      "wot-design-uni/global",
+      "wot-design-uni/global.d.ts",
       "z-paging/types"
     ]
   },
   "vueCompilerOptions": {
+    "target": 3,
     "plugins": [
       "@uni-helper/uni-types/volar-plugin"
     ]
@@ -48,6 +76,8 @@
     "src/**/*.json"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "unpackage",
+    "src/**/*.nvue"
   ]
 }

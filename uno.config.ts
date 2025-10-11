@@ -4,15 +4,10 @@ import transformerCompileClass from '@unocss/transformer-compile-class';
 const isApplet = process.env?.UNI_PLATFORM?.startsWith('mp-') ?? false;
 const presets = [];
 const transformers = [];
+presets.push(presetApplet());
 if (isApplet) {
-  presets.push(presetApplet(), presetRemRpx({ baseFontSize: 16, screenWidth: 375, mode: 'rem2rpx' }));
-  transformers.push(
-    // 小程序用 @apply 功能
-    transformerApplet(),
-    transformerAttributify()
-  );
-} else {
-  presets.push(presetApplet());
+  presets.push(presetRemRpx({ baseFontSize: 16, screenWidth: 375, mode: 'rem2rpx' }));
+  transformers.push(transformerApplet(), transformerAttributify());
 }
 
 export default defineConfig({
@@ -49,6 +44,8 @@ export default defineConfig({
       'f-s': 'flex justify-start items-center',
       'f-e': 'flex justify-end items-center',
       'text-overflow': 'truncate',
+      'absolute-full': 'absolute top-0 left-0 w-full h-full',
+      'fixed-full': 'fixed top-0 left-0 w-full h-full',
       'wh-full': 'w-full h-full'
     }
   ],
