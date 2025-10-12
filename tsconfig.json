@@ -67,6 +67,8 @@
   },
   "include": [
     "package.json",
+    "async-import.d.ts",
+    "async-component.d.ts",
     "src/**/*.ts",
     "src/**/*.js",
     "src/**/*.d.ts",
