@@ -1,8 +1,11 @@
 <template>
-  <base-layout ref="pages" :autoLoading=true class="bg-green">
-    <z-paging ref="paging" v-model="dataList" @query="queryList">
-      <text v-for="i in dataList" :key="i" class="title">{{ i }}</text>
-    </z-paging>
+  <base-layout ref="pages">
+    <text>{{ appBuildDate }}</text>
+    <text>{{ appVersion }}</text>
+    <text>{{ appGitHash }}</text>
+    <!--    <z-paging ref="paging" v-model="dataList" @query="queryList">-->
+    <!--      <text v-for="i in dataList" :key="i" class="title">{{ i }}</text>-->
+    <!--    </z-paging>-->
   </base-layout>
 </template>
 
@@ -10,6 +13,9 @@
 import { ref } from 'vue';
 import BaseLayout from '@/layout/baseLayout.vue';
 // 或使用简化写法
+const appBuildDate = ref<string>(__APP_BUILD_DATE__);
+const appVersion = ref<string>(__APP_VERSION__);
+const appGitHash = ref<string>(__APP_GIT_HASH__);
 const paging = ref<ZPagingRef>();
 const dataList = ref([]);
 const pages = ref<InstanceType<typeof BaseLayout>>();
