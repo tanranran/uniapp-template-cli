@@ -3,7 +3,7 @@ module.exports = {
   printWidth: 400, //指定每行的最大长度。当代码超过 180 个字符时，Prettier 会尝试将其换行
   tabWidth: 2, //指定一个制表符（Tab）等于多少个空格。这里设置为 2。
   useTabs: false, //使用空格进行缩进，而不是使用制表符。
-  semi: true, //在语句末尾打印分号。
+  semi: false, //在语句末尾打印分号。
   singleQuote: true, //使用单引号（'）而不是双引号（"）。
   quoteProps: 'as-needed', //仅在对象属性名需要时（例如属性名包含特殊字符）才为其添加引号。
   jsxSingleQuote: false, //在 JSX 中使用双引号而不是单引号。
@@ -29,4 +29,4 @@ module.exports = {
     '.uvue': 'vue',
     '.uts': 'typescript'
   }
-};
+}

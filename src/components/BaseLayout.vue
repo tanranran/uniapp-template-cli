@@ -2,7 +2,7 @@
   <view :style="{ height: height }" class="base-layout flex flex-col">
     <slot v-if="success" />
     <view v-if="state.showLoading" class="state-layout state-layout--loading flex-col-center">
-      <wd-loading color="#777777" />
+      <wd-loading :color="'#777777'" size="46" />
       <text class="text-#777 m-t-10rpx">加载中...</text>
     </view>
 
@@ -20,8 +20,6 @@
 </template>
 
 <script lang="ts" setup>
-import type { Ref } from 'vue';
-
 defineOptions({
   name: 'BaseLayout',
   inheritAttrs: true,
@@ -30,19 +28,19 @@ defineOptions({
     virtualHost: true,
     styleIsolation: 'shared'
   }
-});
+})
 
 interface Props {
-  height?: string;
-  autoLoading?: boolean;
-  showLogin?: boolean;
+  height?: string
+  autoLoading?: boolean
+  showLogin?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
   height: '100%',
   autoLoading: false,
   showLogin: false
-});
+})
 
 const state = reactive({
   showLoading: false,
@@ -50,17 +48,19 @@ const state = reactive({
   showEmpty: false,
   errorStr: '',
   errorCallback: () => {}
-});
+})
 
 const success: Ref<boolean> = computed(() => {
-  return !(state.showLoading || state.showError || state.showEmpty);
-});
+  return !(state.showLoading || state.showError || state.showEmpty)
+})
+
+const toast = useGlobalToast()
 
 onBeforeMount(() => {
   if (props.autoLoading) {
-    state.showLoading = true;
+    state.showLoading = true
   }
-});
+})
 
 function resetState() {
   Object.assign(state, {
@@ -69,41 +69,45 @@ function resetState() {
     showEmpty: false,
     errorStr: '',
     errorCallback: () => {}
-  });
+  })
 }
 
 function showLoading() {
-  resetState();
-  state.showLoading = true;
+  resetState()
+  state.showLoading = true
 }
 
 function showEmpty() {
-  resetState();
-  state.showEmpty = true;
+  resetState()
+  state.showEmpty = true
 }
 
 function showError(errorStr: string, errorCallback: () => void) {
-  resetState();
-  state.showError = true;
-  state.errorStr = errorStr;
-  state.errorCallback = errorCallback;
+  resetState()
+  state.showError = true
+  state.errorStr = errorStr
+  state.errorCallback = errorCallback
 }
 
 function showSuccess() {
-  resetState();
+  resetState()
 }
 
 function handleRetry() {
-  state.errorCallback?.();
-  showLoading();
+  state.errorCallback?.()
+  showLoading()
 }
 
-defineExpose({
+function showToast(msg: string) {
+  toast.show(msg)
+}
+defineExpose<BaseLayoutRefType>({
   showLoading,
   showEmpty,
   showSuccess,
-  showError
-});
+  showError,
+  showToast
+})
 </script>
 
 <style scoped>

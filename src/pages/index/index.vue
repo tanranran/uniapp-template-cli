@@ -1,46 +1,37 @@
-<template>
-  <base-layout ref="pages">
-    <text>{{ appBuildDate }}</text>
-    <text>{{ appVersion }}</text>
-    <text>{{ appGitHash }}</text>
-    <!--    <z-paging ref="paging" v-model="dataList" @query="queryList">-->
-    <!--      <text v-for="i in dataList" :key="i" class="title">{{ i }}</text>-->
-    <!--    </z-paging>-->
-  </base-layout>
-</template>
-
 <script lang="ts" setup>
-import { ref } from 'vue';
-import BaseLayout from '@/layout/baseLayout.vue';
-// 或使用简化写法
-const appBuildDate = ref<string>(__APP_BUILD_DATE__);
-const appVersion = ref<string>(__APP_VERSION__);
-const appGitHash = ref<string>(__APP_GIT_HASH__);
-const paging = ref<ZPagingRef>();
-const dataList = ref([]);
-const pages = ref<InstanceType<typeof BaseLayout>>();
+const paging = ref<ZPagingRef>()
+const dataList = ref<{ title: string }[]>([])
+const pages = ref(BaseLayoutRefType)
 const queryList = (pageNo: number, pageSize: number) => {
   setTimeout(() => {
-    let listData = [];
+    let listData = []
     for (let i = 0; i < 30; i++) {
       listData.push({
-        title: '测试数据' + i
-      });
+        title: '测试数据' + i + pageSize
+      })
     }
     if (pageNo == 3) {
-      listData = [];
+      listData = []
     }
-    paging?.value?.complete(listData);
-  }, 2000);
-};
-function onTestClick() {
-  pages?.value?.showError('加载失败', () => {
-    setTimeout(() => {
-      pages?.value?.showSuccess();
-    }, 100);
-  });
+    paging?.value?.complete(listData)
+  }, 800)
+}
+const onTestClick = () => {
+  // pages?.value?.showLoading()
+  // setTimeout(() => {
+  //   pages?.value?.showEmpty()
+  // }, 1000)
+  pages?.value?.showToast('测试')
 }
 </script>
+
+<template>
+  <base-layout ref="pages">
+    <z-paging ref="paging" v-model="dataList" @query="queryList">
+      <wd-text v-for="i in dataList" :key="i.title" :text="i.title" class="title" @click="onTestClick" />
+    </z-paging>
+  </base-layout>
+</template>
 
 <style>
 .content {

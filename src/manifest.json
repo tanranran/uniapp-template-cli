@@ -2,8 +2,8 @@
   "name": "uniapp工程化模板",
   "appid": "__UNI__B746FDE",
   "description": "",
-  "versionName": "1.0.2025101309",
-  "versionCode": "2025101309",
+  "versionName": "1.0.2025101401",
+  "versionCode": "2025101401",
   "transformPx": false,
   /* 5+App特有相关 */
   "app-plus": {
@@ -69,7 +69,21 @@
   },
   "mp-alipay": {
     "usingComponents": true,
-    "styleIsolation": "shared"
+    "styleIsolation": "shared",
+    "optimization": {
+      "subPackages": true
+    },
+    // 解决支付宝小程序开发工具报错 【globalThis is not defined】
+    "compileOptions": {
+      "globalObjectMode": "enable",
+      "transpile": {
+        "script": {
+          "ignore": [
+            "node_modules/**"
+          ]
+        }
+      }
+    }
   },
   "mp-baidu": {
     "usingComponents": true

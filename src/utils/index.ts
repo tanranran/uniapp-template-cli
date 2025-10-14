@@ -1,12 +1,20 @@
 export type PageInstance = Page.PageInstance<AnyObject, object> & { $page: Page.PageInstance<AnyObject, object> & { fullPath: string } };
 
+/**
+ * 获取当前页面路径
+ * @returns 当前页面路径
+ */
+export function getCurrentPath() {
+  const pages = getCurrentPages();
+  const currentPage = pages[pages.length - 1];
+  return currentPage.route || '';
+}
+
 export function getLastPage() {
-  // getCurrentPages() 至少有1个元素，所以不再额外判断
-  // const lastPage = getCurrentPages().at(-1)
-  // 上面那个在低版本安卓中打包会报错，所以改用下面这个【虽然我加了 src/interceptions/prototype.ts，但依然报错】
   const pages = getCurrentPages();
   return pages[pages.length - 1] as PageInstance;
 }
+
 /**
  * 获取当前页面路由的 path 路径和 redirectPath 路径
  * path 如 '/pages/login/login'
@@ -66,7 +74,7 @@ export function parseUrlToObj(url: string) {
 
 // 防抖 在一段时间内函数被多次触发，防抖让函数在一段时间后最终只执行一次
 export function debounce(fun: (height: number) => void, delay?: number) {
-  let timer: number;
+  let timer: ReturnType<typeof setTimeout>;
   return (height: number) => {
     clearTimeout(timer);
     timer = setTimeout(
