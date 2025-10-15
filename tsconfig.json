@@ -35,15 +35,14 @@
     "sourceMap": true,
     // 生成 source map 文件
     "removeComments": false,
-    // 保留注释
-    "noUnusedLocals": true,
-    // 检查未使用的局部变量
-    "noUnusedParameters": true,
-    // 检查未使用的参数
-    "noImplicitReturns": true,
+    //不检查未使用的变量
+    "noUnusedLocals": false,
+    //不检查未使用的参数,
+    "noUnusedParameters": false,
     // 检查隐式返回
-    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
     // switch 语句需要 break
+    "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
       "@/*": [

@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 const paging = ref<ZPagingRef>()
-const dataList = ref<{ title: string }[]>([])
-const pages = ref(BaseLayoutRefType)
+const dataList = ref<ZPagingVirtualItem<{ title: string }>[]>([])
+const pages = ref<BaseLayoutRef>()
 const queryList = (pageNo: number, pageSize: number) => {
   setTimeout(() => {
     let listData = []
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 300; i++) {
       listData.push({
         title: '测试数据' + i + pageSize
       })
@@ -23,12 +23,19 @@ const onTestClick = () => {
   // }, 1000)
   pages?.value?.showToast('测试')
 }
+// 监听虚拟列表数组改变并赋值给virtualList进行重新渲染
+// const virtualListChange = (vList: Array<ZPagingVirtualItem<{ title: string }>>) => {
+//   dataList.value = vList
+//   console.log('测his互数据 啊啊', vList)
+// }
 </script>
 
 <template>
-  <base-layout ref="pages">
-    <z-paging ref="paging" v-model="dataList" @query="queryList">
-      <wd-text v-for="i in dataList" :key="i.title" :text="i.title" class="title" @click="onTestClick" />
+  <base-layout ref="pages" :autoLoading="true">
+    <z-paging ref="paging" :cell-height-mode="'dynamic'" :force-close-inner-list="true" use-virtual-list @query="queryList" @virtualListChange="(vList: any) => (dataList = vList)">
+      <view v-for="item in dataList" :id="`zp-id-${item.zp_index}`" :key="item.zp_index" class="block">
+        <text>萨菲隆卡视角福利卡随机发立卡手机</text>
+      </view>
     </z-paging>
   </base-layout>
 </template>

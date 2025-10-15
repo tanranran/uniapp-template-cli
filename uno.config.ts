@@ -1,18 +1,10 @@
-import { defineConfig, presetAttributify, presetIcons, transformerDirectives, transformerVariantGroup } from 'unocss';
-import { presetApplet, presetRemRpx, transformerApplet, transformerAttributify } from 'unocss-applet';
-import transformerCompileClass from '@unocss/transformer-compile-class';
-const isApplet = process.env?.UNI_PLATFORM?.startsWith('mp-') ?? false;
-const presets = [];
-const transformers = [];
-presets.push(presetApplet());
-if (isApplet) {
-  presets.push(presetRemRpx({ baseFontSize: 16, screenWidth: 375, mode: 'rem2rpx' }));
-  transformers.push(transformerApplet(), transformerAttributify());
-}
+import { defineConfig, presetIcons, transformerDirectives, transformerVariantGroup } from 'unocss'
+import transformerCompileClass from '@unocss/transformer-compile-class'
+import { presetUni } from '@uni-helper/unocss-preset-uni'
 
 export default defineConfig({
   presets: [
-    ...presets,
+    presetUni(),
     presetIcons({
       scale: 1.2,
       warn: true,
@@ -20,24 +12,22 @@ export default defineConfig({
         display: 'inline-block',
         'vertical-align': 'middle'
       }
-    }),
-    // 属性模式（在class 属性过多的情况下优先使用属性模式，否则将会变得难以维护）
-    //https://unocss.dev/presets/attributify#attributify-mode
-    presetAttributify()
+    })
   ],
   transformers: [
-    ...transformers,
     // 启用指令功能：主要用于支持 @apply、@screen 和 theme() 等 CSS 指令
     transformerDirectives(),
     // 启用 () 分组功能
     // 支持css class组合，eg: `<div class="hover:(bg-gray-400 font-medium) font-(light mono)">测试 unocss</div>`
     transformerVariantGroup(),
-    //将一组类合并编译为一个单独的类
+    //将一组类合并编译为一个单独的类【在类名字符串前添加 :uno: 来标记它们以进行合并编译。】
     transformerCompileClass()
   ],
   shortcuts: [
     { 'flex-center': 'flex justify-center items-center' },
     { 'flex-col-center': 'flex justify-center items-center flex-col' },
+    { 'flex-col': 'flex flex-col' },
+    { 'flex-row': 'flex flex-row' },
     {
       'f-b': 'flex justify-between items-center',
       'f-c': 'flex justify-center items-center',
@@ -70,6 +60,10 @@ export default defineConfig({
       /** 提供更小号的字体，用法如：text-2xs */
       '2xs': ['20rpx', '28rpx'],
       '3xs': ['18rpx', '26rpx']
+    },
+    platforms: {
+      wechat: 'mp-weixin',
+      web: 'h5'
     }
   }
-});
+})

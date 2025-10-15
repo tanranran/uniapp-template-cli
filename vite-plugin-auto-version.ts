@@ -1,13 +1,13 @@
 // vite-plugin-auto-version.ts
-import { readFileSync, writeFileSync } from 'fs';
-import { resolve } from 'path';
-import { Plugin } from 'vite';
-import { execSync } from 'child_process';
-import dayjs from 'dayjs';
+import { readFileSync, writeFileSync } from 'fs'
+import { resolve } from 'path'
+import { Plugin } from 'vite'
+import { execSync } from 'child_process'
+import dayjs from 'dayjs'
 interface AutoVersionPluginOptions {
-  file?: string; // package.json 路径
-  type?: 'patch' | 'minor' | 'major'; // 版本类型
-  inject?: boolean; // 是否注入到构建中
+  file?: string // package.json 路径
+  type?: 'patch' | 'minor' | 'major' // 版本类型
+  inject?: boolean // 是否注入到构建中
 }
 
 /**
@@ -18,13 +18,13 @@ interface AutoVersionPluginOptions {
  * @returns Vite 插件对象
  */
 export function AutoVersion(options: AutoVersionPluginOptions = {}): Plugin {
-  const { file = 'package.json', type = 'patch', inject = true } = options;
-  let isBuild = false;
-  let manifestPath: string;
-  let packagePath: string;
-  let buildDate: string;
-  let gitCommitHash: string = 'unknown';
-  let gitCommitDate: string = '';
+  const { file = 'package.json', type = 'patch', inject = true } = options
+  let isBuild = false
+  let manifestPath: string
+  let packagePath: string
+  let buildDate: string
+  let gitCommitHash: string = 'unknown'
+  let gitCommitDate: string = ''
 
   return {
     name: 'auto-version',
@@ -36,7 +36,7 @@ export function AutoVersion(options: AutoVersionPluginOptions = {}): Plugin {
      * @param env - 环境信息，包括命令类型等
      */
     config(config, { command }) {
-      isBuild = command === 'build';
+      isBuild = command === 'build'
     },
 
     /**
@@ -44,41 +44,41 @@ export function AutoVersion(options: AutoVersionPluginOptions = {}): Plugin {
      * @param resolvedConfig - 已解析的 Vite 配置对象
      */
     configResolved(resolvedConfig) {
-      manifestPath = `${resolvedConfig.root}/src/manifest.json`;
-      packagePath = resolve(resolvedConfig.root, file);
+      manifestPath = `${resolvedConfig.root}/src/manifest.json`
+      packagePath = resolve(resolvedConfig.root, file)
 
       // 获取构建时间和 Git 提交信息
       try {
-        buildDate = dayjs().format('YYYY-MM-DD HH:mm:ss');
-        gitCommitHash = execSync('git rev-parse --short HEAD', { encoding: 'utf-8' }).trim();
-        gitCommitDate = execSync('git show -s --format=%ci HEAD', { encoding: 'utf-8' }).trim();
+        buildDate = dayjs().format('YYYY-MM-DD HH:mm:ss')
+        gitCommitHash = execSync('git rev-parse --short HEAD', { encoding: 'utf-8' }).trim()
+        gitCommitDate = execSync('git show -s --format=%ci HEAD', { encoding: 'utf-8' }).trim()
       } catch {
-        gitCommitHash = 'unknown';
-        gitCommitDate = 'unknownDate';
+        gitCommitHash = 'unknown'
+        gitCommitDate = 'unknownDate'
       }
 
       // 构建阶段才执行版本更新逻辑
       if (isBuild) {
-        const packageJson = JSON.parse(readFileSync(packagePath, 'utf-8'));
-        const oldVersionCode = packageJson.versionCode;
-        const newVersionCode = ProcessVersionCode(oldVersionCode);
-        const oldVersionName = packageJson.version;
-        const newVersionName = IncrementVersionName(packageJson.version, type, newVersionCode);
+        const packageJson = JSON.parse(readFileSync(packagePath, 'utf-8'))
+        const oldVersionCode = packageJson.versionCode
+        const newVersionCode = ProcessVersionCode(oldVersionCode)
+        const oldVersionName = packageJson.version
+        const newVersionName = IncrementVersionName(packageJson.version, type, newVersionCode)
 
         // 更新 package.json 中的版本信息
-        packageJson.version = newVersionName;
-        packageJson.versionCode = newVersionCode;
-        packageJson.gitHash = gitCommitHash;
-        packageJson.buildDate = buildDate;
-        writeFileSync(packagePath, JSON.stringify(packageJson, null, 2));
+        packageJson.version = newVersionName
+        packageJson.versionCode = newVersionCode
+        packageJson.gitHash = gitCommitHash
+        packageJson.buildDate = buildDate
+        writeFileSync(packagePath, JSON.stringify(packageJson, null, 2))
 
         // 更新 manifest.json 中的版本信息
-        const manifestJson = readFileSync(manifestPath, 'utf-8');
-        let newManifestJson = replaceManifest(manifestJson, 'versionCode', `"${newVersionCode}"`);
-        newManifestJson = replaceManifest(newManifestJson, 'versionName', `"${newVersionName}"`);
-        writeFileSync(manifestPath, newManifestJson);
+        const manifestJson = readFileSync(manifestPath, 'utf-8')
+        let newManifestJson = replaceManifest(manifestJson, 'versionCode', `"${newVersionCode}"`)
+        newManifestJson = replaceManifest(newManifestJson, 'versionName', `"${newVersionName}"`)
+        writeFileSync(manifestPath, newManifestJson)
 
-        console.log(`✅ Version updated from ${oldVersionName} to ${newVersionName}`);
+        console.log(`✅ Version updated from ${oldVersionName} to ${newVersionName}`)
       }
     },
 
@@ -90,12 +90,12 @@ export function AutoVersion(options: AutoVersionPluginOptions = {}): Plugin {
      * @returns 转换后的代码或原始代码
      */
     transform(code, id) {
-      const versionName = '__APP_VERSION__';
+      const versionName = '__APP_VERSION__'
 
       // 如果启用了注入功能且代码中包含版本占位符，则进行替换
       if (inject && code.includes(versionName)) {
         try {
-          const packageJson = JSON.parse(readFileSync(packagePath, 'utf-8'));
+          const packageJson = JSON.parse(readFileSync(packagePath, 'utf-8'))
 
           // 创建替换映射
           const replacements = {
@@ -103,26 +103,32 @@ export function AutoVersion(options: AutoVersionPluginOptions = {}): Plugin {
             __APP_BUILD_DATE__: JSON.stringify(buildDate),
             __APP_GIT_HASH__: JSON.stringify(gitCommitHash),
             __APP_GIT_DATE__: JSON.stringify(gitCommitDate)
-          };
+          }
 
           // 一次性完成所有替换
-          let result = code;
+          let result = code
           for (const [searchValue, replaceValue] of Object.entries(replacements)) {
             if (code.includes(searchValue)) {
-              const regex = new RegExp(searchValue.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g');
-              result = result.replace(regex, replaceValue);
+              const regex = new RegExp(searchValue.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g')
+              result = result.replace(regex, replaceValue)
             }
           }
 
-          return result;
+          return {
+            code: result,
+            map: null // 不生成 source map，消除警告
+          }
         } catch {
-          return code.replace(new RegExp(versionName, 'g'), '"unknown"');
+          return code.replace(new RegExp(versionName, 'g'), '"unknown"')
         }
       }
 
-      return code;
+      return {
+        code,
+        map: null // 不生成 source map，消除警告
+      }
     }
-  };
+  }
 }
 
 /**
@@ -134,20 +140,20 @@ export function AutoVersion(options: AutoVersionPluginOptions = {}): Plugin {
  */
 function IncrementVersionName(version: string, type: 'patch' | 'minor' | 'major', endVersionCode: string): string {
   // 解析版本号为数字数组
-  const [major, minor, patch] = version.split('.').map(Number);
+  const [major, minor, patch] = version.split('.').map(Number)
   switch (type) {
     case 'major':
       // 主版本号递增，次版本号重置为0，补丁版本号使用新值
-      return `${major + 1}.0.${endVersionCode}`;
+      return `${major + 1}.0.${endVersionCode}`
     case 'minor':
       // 次版本号递增，补丁版本号使用新值
-      return `${major}.${minor + 1}.${endVersionCode}`;
+      return `${major}.${minor + 1}.${endVersionCode}`
     case 'patch':
       // 补丁版本号使用新值
-      return `${major}.${minor}.${endVersionCode}`;
+      return `${major}.${minor}.${endVersionCode}`
     default:
       // 类型不匹配时返回原版本号
-      return version;
+      return version
   }
 }
 
@@ -158,34 +164,34 @@ function IncrementVersionName(version: string, type: 'patch' | 'minor' | 'major'
  */
 function ProcessVersionCode(version: string): string {
   // 获取今天的日期 (YYYYMMDD)
-  const todayDate = dayjs().format('YYYYMMDD');
+  const todayDate = dayjs().format('YYYYMMDD')
 
   // 检查是否以8位数字日期开头
-  const isDatePrefix = /^\d{8}/.test(version) && version.length >= 8;
+  const isDatePrefix = /^\d{8}/.test(version) && version.length >= 8
 
-  let endVersionCode = '01';
+  let endVersionCode = '01'
   // 规则1: 不是日期开头 -> YYYYMMDD01
   if (!isDatePrefix) {
-    return `${todayDate}${endVersionCode}`;
+    return `${todayDate}${endVersionCode}`
   }
 
-  const datePrefix = version.substring(0, 8);
+  const datePrefix = version.substring(0, 8)
 
   // 规则2: 日期开头但不是今天 -> YYYYMMDD01
   if (datePrefix !== todayDate) {
-    return `${todayDate}${endVersionCode}`;
+    return `${todayDate}${endVersionCode}`
   }
 
   // 规则3: 今天日期开头，则末尾版本号自增
   if (datePrefix == todayDate) {
-    let endingStr = version.substring(8);
+    let endingStr = version.substring(8)
     if (endingStr) {
-      endVersionCode = `${parseInt(endingStr) + 1}`.padStart(2, '0');
+      endVersionCode = `${parseInt(endingStr) + 1}`.padStart(2, '0')
     }
-    return `${todayDate}${endVersionCode}`;
+    return `${todayDate}${endVersionCode}`
   }
   // 其他情况保持不变
-  return version;
+  return version
 }
 
 /**
@@ -197,23 +203,23 @@ function ProcessVersionCode(version: string): string {
  */
 function replaceManifest(manifest: string, path: string, value: string) {
   // 解析路径数组和相关信息
-  const arr = path.split('.');
-  const len = arr.length;
-  const lastItem = arr[len - 1];
+  const arr = path.split('.')
+  const len = arr.length
+  const lastItem = arr[len - 1]
 
-  let i = 0;
-  let manifestArr = manifest.split(/\n/);
+  let i = 0
+  let manifestArr = manifest.split(/\n/)
 
   // 遍历manifest的每一行，查找并替换指定路径的值
   for (let index = 0; index < manifestArr.length; index++) {
-    const item = manifestArr[index];
-    if (new RegExp(`"${arr[i]}"`).test(item)) ++i;
+    const item = manifestArr[index]
+    if (new RegExp(`"${arr[i]}"`).test(item)) ++i
     if (i === len) {
       // 检查当前行是否有逗号，用于保持原有的格式
-      const hasComma = /,/.test(item);
-      manifestArr[index] = item.replace(new RegExp(`"${lastItem}"[\\s\\S]*:[\\s\\S]*`), `"${lastItem}": ${value}${hasComma ? ',' : ''}`);
-      break;
+      const hasComma = /,/.test(item)
+      manifestArr[index] = item.replace(new RegExp(`"${lastItem}"[\\s\\S]*:[\\s\\S]*`), `"${lastItem}": ${value}${hasComma ? ',' : ''}`)
+      break
     }
   }
-  return manifestArr.join('\n');
+  return manifestArr.join('\n')
 }

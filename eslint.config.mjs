@@ -1,6 +1,5 @@
-import uniHelper from '@uni-helper/eslint-config';
-
-export default uniHelper({
+import uni from '@uni-helper/eslint-config'
+export default uni({
   unocss: true,
   vue: true,
   markdown: false,
@@ -20,6 +19,7 @@ export default uniHelper({
     // 忽略自动生成文件
     'src/service/**'
   ],
+  plugins: ['@unocss'],
   // https://eslint-config.antfu.me/rules
   rules: {
     'no-useless-return': 'off',
@@ -38,13 +38,13 @@ export default uniHelper({
         externalIgnores: ['text']
       }
     ],
-    // vue SFC 调换顺序改这里
     'vue/block-order': [
       'error',
       {
         order: [['script', 'template'], 'style']
       }
-    ]
+    ],
+    '@unocss/enforce-class-compile': 'warn'
   },
   formatters: {
     /**
@@ -58,4 +58,4 @@ export default uniHelper({
      */
     html: true
   }
-});
+})

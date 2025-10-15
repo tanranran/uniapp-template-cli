@@ -1,18 +1,20 @@
 import { defineConfig, loadEnv } from 'vite'
 import Uni from '@uni-helper/plugin-uni'
 import UniHelperComponents from '@uni-helper/vite-plugin-uni-components'
+import UniHelperManifest from '@uni-helper/vite-plugin-uni-manifest'
+import UnoCSS from '@unocss/vite'
 import UniKuRoot from '@uni-ku/root'
-import { WotResolver } from '@uni-helper/vite-plugin-uni-components/resolvers'
-import UnoCSS from 'unocss/vite'
 import AutoImport from 'unplugin-auto-import/vite'
+import { WotResolver } from '@uni-helper/vite-plugin-uni-components/resolvers'
+
 /**
  * 分包优化、模块异步跨包调用、组件异步跨包引用
  * @see https://github.com/uni-ku/bundle-optimizer
  */
 import Optimization from '@uni-ku/bundle-optimizer'
 import CompressJson from '@binbinji/unplugin-compress-json/vite'
-import { visualizer } from 'rollup-plugin-visualizer'
 import ViteRestart from 'vite-plugin-restart'
+import { visualizer } from 'rollup-plugin-visualizer'
 import { AutoVersion } from './vite-plugin-auto-version'
 import dayjs from 'dayjs'
 import process from 'node:process'
@@ -45,7 +47,6 @@ export default async ({ command, mode }) => {
           }
         }
       },
-      UnoCSS(),
       UniHelperComponents({
         resolvers: [WotResolver()],
         extensions: ['vue'],
@@ -57,6 +58,11 @@ export default async ({ command, mode }) => {
       UniKuRoot({
         enabledGlobalRef: true
       }),
+      ViteRestart({
+        // 通过这个插件，在修改vite.config.js文件则不需要重新运行也生效配置
+        restart: ['vite.config.js']
+      }),
+      Uni(),
       AutoImport({
         imports: [
           'vue',
@@ -64,17 +70,21 @@ export default async ({ command, mode }) => {
           'uni-app',
           {
             'wot-design-uni': ['useToast', 'useMessage', 'useNotify', 'CommonUtil'],
-            'z-paging/types': ['zPaging']
+            'z-paging/types': ['zPaging', 'ZPagingVirtualItem']
           }
         ],
         dts: 'src/types/auto-import.d.ts',
         dirs: ['src/composables/**', 'src/store/**', 'src/utils/**', 'src/hooks/**', 'src/utils/**'], // 自动导入 hooks
         eslintrc: {
           enabled: true,
-          filepath: './.eslintrc-auto-import.json', // 生成 json 文件
           globalsPropValue: true
         },
-        vueTemplate: true // default false
+        vueTemplate: true
+      }),
+      UnoCSS(),
+      AutoVersion({
+        type: 'patch', // 可选: 'patch', 'minor', 'major'
+        inject: true
       }),
       Optimization({
         enable: {
@@ -89,15 +99,6 @@ export default async ({ command, mode }) => {
         logger: false
       }),
       CompressJson(),
-      ViteRestart({
-        // 通过这个插件，在修改vite.config.js文件则不需要重新运行也生效配置
-        restart: ['vite.config.js']
-      }),
-      Uni(),
-      AutoVersion({
-        type: 'patch', // 可选: 'patch', 'minor', 'major'
-        inject: true
-      }),
       // h5环境增加 BUILD_TIME 和 BUILD_BRANCH
       UNI_PLATFORM === 'h5' && {
         name: 'html-transform',

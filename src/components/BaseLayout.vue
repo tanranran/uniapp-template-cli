@@ -1,20 +1,22 @@
 <template>
   <view :style="{ height: height }" class="base-layout flex flex-col">
     <slot v-if="success" />
-    <view v-if="state.showLoading" class="state-layout state-layout--loading flex-col-center">
-      <wd-loading :color="'#777777'" size="46" />
-      <text class="text-#777 m-t-10rpx">加载中...</text>
-    </view>
+    <view class="state-layout">
+      <view v-if="state.showLoading" class="flex-col">
+        <wd-loading :color="'#777777'" size="46" />
+        <text class="text-#777 m-t-10rpx">加载中...</text>
+      </view>
 
-    <view v-if="state.showEmpty" class="state-layout state-layout--empty flex-col-center text-#777">
-      <wd-icon name="file" size="46" />
-      <text class="m-t-10rpx">暂无数据</text>
-    </view>
+      <view v-if="state.showEmpty" class=":uno: flex flex-col text-#777">
+        <wd-icon name="file" size="46" />
+        <text class="m-t-10rpx">暂无数据</text>
+      </view>
 
-    <view v-if="state.showError" class="state-layout state-layout--error flex-col-center text-#777">
-      <wd-icon name="file-excel" size="46" />
-      <text class="m-t-10rpx">{{ state.errorStr || '加载失败' }}</text>
-      <wd-button class="m-t-10rpx" type="warning" @click="handleRetry">重新加载</wd-button>
+      <view v-if="state.showError" class=":uno: flex flex-col text-#777">
+        <wd-icon name="file-excel" size="46" />
+        <text class="m-t-10rpx">{{ state.errorStr || '加载失败' }}</text>
+        <wd-button class="m-t-10rpx" type="warning" @click="handleRetry">重新加载</wd-button>
+      </view>
     </view>
   </view>
 </template>
@@ -101,7 +103,7 @@ function handleRetry() {
 function showToast(msg: string) {
   toast.show(msg)
 }
-defineExpose<BaseLayoutRefType>({
+defineExpose<BaseLayoutRef>({
   showLoading,
   showEmpty,
   showSuccess,

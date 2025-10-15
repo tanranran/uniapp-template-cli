@@ -21,6 +21,7 @@
     "Slots": true,
     "VNode": true,
     "WritableComputedRef": true,
+    "ZPagingVirtualItem": true,
     "acceptHMRUpdate": true,
     "computed": true,
     "createApp": true,

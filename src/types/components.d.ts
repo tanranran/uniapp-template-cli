@@ -7,14 +7,16 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    BaseLayout: (typeof import('./../components/BaseLayout.vue'))['default']
-    GlobalLoading: (typeof import('./../components/GlobalLoading.vue'))['default']
-    GlobalMessage: (typeof import('./../components/GlobalMessage.vue'))['default']
-    GlobalToast: (typeof import('./../components/GlobalToast.vue'))['default']
-    PrivacyPopup: (typeof import('./../components/PrivacyPopup.vue'))['default']
-    WdButton: (typeof import('wot-design-uni/components/wd-button/wd-button.vue'))['default']
-    WdIcon: (typeof import('wot-design-uni/components/wd-icon/wd-icon.vue'))['default']
-    WdLoading: (typeof import('wot-design-uni/components/wd-loading/wd-loading.vue'))['default']
-    WdRate: (typeof import('wot-design-uni/components/wd-rate/wd-rate.vue'))['default']
+    BaseLayout: typeof import('./../components/BaseLayout.vue')['default']
+    GlobalLoading: typeof import('./../components/GlobalLoading.vue')['default']
+    GlobalMessage: typeof import('./../components/GlobalMessage.vue')['default']
+    GlobalToast: typeof import('./../components/GlobalToast.vue')['default']
+    PrivacyPopup: typeof import('./../components/PrivacyPopup.vue')['default']
+    WdButton: typeof import('wot-design-uni/components/wd-button/wd-button.vue')['default']
+    WdIcon: typeof import('wot-design-uni/components/wd-icon/wd-icon.vue')['default']
+    WdLoading: typeof import('wot-design-uni/components/wd-loading/wd-loading.vue')['default']
+    WdMessageBox: typeof import('wot-design-uni/components/wd-message-box/wd-message-box.vue')['default']
+    WdPopup: typeof import('wot-design-uni/components/wd-popup/wd-popup.vue')['default']
+    WdToast: typeof import('wot-design-uni/components/wd-toast/wd-toast.vue')['default']
   }
 }
