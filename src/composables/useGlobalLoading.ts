@@ -8,30 +8,36 @@ interface GlobalLoading {
 }
 
 const defaultOptions: ToastOptions = {
-  show: false,
+  show: false
 }
 export const useGlobalLoading = defineStore('global-loading', {
   state: (): GlobalLoading => ({
     loadingOptions: defaultOptions,
-    currentPage: '',
+    currentPage: ''
   }),
   getters: {},
   actions: {
     // 加载提示
     loading(option: ToastOptions | string) {
       this.currentPage = getCurrentPath()
-      this.loadingOptions = CommonUtil.deepMerge({
-        iconName: 'loading',
-        duration: 0,
-        cover: true,
-        position: 'middle',
-        show: true,
-      }, typeof option === 'string' ? { msg: option } : option) as ToastOptions
+      this.loadingOptions = CommonUtil.deepMerge(
+        {
+          iconName: 'loading',
+          loadingType: 'ring',
+          loadingColor: '#777777',
+          duration: 0,
+          cover: true,
+          position: 'middle',
+          direction: 'vertical',
+          show: true
+        },
+        typeof option === 'string' ? { msg: option } : option
+      ) as ToastOptions
     },
     // 关闭Toast
     close() {
       this.loadingOptions = defaultOptions
       this.currentPage = ''
-    },
-  },
+    }
+  }
 })

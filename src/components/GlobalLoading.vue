@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { useGlobalLoading } from '@/composables/useGlobalLoading.ts'
+
 const { loadingOptions, currentPage } = storeToRefs(useGlobalLoading())
 
 const { close: closeGlobalLoading } = useGlobalLoading()

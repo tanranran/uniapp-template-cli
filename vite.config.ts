@@ -1,9 +1,12 @@
 import { defineConfig, loadEnv } from 'vite'
 import Uni from '@uni-helper/plugin-uni'
 import UniHelperComponents from '@uni-helper/vite-plugin-uni-components'
+// @see https://github.com/uni-helper/vite-plugin-uni-manifest
 import UniHelperManifest from '@uni-helper/vite-plugin-uni-manifest'
 import UnoCSS from '@unocss/vite'
 import UniKuRoot from '@uni-ku/root'
+// @see https://uni-helper.js.org/vite-plugin-uni-pages
+import UniPages from '@uni-helper/vite-plugin-uni-pages'
 import AutoImport from 'unplugin-auto-import/vite'
 import { WotResolver } from '@uni-helper/vite-plugin-uni-components/resolvers'
 
@@ -15,17 +18,18 @@ import Optimization from '@uni-ku/bundle-optimizer'
 import CompressJson from '@binbinji/unplugin-compress-json/vite'
 import ViteRestart from 'vite-plugin-restart'
 import { visualizer } from 'rollup-plugin-visualizer'
-import { AutoVersion } from './vite-plugin-auto-version'
+import { AutoVersion } from './vite-plugins/vite-plugin-auto-version'
 import dayjs from 'dayjs'
 import process from 'node:process'
 import path from 'node:path'
+import { handlePageName, writePageConst } from './vite-plugins/vite-config-uni-pages'
 
 // https://vitejs.dev/config/
 export default async ({ command, mode }) => {
   const { UNI_PLATFORM } = process.env
   const env = loadEnv(mode, path.resolve(process.cwd(), 'env'))
   const { VITE_APP_PORT, VITE_SERVER_BASEURL, VITE_APP_TITLE, VITE_DELETE_CONSOLE, VITE_APP_PUBLIC_BASE } = env
-  console.log('环境变量 env -> ', env)
+  // console.log('环境变量 env -> ', env)
 
   // mode: 区分生产环境还是开发环境
   console.log('command, mode -> ', command, mode)
@@ -47,6 +51,19 @@ export default async ({ command, mode }) => {
           }
         }
       },
+      AutoVersion({
+        type: 'patch', // 可选: 'patch', 'minor', 'major'
+        inject: true
+      }),
+      UniPages({
+        exclude: ['**/components/**/**.*'],
+        dts: 'src/types/uni-pages.d.ts',
+        onAfterMergePageMetaData: (ctx) => {
+          handlePageName(ctx, 'pageMetaData')
+          handlePageName(ctx, 'subPageMetaData')
+        }
+      }),
+      await UniHelperManifest(),
       UniHelperComponents({
         resolvers: [WotResolver()],
         extensions: ['vue'],
@@ -74,7 +91,7 @@ export default async ({ command, mode }) => {
           }
         ],
         dts: 'src/types/auto-import.d.ts',
-        dirs: ['src/composables/**', 'src/store/**', 'src/utils/**', 'src/hooks/**', 'src/utils/**'], // 自动导入 hooks
+        dirs: ['src/composables/**', 'src/store/**', 'src/utils/**', 'src/hooks/**', 'src/utils/**', 'src/router/**'], // 自动导入 hooks
         eslintrc: {
           enabled: true,
           globalsPropValue: true
@@ -82,10 +99,6 @@ export default async ({ command, mode }) => {
         vueTemplate: true
       }),
       UnoCSS(),
-      AutoVersion({
-        type: 'patch', // 可选: 'patch', 'minor', 'major'
-        inject: true
-      }),
       Optimization({
         enable: {
           optimization: true,
@@ -137,8 +150,8 @@ export default async ({ command, mode }) => {
       sourcemap: false,
       target: 'es2015',
       cssTarget: 'chrome61',
-      // 开发环境不用压缩
-      minify: mode === 'development' ? false : 'esbuild'
+      cssMinify: mode === 'development' ? false : 'esbuild', // 开发环境不用压缩
+      minify: mode === 'development' ? false : 'esbuild' // 开发环境不用压缩
     }
   })
 }

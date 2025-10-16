@@ -52,11 +52,10 @@
     "types": [
       "node",
       "@types/node",
-      "vitest/jsdom",
       "@dcloudio/types",
-      "mini-types",
       "@uni-helper/uni-types",
       "@uni-helper/uni-app-types",
+      "@uni-helper/vite-plugin-uni-pages",
       "miniprogram-api-typings",
       "wot-design-uni/global",
       "z-paging/types"

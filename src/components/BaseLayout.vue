@@ -1,18 +1,18 @@
 <template>
-  <view :style="{ height: height }" class="base-layout flex flex-col">
+  <view :style="{ height: height }" class="base-layout flex-col">
     <slot v-if="success" />
-    <view class="state-layout">
-      <view v-if="state.showLoading" class="flex-col">
+    <view v-if="!success" :style="{ backgroundColor: stateBg }" class=":uno: wh-full flex-center flex-1">
+      <view v-if="state.showLoading" class="flex-col-center">
         <wd-loading :color="'#777777'" size="46" />
         <text class="text-#777 m-t-10rpx">加载中...</text>
       </view>
 
-      <view v-if="state.showEmpty" class=":uno: flex flex-col text-#777">
+      <view v-if="state.showEmpty" class="flex-col-center text-#777">
         <wd-icon name="file" size="46" />
         <text class="m-t-10rpx">暂无数据</text>
       </view>
 
-      <view v-if="state.showError" class=":uno: flex flex-col text-#777">
+      <view v-if="state.showError" class="flex-col-center text-#777">
         <wd-icon name="file-excel" size="46" />
         <text class="m-t-10rpx">{{ state.errorStr || '加载失败' }}</text>
         <wd-button class="m-t-10rpx" type="warning" @click="handleRetry">重新加载</wd-button>
@@ -20,7 +20,6 @@
     </view>
   </view>
 </template>
-
 <script lang="ts" setup>
 defineOptions({
   name: 'BaseLayout',
@@ -36,12 +35,14 @@ interface Props {
   height?: string
   autoLoading?: boolean
   showLogin?: boolean
+  stateBg?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
   height: '100%',
   autoLoading: false,
-  showLogin: false
+  showLogin: false,
+  stateBg: '#fff'
 })
 
 const state = reactive({
@@ -116,11 +117,5 @@ defineExpose<BaseLayoutRef>({
 .base-layout {
   position: relative;
   width: 100%;
-}
-
-.state-layout {
-  width: 100%;
-  flex: 1;
-  display: flex;
 }
 </style>

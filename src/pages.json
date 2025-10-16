@@ -1,8 +1,9 @@
 {
   "globalStyle": {
-    "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "uni-app",
+    "navigationStyle": "default",
+    "navigationBarTitleText": "unibest",
     "navigationBarBackgroundColor": "#F8F8F8",
+    "navigationBarTextStyle": "black",
     "backgroundColor": "#F8F8F8"
   },
   "easycom": {
@@ -13,24 +14,32 @@
     }
   },
   "pages": [
-    //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+    // #ifdef MP-WEIXIN || H5
     {
       "path": "pages/index/index",
+      "type": "home",
       "style": {
-        "navigationBarTitleText": "index"
-      }
+        "navigationBarTitleText": "我是首页"
+      },
+      "name": "PAGES_INDEX_INDEX"
     },
+    // #endif
     {
       "path": "pages/index/testA",
+      "type": "page",
       "style": {
-        "navigationBarTitleText": "testA"
-      }
+        "navigationBarTitleText": "我是testA"
+      },
+      "name": "PAGES_INDEX_TESTA"
     },
     {
       "path": "pages/index/testB",
+      "type": "page",
       "style": {
-        "navigationBarTitleText": "testB"
-      }
+        "navigationBarTitleText": "我是testB"
+      },
+      "name": "PAGES_INDEX_TESTB"
     }
-  ]
+  ],
+  "subPackages": []
 }
