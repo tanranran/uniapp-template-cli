@@ -9,7 +9,7 @@
       "ES6"
     ],
     "module": "ESNext",
-    "moduleResolution": "Bundler",
+    //    "moduleResolution": "Bundler",
     // 更适合 Vite 的模块解析策略
     "allowImportingTsExtensions": true,
     // 允许导入 .ts 扩展名
@@ -58,6 +58,7 @@
       "@uni-helper/vite-plugin-uni-pages",
       "miniprogram-api-typings",
       "wot-design-uni/global",
+      "uni-echarts/global",
       "z-paging/types"
     ]
   },

@@ -1,6 +1,12 @@
 export default {
-  push(options: UniNamespace.NavigateToOptions & NavigateToOptions) {
-    uni.navigateTo(options)
+  push(options: (UniNamespace.NavigateToOptions & NavigateToOptions) | _LocationUrl) {
+    if (typeof options === 'string') {
+      uni.navigateTo({
+        url: options
+      })
+    } else {
+      uni.navigateTo(options)
+    }
   },
   showTestA() {
     this.push({

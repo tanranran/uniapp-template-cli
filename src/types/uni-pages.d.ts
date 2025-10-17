@@ -5,8 +5,12 @@
 
 type _LocationUrl =
   "/pages/index/index" |
+  "/pages/index/paging" |
   "/pages/index/testA" |
-  "/pages/index/testB";
+  "/pages/index/testB" |
+  "/subPages/styles/index" |
+  "/subEcharts/echarts/index" |
+  "/subAsyncEcharts/asyncEcharts/index";
 
 interface NavigateToOptions {
   url: _LocationUrl;

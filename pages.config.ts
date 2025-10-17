@@ -14,5 +14,11 @@ export default defineUniPages({
       '^wd-(.*)': 'wot-design-uni/components/wd-$1/wd-$1.vue',
       '^(?!z-paging-refresh|z-paging-load-more)z-paging(.*)': 'z-paging/components/z-paging$1/z-paging$1.vue'
     }
+  },
+  preloadRule: {
+    'pages/index/index': {
+      network: 'all',
+      packages: ['subAsyncEcharts', 'subEcharts']
+    }
   }
 })

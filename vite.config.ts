@@ -9,7 +9,9 @@ import UniKuRoot from '@uni-ku/root'
 import UniPages from '@uni-helper/vite-plugin-uni-pages'
 import AutoImport from 'unplugin-auto-import/vite'
 import { WotResolver } from '@uni-helper/vite-plugin-uni-components/resolvers'
-
+//Echarts
+import { UniEchartsResolver } from 'uni-echarts/resolver'
+import { UniEcharts } from 'uni-echarts/vite'
 /**
  * 分包优化、模块异步跨包调用、组件异步跨包引用
  * @see https://github.com/uni-ku/bundle-optimizer
@@ -38,6 +40,9 @@ export default async ({ command, mode }) => {
   return defineConfig({
     envDir: './env', // 自定义env目录
     base: VITE_APP_PUBLIC_BASE,
+    optimizeDeps: {
+      exclude: process.env.NODE_ENV === 'development' ? ['wot-design-uni', 'uni-echarts'] : []
+    },
     plugins: [
       {
         // 临时解决 dcloudio 官方的 @dcloudio/uni-mp-compiler 出现的编译 BUG
@@ -56,16 +61,17 @@ export default async ({ command, mode }) => {
         inject: true
       }),
       UniPages({
-        exclude: ['**/components/**/**.*'],
         dts: 'src/types/uni-pages.d.ts',
+        subPackages: ['src/subPages', 'src/subEcharts', 'src/subAsyncEcharts'],
         onAfterMergePageMetaData: (ctx) => {
           handlePageName(ctx, 'pageMetaData')
           handlePageName(ctx, 'subPageMetaData')
-        }
+        },
+        exclude: ['**/components/**/*.*']
       }),
       await UniHelperManifest(),
       UniHelperComponents({
-        resolvers: [WotResolver()],
+        resolvers: [WotResolver(), UniEchartsResolver()],
         extensions: ['vue'],
         deep: true, // 是否递归扫描子目录，
         directoryAsNamespace: false, // 是否把目录名作为命名空间前缀，true 时组件名为 目录名+组件名，
@@ -75,6 +81,7 @@ export default async ({ command, mode }) => {
       UniKuRoot({
         enabledGlobalRef: true
       }),
+      UniEcharts(),
       ViteRestart({
         // 通过这个插件，在修改vite.config.js文件则不需要重新运行也生效配置
         restart: ['vite.config.js']

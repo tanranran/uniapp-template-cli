@@ -10,7 +10,14 @@ export function handlePageName(ctx, inKey) {
     // 将路径中的 /.- 替换为下划线，并转换为大写，作为路由名称
     // 例如：路径 pages/home/index.page.vue 会生成路由名称 PAGES_HOME_INDEX_PAGE
     // 你可以根据需要修改生成规则，建议通过 path 转化而成，大多数情况下能保持全局唯一，而且容易从 name 猜测页面所在
-    page.name = page.path.replace(/[/.-]/g, '_').toUpperCase()
+    if (page.pages) {
+      //分包
+      for (const pageItem of page.pages) {
+        pageItem.name = pageItem.path.replace(/[/.-]/g, '_').toUpperCase()
+      }
+    } else {
+      page.name = page.path.replace(/[/.-]/g, '_').toUpperCase()
+    }
   })
 }
 
