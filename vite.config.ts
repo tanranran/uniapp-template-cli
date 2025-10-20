@@ -141,9 +141,13 @@ export default async ({ command, mode }) => {
     },
     resolve: {
       alias: {
-        '@': path.join(process.cwd(), './src'),
-        '@img': path.join(process.cwd(), './src/static/images')
-      }
+        '@': path.resolve(__dirname, './src'),
+        '@img': path.resolve(__dirname, './src/static/images'),
+        '@components': path.resolve(__dirname, './src/components'),
+        '@utils': path.resolve(__dirname, './src/utils')
+      },
+      // 自动补全扩展名
+      extensions: ['.js', '.ts', '.jsx', '.tsx']
     },
     server: {
       host: '0.0.0.0',
@@ -158,7 +162,7 @@ export default async ({ command, mode }) => {
       target: 'es2015',
       cssTarget: 'chrome61',
       cssMinify: mode === 'development' ? false : 'esbuild', // 开发环境不用压缩
-      minify: mode === 'development' ? false : 'esbuild' // 开发环境不用压缩
+      minify: mode === 'development' ? false : 'terser' // 开发环境不用压缩
     }
   })
 }

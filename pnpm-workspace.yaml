@@ -1,3 +1,6 @@
 ignoredBuiltDependencies:
   - core-js
   - esbuild
+
+onlyBuiltDependencies:
+  - '@uni-helper/unocss-preset-uni'
