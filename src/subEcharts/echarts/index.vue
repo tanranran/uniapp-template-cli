@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import BarChart from './components/BarChart.vue'
+// import BarChart from './components/BarChart.vue'
 // import DonutChart from './components/DonutChart.vue'
 // import FunnelChart from './components/FunnelChart.vue'
 // import GaugeChart from './components/GaugeChart.vue'

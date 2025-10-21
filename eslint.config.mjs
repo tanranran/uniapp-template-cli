@@ -32,6 +32,10 @@ export default uni({
     'jsdoc/require-returns-description': 'off',
     'ts/no-empty-object-type': 'off',
     'no-extend-native': 'off',
+    'vue/event-name-casing': 'off',
+    'vue/prop-name-casing': 'off',
+    'vue/max-attributes-per-line': 'off',
+    'vue/multi-word-component-names': 'off',
     'vue/singleline-html-element-content-newline': [
       'error',
       {
@@ -42,6 +46,26 @@ export default uni({
       'error',
       {
         order: [['script', 'template'], 'style']
+      }
+    ],
+    'vue/html-closing-bracket-newline': [
+      'warn',
+      {
+        singleline: 'never',
+        multiline: 'never'
+      }
+    ],
+    'vue/first-attribute-linebreak': [
+      'warn',
+      {
+        singleline: 'ignore',
+        multiline: 'ignore'
+      }
+    ],
+    'vue/html-self-closing': [
+      'error',
+      {
+        html: { void: 'always', normal: 'never', component: 'always' }
       }
     ],
     '@unocss/enforce-class-compile': 'warn'

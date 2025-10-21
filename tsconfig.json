@@ -58,7 +58,6 @@
       "@uni-helper/vite-plugin-uni-pages",
       "miniprogram-api-typings",
       "wot-design-uni/global",
-      "uni-echarts/global",
       "z-paging/types"
     ]
   },
