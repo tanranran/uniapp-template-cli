@@ -29,7 +29,7 @@ export default async ({ command, mode }) => {
   const env = loadEnv(mode, path.resolve(process.cwd(), 'env'))
   const { VITE_APP_PORT, VITE_SERVER_BASEURL, VITE_APP_TITLE, VITE_DELETE_CONSOLE, VITE_APP_PUBLIC_BASE } = env
   // console.log('环境变量 env -> ', env)
-
+  const isDev = mode === 'development'
   // mode: 区分生产环境还是开发环境
   console.log('command, mode -> ', command, mode)
   console.log('UNI_PLATFORM -> ', UNI_PLATFORM) // 得到 mp-weixin, h5, app 等
@@ -38,7 +38,7 @@ export default async ({ command, mode }) => {
     envDir: './env', // 自定义env目录
     base: VITE_APP_PUBLIC_BASE,
     optimizeDeps: {
-      exclude: process.env.NODE_ENV === 'development' ? ['wot-design-uni'] : []
+      exclude: isDev ? ['wot-design-uni'] : []
     },
     plugins: [
       {
@@ -57,15 +57,15 @@ export default async ({ command, mode }) => {
         type: 'patch', // 可选: 'patch', 'minor', 'major'
         inject: true
       }),
-      UniPages({
-        dts: 'src/types/uni-pages.d.ts',
-        subPackages: ['src/subPages', 'src/subEcharts', 'src/subAsyncEcharts'],
-        onAfterMergePageMetaData: (ctx) => {
-          handlePageName(ctx, 'pageMetaData')
-          handlePageName(ctx, 'subPageMetaData')
-        },
-        exclude: ['**/components/**/*.*']
-      }),
+      // UniPages({
+      //   dts: 'src/types/uni-pages.d.ts',
+      //   subPackages: ['src/pages-sub'],
+      //   onAfterMergePageMetaData: (ctx) => {
+      //     handlePageName(ctx, 'pageMetaData')
+      //     handlePageName(ctx, 'subPageMetaData')
+      //   },
+      //   exclude: ['**/components/**/*.*']
+      // }),
       await UniHelperManifest(),
       UniHelperComponents({
         resolvers: [WotResolver()],
@@ -93,7 +93,7 @@ export default async ({ command, mode }) => {
             'z-paging/types': ['zPaging', 'ZPagingVirtualItem']
           }
         ],
-        dts: 'src/types/auto-import.d.ts',
+        dts: 'src/types/auto-import.d.ts', //'src/store/**',
         dirs: ['src/composables/**', 'src/store/**', 'src/utils/**', 'src/hooks/**', 'src/utils/**', 'src/router/**'], // 自动导入 hooks
         eslintrc: {
           enabled: true,
@@ -110,7 +110,19 @@ export default async ({ command, mode }) => {
         },
         dts: {
           enable: true,
-          base: 'src/types'
+          base: 'src/types',
+          'async-import': {
+            enable: true,
+            base: 'src/types',
+            name: 'async-import.d.ts',
+            path: './src/types/async-import.d.ts'
+          },
+          'async-component': {
+            enable: true,
+            base: 'src/types',
+            name: 'async-component.d.ts',
+            path: './src/types/async-component.d.ts'
+          }
         },
         logger: false
       }),
@@ -157,8 +169,8 @@ export default async ({ command, mode }) => {
       sourcemap: false,
       target: 'es2015',
       cssTarget: 'chrome61',
-      cssMinify: mode === 'development' ? false : 'esbuild', // 开发环境不用压缩
-      minify: mode === 'development' ? false : 'terser' // 开发环境不用压缩
+      cssMinify: isDev ? false : 'esbuild', // 开发环境不用压缩
+      minify: isDev ? false : 'terser' // 开发环境不用压缩
     }
   })
 }

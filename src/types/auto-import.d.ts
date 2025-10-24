@@ -8,7 +8,6 @@ export {}
 declare global {
   const CommonUtil: typeof import('wot-design-uni').CommonUtil
   const EffectScope: typeof import('vue').EffectScope
-  const PageUrlConst: typeof import('../router/pageConst').PageUrlConst
   const ZPagingVirtualItem: typeof import('z-paging/types').ZPagingVirtualItem
   const acceptHMRUpdate: typeof import('pinia').acceptHMRUpdate
   const computed: typeof import('vue').computed
@@ -42,6 +41,8 @@ declare global {
   const isReadonly: typeof import('vue').isReadonly
   const isRef: typeof import('vue').isRef
   const isShallow: typeof import('vue').isShallow
+  const isShowLoadingOptions: typeof import('../utils/is').isShowLoadingOptions
+  const isToastOptions: typeof import('../utils/is').isToastOptions
   const mapActions: typeof import('pinia').mapActions
   const mapGetters: typeof import('pinia').mapGetters
   const mapState: typeof import('pinia').mapState
@@ -97,12 +98,12 @@ declare global {
   const router: typeof import('../router/router').default
   const setActivePinia: typeof import('pinia').setActivePinia
   const setMapStoreSuffix: typeof import('pinia').setMapStoreSuffix
-  const setupStore: typeof import('../store/index').setupStore
   const shallowReactive: typeof import('vue').shallowReactive
   const shallowReadonly: typeof import('vue').shallowReadonly
   const shallowRef: typeof import('vue').shallowRef
   const store: typeof import('../store/index').default
   const storeToRefs: typeof import('pinia').storeToRefs
+  const themeColorOptions: typeof import('../composables/types/theme').themeColorOptions
   const throttle: typeof import('../utils/index').throttle
   const toRaw: typeof import('vue').toRaw
   const toRef: typeof import('vue').toRef
@@ -121,6 +122,8 @@ declare global {
   const useGlobalPage: typeof import('../composables/useGlobalPage').useGlobalPage
   const useGlobalToast: typeof import('../composables/useGlobalToast').useGlobalToast
   const useId: typeof import('vue').useId
+  const useManualTheme: typeof import('../composables/useManualTheme').useManualTheme
+  const useManualThemeStore: typeof import('../store/manualThemeStore').useManualThemeStore
   const useMessage: typeof import('wot-design-uni').useMessage
   const useModel: typeof import('vue').useModel
   const useNotify: typeof import('wot-design-uni').useNotify
@@ -140,6 +143,9 @@ declare global {
   // @ts-ignore
   export type { Component, Slot, Slots, ComponentPublicInstance, ComputedRef, DirectiveBinding, ExtractDefaultPropTypes, ExtractPropTypes, ExtractPublicPropTypes, InjectionKey, PropType, Ref, ShallowRef, MaybeRef, MaybeRefOrGetter, VNode, WritableComputedRef } from 'vue'
   import('vue')
+  // @ts-ignore
+  export type { ThemeColorOption, ThemeMode, ThemeState, SystemThemeState } from '../composables/types/theme'
+  import('../composables/types/theme')
   // @ts-ignore
   export type { GlobalMessageOptions } from '../composables/useGlobalMessage'
   import('../composables/useGlobalMessage')
@@ -188,6 +194,8 @@ declare module 'vue' {
     readonly isReadonly: UnwrapRef<typeof import('vue')['isReadonly']>
     readonly isRef: UnwrapRef<typeof import('vue')['isRef']>
     readonly isShallow: UnwrapRef<typeof import('vue')['isShallow']>
+    readonly isShowLoadingOptions: UnwrapRef<typeof import('../utils/is')['isShowLoadingOptions']>
+    readonly isToastOptions: UnwrapRef<typeof import('../utils/is')['isToastOptions']>
     readonly mapActions: UnwrapRef<typeof import('pinia')['mapActions']>
     readonly mapGetters: UnwrapRef<typeof import('pinia')['mapGetters']>
     readonly mapState: UnwrapRef<typeof import('pinia')['mapState']>
@@ -243,12 +251,12 @@ declare module 'vue' {
     readonly router: UnwrapRef<typeof import('../router/router')['default']>
     readonly setActivePinia: UnwrapRef<typeof import('pinia')['setActivePinia']>
     readonly setMapStoreSuffix: UnwrapRef<typeof import('pinia')['setMapStoreSuffix']>
-    readonly setupStore: UnwrapRef<typeof import('../store/index')['setupStore']>
     readonly shallowReactive: UnwrapRef<typeof import('vue')['shallowReactive']>
     readonly shallowReadonly: UnwrapRef<typeof import('vue')['shallowReadonly']>
     readonly shallowRef: UnwrapRef<typeof import('vue')['shallowRef']>
     readonly store: UnwrapRef<typeof import('../store/index')['default']>
     readonly storeToRefs: UnwrapRef<typeof import('pinia')['storeToRefs']>
+    readonly themeColorOptions: UnwrapRef<typeof import('../composables/types/theme')['themeColorOptions']>
     readonly throttle: UnwrapRef<typeof import('../utils/index')['throttle']>
     readonly toRaw: UnwrapRef<typeof import('vue')['toRaw']>
     readonly toRef: UnwrapRef<typeof import('vue')['toRef']>
@@ -267,6 +275,8 @@ declare module 'vue' {
     readonly useGlobalPage: UnwrapRef<typeof import('../composables/useGlobalPage')['useGlobalPage']>
     readonly useGlobalToast: UnwrapRef<typeof import('../composables/useGlobalToast')['useGlobalToast']>
     readonly useId: UnwrapRef<typeof import('vue')['useId']>
+    readonly useManualTheme: UnwrapRef<typeof import('../composables/useManualTheme')['useManualTheme']>
+    readonly useManualThemeStore: UnwrapRef<typeof import('../store/manualThemeStore')['useManualThemeStore']>
     readonly useMessage: UnwrapRef<typeof import('wot-design-uni')['useMessage']>
     readonly useModel: UnwrapRef<typeof import('vue')['useModel']>
     readonly useNotify: UnwrapRef<typeof import('wot-design-uni')['useNotify']>

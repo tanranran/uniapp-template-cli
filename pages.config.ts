@@ -3,10 +3,19 @@ import { defineUniPages } from '@uni-helper/vite-plugin-uni-pages'
 export default defineUniPages({
   globalStyle: {
     navigationStyle: 'default',
-    navigationBarTitleText: 'unibest',
-    navigationBarBackgroundColor: '#F8F8F8',
-    navigationBarTextStyle: 'black',
-    backgroundColor: '#F8F8F8'
+    // 导航栏配置
+    navigationBarBackgroundColor: '@navBgColor',
+    navigationBarTextStyle: '@navTxtStyle',
+    navigationBarTitleText: 'uniapp-template-cli',
+    // 页面背景配置
+    backgroundColor: '@bgColor',
+    backgroundTextStyle: '@bgTxtStyle',
+    backgroundColorTop: '@bgColorTop',
+    backgroundColorBottom: '@bgColorBottom',
+
+    // 下拉刷新配置
+    enablePullDownRefresh: false,
+    onReachBottomDistance: 50
   },
   easycom: {
     autoscan: true,
@@ -18,7 +27,7 @@ export default defineUniPages({
   preloadRule: {
     'pages/index/index': {
       network: 'all',
-      packages: ['subAsyncEcharts', 'subEcharts']
+      packages: []
     }
   }
 })

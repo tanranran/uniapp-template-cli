@@ -1,9 +1,7 @@
 <script lang="ts" setup>
-const appData = ref('')
-
+const { themeVars, theme } = useManualTheme()
 onLaunch(() => {
   console.log('Root onLaunch')
-  appData.value = 'App initialized'
 })
 
 onLoad(() => {
@@ -19,6 +17,7 @@ onReady(() => {
 })
 </script>
 <template>
+  <!--  <wd-config-provider :theme="theme" :theme-vars="themeVars">-->
   <ku-root-view />
   <global-loading />
   <global-toast />
@@ -26,4 +25,5 @@ onReady(() => {
   <!-- #ifdef MP-WEIXIN -->
   <privacy-popup />
   <!-- #endif -->
+  <!--  </wd-config-provider>-->
 </template>

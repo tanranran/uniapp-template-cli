@@ -56,9 +56,6 @@ const state = reactive({
 const success: Ref<boolean> = computed(() => {
   return !(state.showLoading || state.showError || state.showEmpty)
 })
-
-const toast = useGlobalToast()
-
 onBeforeMount(() => {
   if (props.autoLoading) {
     state.showLoading = true
@@ -102,7 +99,7 @@ function handleRetry() {
 }
 
 function showToast(msg: string) {
-  toast.show(msg)
+  // toast.show(msg)
 }
 defineExpose<BaseLayoutRef>({
   showLoading,

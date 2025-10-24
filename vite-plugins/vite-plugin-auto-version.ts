@@ -36,7 +36,7 @@ export function AutoVersion(options: AutoVersionPluginOptions = {}): Plugin {
      * @param env - 环境信息，包括命令类型等
      */
     config(config, { command }) {
-      isBuild = command === 'build' // && process.env.NODE_ENV === 'production'
+      isBuild = command === 'build' && process.env.NODE_ENV === 'production'
     },
 
     /**

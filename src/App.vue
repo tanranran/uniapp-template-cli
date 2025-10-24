@@ -1,15 +1,13 @@
 <script lang="ts" setup>
-import { onHide, onLaunch, onShow } from '@dcloudio/uni-app';
-
 onLaunch(() => {
-  console.log('App Launch');
-});
+  console.log('App Launch')
+})
 onShow(() => {
-  console.log('App Show');
-});
+  console.log('App Show')
+})
 onHide(() => {
-  console.log('App Hide');
-});
+  console.log('App Hide')
+})
 </script>
 <style lang="scss">
 page,
@@ -17,7 +15,6 @@ html,
 body,
 #app {
   height: 100%;
-  background-color: #f5f5f5;
   @apply max-w-[750rpx] mx-auto;
 }
 

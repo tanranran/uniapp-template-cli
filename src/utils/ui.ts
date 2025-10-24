@@ -1,14 +1,22 @@
 import type { ToastOptions } from 'wot-design-uni/components/wd-toast/types.ts'
-
-const toast = useGlobalToast()
-const loading = useGlobalLoading()
+import { isShowLoadingOptions, isToastOptions } from '@/utils/is.ts'
 export default {
   showToast(option: UniNamespace.ShowToastOptions | ToastOptions | string) {
-    // uni.showToast(typeof option === 'string' ? { title: option } : option)
-    toast.show(option)
+    if (isToastOptions(option)) {
+      uni.showToast(option)
+    } else if (typeof option === 'string') {
+      uni.showToast({ title: option })
+    } else {
+      useGlobalToast().show(option)
+    }
   },
   showLoading(option: UniNamespace.ShowLoadingOptions | ToastOptions | string) {
-    // uni.showLoading(typeof option === 'string' ? { title: option } : option)
-    loading.loading(option)
+    if (isShowLoadingOptions(option)) {
+      uni.showLoading(option)
+    } else if (typeof option === 'string') {
+      uni.showLoading({ title: option })
+    } else {
+      useGlobalLoading().loading(option)
+    }
   }
 }
