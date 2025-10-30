@@ -7,7 +7,6 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    BaseLayout: typeof import('./../components/BaseLayout.vue')['default']
     DemoBlock: typeof import('./../components/DemoBlock.vue')['default']
     GlobalLoading: typeof import('./../components/GlobalLoading.vue')['default']
     GlobalMessage: typeof import('./../components/GlobalMessage.vue')['default']
@@ -16,11 +15,11 @@ declare module 'vue' {
     WdButton: typeof import('wot-design-uni/components/wd-button/wd-button.vue')['default']
     WdCell: typeof import('wot-design-uni/components/wd-cell/wd-cell.vue')['default']
     WdCellGroup: typeof import('wot-design-uni/components/wd-cell-group/wd-cell-group.vue')['default']
+    WdConfigProvider: typeof import('wot-design-uni/components/wd-config-provider/wd-config-provider.vue')['default']
     WdIcon: typeof import('wot-design-uni/components/wd-icon/wd-icon.vue')['default']
     WdLoading: typeof import('wot-design-uni/components/wd-loading/wd-loading.vue')['default']
     WdMessageBox: typeof import('wot-design-uni/components/wd-message-box/wd-message-box.vue')['default']
     WdPopup: typeof import('wot-design-uni/components/wd-popup/wd-popup.vue')['default']
-    WdSwitch: typeof import('wot-design-uni/components/wd-switch/wd-switch.vue')['default']
     WdToast: typeof import('wot-design-uni/components/wd-toast/wd-toast.vue')['default']
   }
 }

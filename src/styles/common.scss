@@ -1,0 +1,28 @@
+@import 'variable';
+//全局默认样式
+::-webkit-scrollbar {
+  display: none;
+  width: 0 !important;
+  height: 0 !important;
+  -webkit-appearance: none;
+  background: transparent;
+}
+
+// 公共类
+//.color-primary {
+//  color: $primary-color;
+//}
+
+//.bg-primary {
+//  background-color: $primary-color;
+//  color: #fff;
+//}
+
+.page-wrapper {
+  min-height: calc(100vh - var(--window-top));
+  //background-color: red;
+}
+
+.wot-theme-dark.page-wrapper {
+  //background: #222;
+}

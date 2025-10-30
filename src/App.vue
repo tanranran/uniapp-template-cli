@@ -9,21 +9,3 @@ onHide(() => {
   console.log('App Hide')
 })
 </script>
-<style lang="scss">
-page,
-html,
-body,
-#app {
-  height: 100%;
-  @apply max-w-[750rpx] mx-auto;
-}
-
-/* 隐藏 scroll-view 的滚动条 */
-::-webkit-scrollbar {
-  display: none;
-  width: 0 !important;
-  height: 0 !important;
-  -webkit-appearance: none;
-  background: transparent;
-}
-</style>

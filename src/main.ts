@@ -1,10 +1,12 @@
 import { createSSRApp } from 'vue'
 import App from './App.vue'
-import store from '@/store'
 import 'virtual:uno.css'
+import '@/styles/common.scss'
+import { setupStore } from '@/store'
 export function createApp() {
   const app = createSSRApp(App)
-  app.use(store)
+  // 挂载状态管理
+  setupStore(app)
   return {
     app
   }

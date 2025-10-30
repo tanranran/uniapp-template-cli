@@ -1,10 +1,12 @@
 <template>
-  <wd-button
-    @click="
-      ui.showToast({
-        msg: '测试Toast'
-      })
-    "></wd-button>
+  <base-layout>
+    <wd-button
+      @click="
+        ui.showToast({
+          msg: '测试Toast'
+        })
+      "></wd-button>
+  </base-layout>
 </template>
 
 <script lang="ts" setup>

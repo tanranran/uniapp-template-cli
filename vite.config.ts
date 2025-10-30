@@ -1,4 +1,4 @@
-import { defineConfig, loadEnv } from 'vite'
+import { ConfigEnv, defineConfig, loadEnv } from 'vite'
 import Uni from '@uni-helper/plugin-uni'
 import UniHelperComponents from '@uni-helper/vite-plugin-uni-components'
 // @see https://github.com/uni-helper/vite-plugin-uni-manifest
@@ -24,7 +24,7 @@ import path from 'node:path'
 import { handlePageName, writePageConst } from './vite-plugins/vite-config-uni-pages'
 
 // https://vitejs.dev/config/
-export default async ({ command, mode }) => {
+export default async ({ command, mode }: ConfigEnv) => {
   const { UNI_PLATFORM } = process.env
   const env = loadEnv(mode, path.resolve(process.cwd(), 'env'))
   const { VITE_APP_PORT, VITE_SERVER_BASEURL, VITE_APP_TITLE, VITE_DELETE_CONSOLE, VITE_APP_PUBLIC_BASE } = env
@@ -47,7 +47,7 @@ export default async ({ command, mode }) => {
         // 自定义插件禁用 vite:vue 插件的 devToolsEnabled，强制编译 vue 模板时 inline 为 true
         name: 'fix-vite-plugin-vue',
         configResolved(config) {
-          const plugin = config.plugins.find((p) => p.name === 'vite:vue')
+          const plugin = config.plugins.find(p => p.name === 'vite:vue')
           if (plugin && plugin.api && plugin.api.options) {
             plugin.api.options.devToolsEnabled = false
           }
@@ -57,15 +57,15 @@ export default async ({ command, mode }) => {
         type: 'patch', // 可选: 'patch', 'minor', 'major'
         inject: true
       }),
-      // UniPages({
-      //   dts: 'src/types/uni-pages.d.ts',
-      //   subPackages: ['src/pages-sub'],
-      //   onAfterMergePageMetaData: (ctx) => {
-      //     handlePageName(ctx, 'pageMetaData')
-      //     handlePageName(ctx, 'subPageMetaData')
-      //   },
-      //   exclude: ['**/components/**/*.*']
-      // }),
+      UniPages({
+        dts: 'src/types/uni-pages.d.ts',
+        subPackages: ['src/pages-sub'],
+        onAfterMergePageMetaData: ctx => {
+          handlePageName(ctx, 'pageMetaData')
+          handlePageName(ctx, 'subPageMetaData')
+        },
+        exclude: ['**/components/**/*.*', '**/layout/**/*.*']
+      }),
       await UniHelperManifest(),
       UniHelperComponents({
         resolvers: [WotResolver()],
@@ -73,7 +73,7 @@ export default async ({ command, mode }) => {
         deep: true, // 是否递归扫描子目录，
         directoryAsNamespace: false, // 是否把目录名作为命名空间前缀，true 时组件名为 目录名+组件名，
         dts: 'src/types/components.d.ts', // 自动生成的组件类型声明文件路径（用于 TypeScript 支持）
-        dirs: ['src/components']
+        dirs: ['src/components', 'src/layout']
       }),
       UniKuRoot({
         enabledGlobalRef: true
@@ -102,6 +102,7 @@ export default async ({ command, mode }) => {
         vueTemplate: true
       }),
       UnoCSS(),
+      // UnoCssInject(),
       Optimization({
         enable: {
           optimization: true,
@@ -152,6 +153,7 @@ export default async ({ command, mode }) => {
         '@': path.resolve(__dirname, './src'),
         '@img': path.resolve(__dirname, './src/static/images'),
         '@components': path.resolve(__dirname, './src/components'),
+        '@layout': path.resolve(__dirname, './src/layout'),
         '@utils': path.resolve(__dirname, './src/utils')
       },
       // 自动补全扩展名
@@ -159,8 +161,14 @@ export default async ({ command, mode }) => {
     },
     server: {
       host: '0.0.0.0',
+      open: true,
       hmr: true,
-      port: Number.parseInt(VITE_APP_PORT, 10)
+      port: Number.parseInt(VITE_APP_PORT, 10),
+      // 预热文件以降低启动期间的初始页面加载时长
+      warmup: {
+        // 预热的客户端文件：首页、views、 components
+        clientFiles: ['./index.html', './src/{views,components,layout}/*']
+      }
     },
     esbuild: {
       drop: VITE_DELETE_CONSOLE === 'true' ? ['console', 'debugger'] : ['debugger']

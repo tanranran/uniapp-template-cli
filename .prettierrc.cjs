@@ -5,15 +5,15 @@ module.exports = {
   useTabs: false, //使用空格进行缩进，而不是使用制表符。
   semi: false, //在语句末尾打印分号。
   singleQuote: true, //使用单引号（'）而不是双引号（"）。
-  quoteProps: 'as-needed', //仅在对象属性名需要时（例如属性名包含特殊字符）才为其添加引号。
-  jsxSingleQuote: false, //在 JSX 中使用双引号而不是单引号。
+  quoteProps: 'preserve', //仅在对象属性名需要时（例如属性名包含特殊字符）才为其添加引号。
+  jsxSingleQuote: true, //在 JSX 中使用单引号而不是双引号。
   trailingComma: 'none', //仅在ES5 中需要的位置添加逗号
   bracketSpacing: true, //在对象字面量的大括号 {} 内侧打印空格。例如 { foo: bar } 而不是 {foo:bar}。
-  bracketSameLine: true, //将多行 HTML (HTML, JSX, Vue, Angular) 元素的 > 放在新的一行。
-  arrowParens: 'always', //总是在箭头函数的单个参数周围加上括号。例如 (x) => x 而不是 x => x。
+  bracketSameLine: false, //将>多行 HTML（HTML、JSX、Vue、Angular）元素放在最后一行的末尾，而不是单独放在下一行（不适用于自闭合元素）。
+  arrowParens: 'avoid', // 在唯一的箭头函数参数周围始终包含括号。
   proseWrap: 'preserve', //对于 Markdown 等文本文件，保持其原有的换行方式，不做自动换行处理。
   htmlWhitespaceSensitivity: 'ignore', //忽略 HTML、Vue、Angular 和 Handlebars 文件中的全局空白敏感性。Prettier 会对标签周围的空白进行更自由的格式化。
-  vueIndentScriptAndStyle: false, //不缩进 .vue 文件中的 <script> 和 <style> 标签内的代码。
+  vueIndentScriptAndStyle: true, //Vue 文件脚本和样式标签缩进
   endOfLine: 'lf', //统一使用 LF (\n) 作为换行符，通常用于 Linux 和 macOS 系统。
   embeddedLanguageFormatting: 'auto', //让 Prettier 自动格式化文件中的嵌入代码，例如 HTML 字符串中的 JavaScript 代码。
   singleAttributePerLine: false, //允许多个属性存在于同一行，而不是强制每个属性单独占一行。

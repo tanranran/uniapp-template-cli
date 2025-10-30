@@ -1,17 +1,16 @@
 {
   "globalStyle": {
     "navigationStyle": "default",
-    "navigationBarBackgroundColor": "#18ffff",
-    "navigationBarTextStyle": "black",
+    "navigationBarBackgroundColor": "@navBgColor",
+    "navigationBarTextStyle": "@navTxtStyle",
     "navigationBarTitleText": "uniapp-template-cli",
-    "backgroundColor": "#ff1744",
-    "backgroundTextStyle": "dark",
-    "backgroundColorTop": "#e040fb",
-    "backgroundColorBottom": "#00b0ff",
+    "backgroundColor": "@bgColor",
+    "backgroundTextStyle": "@bgTxtStyle",
+    "backgroundColorTop": "@bgColorTop",
+    "backgroundColorBottom": "@bgColorBottom",
     "enablePullDownRefresh": false,
     "onReachBottomDistance": 50
   },
-  "debug": true,
   "easycom": {
     "autoscan": true,
     "custom": {
@@ -26,7 +25,7 @@
     }
   },
   "pages": [
-    // #ifdef APP || H5 || MP-HARMONY || MP-WEIXIN
+    // #ifdef APP || MP-HARMONY
     {
       "path": "pages/index/index",
       "type": "home",
@@ -36,6 +35,15 @@
       "name": "PAGES_INDEX_INDEX"
     },
     // #endif
+    {
+      "path": "pages/index/index",
+      "type": "home",
+      "style": {
+        "navigationBarTitleText": "我是首页",
+        "enablePullDownRefresh": true
+      },
+      "name": "PAGES_INDEX_INDEX"
+    },
     {
       "path": "pages/index/paging",
       "type": "page",

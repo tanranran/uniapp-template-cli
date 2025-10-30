@@ -58,7 +58,9 @@
       "@uni-helper/vite-plugin-uni-pages",
       "miniprogram-api-typings",
       "wot-design-uni/global",
-      "z-paging/types"
+      "z-paging/types",
+      "./src/types/async-component.d.ts",
+      "./src/types/async-import.d.ts"
     ]
   },
   "vueCompilerOptions": {
@@ -75,7 +77,8 @@
     "src/**/*.tsx",
     "src/**/*.jsx",
     "src/**/*.vue",
-    "src/**/*.json"
+    "src/**/*.json",
+    "uno-color-mapping.ts"
   ],
   "exclude": [
     "node_modules",

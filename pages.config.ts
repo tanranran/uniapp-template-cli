@@ -12,7 +12,6 @@ export default defineUniPages({
     backgroundTextStyle: '@bgTxtStyle',
     backgroundColorTop: '@bgColorTop',
     backgroundColorBottom: '@bgColorBottom',
-
     // 下拉刷新配置
     enablePullDownRefresh: false,
     onReachBottomDistance: 50

@@ -1,7 +1,7 @@
 import { defineConfig, presetIcons, transformerDirectives, transformerVariantGroup } from 'unocss'
 import transformerCompileClass from '@unocss/transformer-compile-class'
 import { presetUni } from '@uni-helper/unocss-preset-uni'
-
+import { generateDarkColorRules, generateDarkColorShortcuts } from './uno-color-mapping'
 export default defineConfig({
   presets: [
     presetUni(),
@@ -24,6 +24,8 @@ export default defineConfig({
     transformerCompileClass()
   ],
   shortcuts: [
+    // 生成的暗色模式颜色快捷方式
+    ...generateDarkColorShortcuts(),
     { 'flex-center': 'flex justify-center items-center' },
     { 'flex-col-center': 'flex justify-center items-center flex-col' },
     { 'flex-col': 'flex flex-col' },
@@ -49,7 +51,9 @@ export default defineConfig({
       }
     ],
     ['pt-safe', { 'padding-top': 'env(safe-area-inset-top)' }],
-    ['pb-safe', { 'padding-bottom': 'env(safe-area-inset-bottom)' }]
+    ['pb-safe', { 'padding-bottom': 'env(safe-area-inset-bottom)' }],
+    // 动态暗色模式颜色规则
+    ...generateDarkColorRules()
   ],
   theme: {
     colors: {

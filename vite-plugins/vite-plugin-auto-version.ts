@@ -1,7 +1,7 @@
 // vite-plugin-auto-version.ts
 import { readFileSync, writeFileSync } from 'fs'
 import { resolve } from 'path'
-import { Plugin } from 'vite'
+import type { Plugin } from 'vite'
 import { execSync } from 'child_process'
 import dayjs from 'dayjs'
 interface AutoVersionPluginOptions {

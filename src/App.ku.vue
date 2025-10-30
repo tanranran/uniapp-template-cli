@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const { themeVars, theme } = useManualTheme()
+const { theme, isDark, themeVars } = useTheme()
 onLaunch(() => {
   console.log('Root onLaunch')
 })
@@ -17,13 +17,13 @@ onReady(() => {
 })
 </script>
 <template>
-  <!--  <wd-config-provider :theme="theme" :theme-vars="themeVars">-->
-  <ku-root-view />
-  <global-loading />
-  <global-toast />
-  <global-message />
-  <!-- #ifdef MP-WEIXIN -->
-  <privacy-popup />
-  <!-- #endif -->
-  <!--  </wd-config-provider>-->
+  <wd-config-provider :custom-class="`page-wrapper ${theme}`" :theme="theme" :theme-vars="themeVars">
+    <ku-root-view />
+    <global-loading />
+    <global-toast />
+    <global-message />
+    <!-- #ifdef MP-WEIXIN -->
+    <privacy-popup />
+    <!-- #endif -->
+  </wd-config-provider>
 </template>
