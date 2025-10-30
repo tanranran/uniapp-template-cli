@@ -78,6 +78,7 @@ export default async ({ command, mode }: ConfigEnv) => {
       UniKuRoot({
         enabledGlobalRef: true
       }),
+      UnoCSS(),
       ViteRestart({
         // 通过这个插件，在修改vite.config.js文件则不需要重新运行也生效配置
         restart: ['vite.config.js']
@@ -101,7 +102,6 @@ export default async ({ command, mode }: ConfigEnv) => {
         },
         vueTemplate: true
       }),
-      UnoCSS(),
       // UnoCssInject(),
       Optimization({
         enable: {

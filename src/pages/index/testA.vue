@@ -5,16 +5,21 @@
         ui.showToast({
           msg: '测试Toast'
         })
-      "></wd-button>
+      "
+    ></wd-button>
+
+    <BarChart :text="'我是异步组件'" />
   </base-layout>
 </template>
 
 <script lang="ts" setup>
-definePage({
-  style: {
-    navigationBarTitleText: '我是testA'
-  }
-})
+  import BarChart from '@/pages-sub/components/BarChart.vue?async'
+
+  definePage({
+    style: {
+      navigationBarTitleText: '我是testA'
+    }
+  })
 </script>
 
 <style></style>

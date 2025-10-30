@@ -21,12 +21,12 @@ export const useThemeStore = defineStore('theme', {
       darkColor: '#ffffff',
       darkColor2: '#e0e0e0',
       darkColor3: '#a0a0a0',
-      colorTheme: themeColorOptions[0].primary,
-    },
+      colorTheme: themeColorOptions[0].primary
+    }
   }),
 
   getters: {
-    isDark: state => state.theme === 'dark',
+    isDark: state => state.theme === 'dark'
   },
 
   actions: {
@@ -68,7 +68,6 @@ export const useThemeStore = defineStore('theme', {
     initSystemTheme() {
       const systemTheme = this.getSystemTheme()
       this.theme = systemTheme
-      console.log('初始化系统主题:', this.theme)
-    },
-  },
+    }
+  }
 })

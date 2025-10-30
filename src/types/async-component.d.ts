@@ -6,3 +6,7 @@ declare module '*?async' {
   const component: any
   export = component
 }
+declare module '@/pages-sub/components/BarChart.vue?async' {
+  const component: typeof import('@/pages-sub/components/BarChart.vue')
+  export = component
+}
