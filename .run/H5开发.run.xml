@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="H5开发" type="AppRunConfiguration" factoryName="AppRunConfiguration">
+    <option name="mpDescribeName" />
+    <option name="mpIdName" />
+    <option name="mpKeyName" />
+    <option name="mpVersionName" />
+    <option name="scriptName" />
+    <method v="2" />
+  </configuration>
+</component>

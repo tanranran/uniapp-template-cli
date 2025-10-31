@@ -4,23 +4,21 @@ import process from 'node:process'
 import { defineManifestConfig } from '@uni-helper/vite-plugin-uni-manifest'
 import { loadEnv } from 'vite'
 import { readFileSync } from 'fs'
-
 const packageJsonPath = path.resolve(__dirname, 'package.json')
 const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf-8'))
-
 // 手动解析命令行参数获取 mode
 function getMode() {
-  const args = process.argv.slice(2)
-  const modeFlagIndex = args.findIndex((arg) => arg === '--mode')
+  const args = process.argv.slice(2) //发布[ 'build', '-p', 'mp-weixin' ] 运行 [ '-p', 'mp-weixin' ]
+  const modeFlagIndex = args.findIndex(arg => arg === '--mode')
   return modeFlagIndex !== -1 ? args[modeFlagIndex + 1] : args[0] === 'build' ? 'production' : 'development' // 默认 development
 }
-
 // 获取环境变量的范例
 const env = loadEnv(getMode(), path.resolve(process.cwd(), 'env'))
-const { VITE_APP_TITLE, VITE_UNI_APPID, VITE_WX_APPID, VITE_APP_PUBLIC_BASE, VITE_FALLBACK_LOCALE } = env
+const { VITE_APP_TITLE, VITE_UNI_APPID, VITE_WX_APPID, VITE_APP_PUBLIC_BASE, VITE_FALLBACK_LOCALE, VITE_USER_NODE_ENV } = env
+const isBuild = VITE_USER_NODE_ENV == 'production'
 
 export default defineManifestConfig({
-  name: VITE_APP_TITLE,
+  name: `${VITE_APP_TITLE}-${isBuild ? 'debug' : 'release'}`,
   appid: VITE_UNI_APPID,
   description: packageJson?.description ?? '',
   versionName: packageJson?.version ?? '1.0.0',
@@ -119,13 +117,16 @@ export default defineManifestConfig({
   /* 小程序特有相关 */
   'mp-weixin': {
     appid: VITE_WX_APPID,
+    projectname: `${VITE_APP_TITLE}-${isBuild ? 'debug' : 'release'}`,
     setting: {
       urlCheck: false,
-      es6: false,
-      minified: true,
-      postcss: true,
-      uglifyFileName: true,
-      swc: true
+      minified: isBuild, //上传代码时是否自动压缩脚本文件
+      minifyWXSS: isBuild, //上传代码时是否自动压缩样式文件
+      minifyWXML: isBuild, //上传代码时是否自动压缩 WXML 文件
+      postcss: false, //上传代码时样式是否自动补全
+      uglifyFileName: isBuild, //	上传时进行代码保护
+      swc: true, //开启 swc 编译模式
+      ignoreUploadUnusedFiles: isBuild //上传时是否过滤无依赖文件
     },
     darkmode: true,
     themeLocation: 'theme.json',
@@ -136,9 +137,8 @@ export default defineManifestConfig({
     // 是否合并组件虚拟节点外层属性，uni-app 3.5.1+ 开始支持。目前仅支持 style、class 属性。
     // 默认不开启（undefined），这里设置为开启。
     mergeVirtualHostAttributes: true,
-    // styleIsolation: 'shared',
     usingComponents: true,
-    // __usePrivacyCheck__: true,
+    bigPackageSizeSupport: true,
     libVersion: 'latest'
     // 处理微信开发者工具报错
   },

@@ -25,20 +25,17 @@ import { handlePageName, writePageConst } from './vite-plugins/vite-config-uni-p
 
 // https://vitejs.dev/config/
 export default async ({ command, mode }: ConfigEnv) => {
-  const { UNI_PLATFORM } = process.env
+  const { UNI_PLATFORM, VITE_USER_NODE_ENV } = process.env
   const env = loadEnv(mode, path.resolve(process.cwd(), 'env'))
   const { VITE_APP_PORT, VITE_SERVER_BASEURL, VITE_APP_TITLE, VITE_DELETE_CONSOLE, VITE_APP_PUBLIC_BASE } = env
-  // console.log('环境变量 env -> ', env)
-  const isDev = mode === 'development'
-  // mode: 区分生产环境还是开发环境
-  console.log('command, mode -> ', command, mode)
+  const isBuild = VITE_USER_NODE_ENV == 'production'
   console.log('UNI_PLATFORM -> ', UNI_PLATFORM) // 得到 mp-weixin, h5, app 等
 
   return defineConfig({
     envDir: './env', // 自定义env目录
     base: VITE_APP_PUBLIC_BASE,
     optimizeDeps: {
-      exclude: isDev ? ['wot-design-uni'] : []
+      exclude: isBuild ? ['wot-design-uni'] : []
     },
     plugins: [
       {
@@ -137,7 +134,7 @@ export default async ({ command, mode }: ConfigEnv) => {
       },
       // 打包分析插件，h5 + 生产环境才弹出
       UNI_PLATFORM === 'h5' &&
-        mode === 'production' &&
+        isBuild &&
         visualizer({
           filename: './node_modules/.cache/visualizer/stats.html',
           open: true,
@@ -177,8 +174,8 @@ export default async ({ command, mode }: ConfigEnv) => {
       sourcemap: false,
       target: 'es2015',
       cssTarget: 'chrome61',
-      cssMinify: isDev ? false : 'esbuild', // 开发环境不用压缩
-      minify: isDev ? false : 'terser' // 开发环境不用压缩
+      cssMinify: isBuild ? 'esbuild' : false, // 开发环境不用压缩
+      minify: isBuild ? 'terser' : false // 开发环境不用压缩
     }
   })
 }
