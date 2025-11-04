@@ -1,7 +1,7 @@
 import type { SystemThemeState, ThemeMode } from '@/composables/types/theme'
 import { defineStore } from 'pinia'
 import { themeColorOptions } from '@/composables/types/theme'
-
+import theme from '../theme.json' with { type: 'json' }
 /**
  * 简化版系统主题状态管理
  * 仅支持跟随系统主题，不提供手动切换功能

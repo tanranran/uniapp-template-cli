@@ -37,6 +37,7 @@ export default async ({ command, mode }: ConfigEnv) => {
     optimizeDeps: {
       exclude: isBuild ? ['wot-design-uni'] : []
     },
+
     plugins: [
       {
         // 临时解决 dcloudio 官方的 @dcloudio/uni-mp-compiler 出现的编译 BUG
@@ -172,10 +173,34 @@ export default async ({ command, mode }: ConfigEnv) => {
     },
     build: {
       sourcemap: false,
-      target: 'es2015',
+      target: 'es2020',
       cssTarget: 'chrome61',
+      cssCodeSplit: true, // CSS 代码分割
       cssMinify: isBuild ? 'esbuild' : false, // 开发环境不用压缩
-      minify: isBuild ? 'terser' : false // 开发环境不用压缩
+      minify: isBuild ? 'terser' : false, // 开发环境不用压缩
+      terserOptions: {
+        compress: isBuild
+          ? {
+              ecma: 2020,
+              drop_console: true,
+              drop_debugger: true
+            }
+          : false
+      },
+      rollupOptions: {
+        output: isBuild
+          ? {
+              chunkFileNames: 'static/js/[name]-[hash].js',
+              entryFileNames: 'static/js/[name]-[hash].js',
+              assetFileNames: 'static/[ext]/[name]-[hash][extname]',
+              manualChunks(id) {
+                if (id.includes('element-plus')) {
+                  return 'element-plus'
+                }
+              }
+            }
+          : {}
+      }
     }
   })
 }

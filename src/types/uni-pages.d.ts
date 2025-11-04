@@ -8,6 +8,9 @@ type _LocationUrl =
   "/pages/index/paging" |
   "/pages/index/testA" |
   "/pages/index/testB" |
+  "/pages-sub/webview" |
+  "/pages-sub/404/index" |
+  "/pages-sub/login/login" |
   "/pages-sub/styles/index";
 
 interface NavigateToOptions {

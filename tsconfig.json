@@ -2,13 +2,16 @@
   "extends": "@vue/tsconfig/tsconfig.json",
   "compilerOptions": {
     "composite": true,
+    "target": "ESNext",
     "lib": [
+      // 包含的库文件（DOM用于浏览器环境）
       "ESNext",
       "DOM",
       "DOM.Iterable",
       "ES6"
     ],
     "module": "ESNext",
+    // 模块规范
     //    "moduleResolution": "Bundler",
     // 更适合 Vite 的模块解析策略
     "allowImportingTsExtensions": true,
@@ -22,15 +25,18 @@
     "noImplicitAny": true,
     "strictNullChecks": true,
     "strict": true,
+    // 开启所有严格类型检查
     "verbatimModuleSyntax": true,
-    "target": "ESNext",
     "useDefineForClassFields": true,
     "esModuleInterop": true,
+    // 兼容CommonJS和ES模块
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
+    // 跳过库文件类型检查以提升性能
     "allowSyntheticDefaultImports": true,
     // 允许默认导入
     "experimentalDecorators": true,
+    // 启用装饰器
     // 支持装饰器语法
     "sourceMap": true,
     // 生成 source map 文件

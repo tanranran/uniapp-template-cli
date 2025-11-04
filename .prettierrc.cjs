@@ -21,6 +21,8 @@ module.exports = {
   requirePragma: false,
   // Prettier可以在文件的顶部插入一个 @format 的特殊注释，以表明该文件已经被Prettier格式化过了。在使用 --require-pragma 参数处理一连串的文件时这个功能将十分有用。如果文件顶部已经有一个doclock，这个选项将新建一行注释，并打上 @format 标记<bool>，默认false
   insertPragma: false,
+  //强制在文件末尾添加一个换行>https://juejin.cn/post/7533280203805671487
+  insertFinalNewline: true,
   //自定义文件后缀对应的parser
   parsers: {
     '.html': 'html',

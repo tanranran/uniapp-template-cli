@@ -1,9 +1,9 @@
 {
-  "name": "uniapp-template-cli-debug",
+  "name": "uniapp-template-cli-release",
   "appid": "__UNI__B746FDE",
   "description": "由 uniapp + Vue3 + Ts + Vite5 + UnoCss 构成的开发模板",
-  "versionName": "1.0.2025103126",
-  "versionCode": "2025103126",
+  "versionName": "1.0.2025110305",
+  "versionCode": "2025110305",
   "transformPx": false,
   "app-plus": {
     "usingComponents": true,
@@ -86,17 +86,16 @@
     "appid": "wxe3b11989a85eb61e",
     "setting": {
       "urlCheck": false,
-      "es6": false,
-      "minified": true,
-      "minifyWXSS": true,
-      "minifyWXML": true,
+      "minified": false,
+      "minifyWXSS": false,
+      "minifyWXML": false,
       "postcss": false,
-      "uglifyFileName": true,
+      "uglifyFileName": false,
       "swc": true,
-      "ignoreUploadUnusedFiles": true
+      "ignoreUploadUnusedFiles": false
     },
     "usingComponents": true,
-    "projectname": "uniapp-template-cli-debug",
+    "projectname": "uniapp-template-cli-release",
     "darkmode": true,
     "themeLocation": "theme.json",
     "optimization": {
@@ -104,6 +103,7 @@
     },
     "lazyCodeLoading": "requiredComponents",
     "mergeVirtualHostAttributes": true,
+    "bigPackageSizeSupport": true,
     "libVersion": "latest"
   },
   "mp-alipay": {

@@ -8,49 +8,70 @@ export {}
 declare global {
   const CommonUtil: typeof import('wot-design-uni').CommonUtil
   const EffectScope: typeof import('vue').EffectScope
+  const FG_LOG_ENABLE: typeof import('../router/interceptor').FG_LOG_ENABLE
+  const HOME_PAGE: typeof import('../router/router').HOME_PAGE
+  const LOGIN_PAGE: typeof import('../router/router').LOGIN_PAGE
+  const NOT_FOUND_PAGE: typeof import('../router/router').NOT_FOUND_PAGE
   const ZPagingVirtualItem: typeof import('z-paging/types').ZPagingVirtualItem
   const acceptHMRUpdate: typeof import('pinia').acceptHMRUpdate
   const asyncLoadScript: typeof import('../utils/script').asyncLoadScript
+  const buildUrlWithParams: typeof import('../utils/string').buildUrlWithParams
   const checkIsLoadScript: typeof import('../utils/script').checkIsLoadScript
   const computed: typeof import('vue').computed
   const createApp: typeof import('vue').createApp
   const createPinia: typeof import('pinia').createPinia
-  const currRoute: typeof import('../utils/index').currRoute
+  const currRoute: typeof import('../router/index').currRoute
   const customRef: typeof import('vue').customRef
   const debounce: typeof import('../utils/index').debounce
+  const deepClone: typeof import('../utils/object').deepClone
   const defineAsyncComponent: typeof import('vue').defineAsyncComponent
   const defineComponent: typeof import('vue').defineComponent
   const defineStore: typeof import('pinia').defineStore
   const effectScope: typeof import('vue').effectScope
-  const ensureDecodeURIComponent: typeof import('../utils/index').ensureDecodeURIComponent
+  const ensureDecodeURIComponent: typeof import('../router/index').ensureDecodeURIComponent
   const getActivePinia: typeof import('pinia').getActivePinia
+  const getAllPages: typeof import('../router/index').getAllPages
   const getCurrentInstance: typeof import('vue').getCurrentInstance
-  const getCurrentPath: typeof import('../utils/index').getCurrentPath
+  const getCurrentPath: typeof import('../router/index').getCurrentPath
   const getCurrentScope: typeof import('vue').getCurrentScope
   const getCurrentWatcher: typeof import('vue').getCurrentWatcher
-  const getLastPage: typeof import('../utils/index').getLastPage
+  const getGraphemeLength: typeof import('../utils/string').getGraphemeLength
+  const getLastPage: typeof import('../router/index').getLastPage
+  const getValue: typeof import('../utils/object').getValue
   const h: typeof import('vue').h
+  const hasProperty: typeof import('../utils/object').hasProperty
   const inject: typeof import('vue').inject
   const isApp: typeof import('../utils/platform').isApp
+  const isArray: typeof import('../utils/object').isArray
+  const isEmpty: typeof import('../utils/object').isEmpty
   const isH5: typeof import('../utils/platform').isH5
   const isHarmony: typeof import('../utils/platform').isHarmony
+  const isJSON: typeof import('../utils/json').isJSON
   const isMp: typeof import('../utils/platform').isMp
   const isMpAplipay: typeof import('../utils/platform').isMpAplipay
   const isMpToutiao: typeof import('../utils/platform').isMpToutiao
   const isMpWeixin: typeof import('../utils/platform').isMpWeixin
+  const isNotEmpty: typeof import('../utils/object').isNotEmpty
+  const isNull: typeof import('../utils/object').isNull
+  const isNumber: typeof import('../utils/number').isNumber
+  const isObject: typeof import('../utils/object').isObject
+  const isObjectEmpty: typeof import('../utils/object').isObjectEmpty
   const isProxy: typeof import('vue').isProxy
   const isReactive: typeof import('vue').isReactive
   const isReadonly: typeof import('vue').isReadonly
   const isRef: typeof import('vue').isRef
   const isShallow: typeof import('vue').isShallow
   const isShowLoadingOptions: typeof import('../utils/is').isShowLoadingOptions
+  const isString: typeof import('../utils/object').isString
   const isToastOptions: typeof import('../utils/is').isToastOptions
+  const judgeIsExcludePath: typeof import('../router/interceptor').judgeIsExcludePath
   const mapActions: typeof import('pinia').mapActions
   const mapGetters: typeof import('pinia').mapGetters
   const mapState: typeof import('pinia').mapState
   const mapStores: typeof import('pinia').mapStores
   const mapWritableState: typeof import('pinia').mapWritableState
   const markRaw: typeof import('vue').markRaw
+  const navigateToInterceptor: typeof import('../router/interceptor').navigateToInterceptor
   const nextTick: typeof import('vue').nextTick
   const onActivated: typeof import('vue').onActivated
   const onAddToFavorites: typeof import('@dcloudio/uni-app').onAddToFavorites
@@ -90,7 +111,8 @@ declare global {
   const onUnmounted: typeof import('vue').onUnmounted
   const onUpdated: typeof import('vue').onUpdated
   const onWatcherCleanup: typeof import('vue').onWatcherCleanup
-  const parseUrlToObj: typeof import('../utils/index').parseUrlToObj
+  const parseJSON: typeof import('../utils/json').parseJSON
+  const parseUrlToObj: typeof import('../router/index').parseUrlToObj
   const platform: typeof import('../utils/platform').default
   const provide: typeof import('vue').provide
   const reactive: typeof import('vue').reactive
@@ -98,9 +120,13 @@ declare global {
   const ref: typeof import('vue').ref
   const removeScript: typeof import('../utils/script').removeScript
   const resolveComponent: typeof import('vue').resolveComponent
+  const routeInterceptor: typeof import('../router/interceptor').routeInterceptor
   const router: typeof import('../router/router').default
+  const safeJsonParse: typeof import('../utils/json').safeJsonParse
   const setActivePinia: typeof import('pinia').setActivePinia
   const setMapStoreSuffix: typeof import('pinia').setMapStoreSuffix
+  const setValue: typeof import('../utils/object').setValue
+  const setupRoute: typeof import('../router/interceptor').setupRoute
   const setupStore: typeof import('../store/index').setupStore
   const shallowReactive: typeof import('vue').shallowReactive
   const shallowReadonly: typeof import('vue').shallowReadonly
@@ -109,6 +135,8 @@ declare global {
   const storeToRefs: typeof import('pinia').storeToRefs
   const themeColorOptions: typeof import('../composables/types/theme').themeColorOptions
   const throttle: typeof import('../utils/index').throttle
+  const toFloat: typeof import('../utils/number').toFloat
+  const toInt: typeof import('../utils/number').toInt
   const toRaw: typeof import('vue').toRaw
   const toRef: typeof import('vue').toRef
   const toRefs: typeof import('vue').toRefs
@@ -137,6 +165,7 @@ declare global {
   const useTheme: typeof import('../composables/useTheme').useTheme
   const useThemeStore: typeof import('../store/themeStore').useThemeStore
   const useToast: typeof import('wot-design-uni').useToast
+  const useTokenStore: typeof import('../store/useTokenStore').useTokenStore
   const useUserStore: typeof import('../store/user').useUserStore
   const watch: typeof import('vue').watch
   const watchEffect: typeof import('vue').watchEffect
@@ -156,8 +185,11 @@ declare global {
   export type { GlobalMessageOptions } from '../composables/useGlobalMessage'
   import('../composables/useGlobalMessage')
   // @ts-ignore
-  export type { PageInstance } from '../utils/index'
-  import('../utils/index')
+  export type { CommonSingleType, CommonAllType } from '../utils/type'
+  import('../utils/type')
+  // @ts-ignore
+  export type { PageInstance } from '../router/index'
+  import('../router/index')
 }
 
 // for vue template auto import
@@ -167,49 +199,70 @@ declare module 'vue' {
   interface ComponentCustomProperties {
     readonly CommonUtil: UnwrapRef<typeof import('wot-design-uni')['CommonUtil']>
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
+    readonly FG_LOG_ENABLE: UnwrapRef<typeof import('../router/interceptor')['FG_LOG_ENABLE']>
+    readonly HOME_PAGE: UnwrapRef<typeof import('../router/router')['HOME_PAGE']>
+    readonly LOGIN_PAGE: UnwrapRef<typeof import('../router/router')['LOGIN_PAGE']>
+    readonly NOT_FOUND_PAGE: UnwrapRef<typeof import('../router/router')['NOT_FOUND_PAGE']>
     readonly ZPagingVirtualItem: UnwrapRef<typeof import('z-paging/types')['ZPagingVirtualItem']>
     readonly acceptHMRUpdate: UnwrapRef<typeof import('pinia')['acceptHMRUpdate']>
     readonly asyncLoadScript: UnwrapRef<typeof import('../utils/script')['asyncLoadScript']>
+    readonly buildUrlWithParams: UnwrapRef<typeof import('../utils/string')['buildUrlWithParams']>
     readonly checkIsLoadScript: UnwrapRef<typeof import('../utils/script')['checkIsLoadScript']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly createApp: UnwrapRef<typeof import('vue')['createApp']>
     readonly createPinia: UnwrapRef<typeof import('pinia')['createPinia']>
-    readonly currRoute: UnwrapRef<typeof import('../utils/index')['currRoute']>
+    readonly currRoute: UnwrapRef<typeof import('../router/index')['currRoute']>
     readonly customRef: UnwrapRef<typeof import('vue')['customRef']>
     readonly debounce: UnwrapRef<typeof import('../utils/index')['debounce']>
+    readonly deepClone: UnwrapRef<typeof import('../utils/object')['deepClone']>
     readonly defineAsyncComponent: UnwrapRef<typeof import('vue')['defineAsyncComponent']>
     readonly defineComponent: UnwrapRef<typeof import('vue')['defineComponent']>
     readonly defineStore: UnwrapRef<typeof import('pinia')['defineStore']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
-    readonly ensureDecodeURIComponent: UnwrapRef<typeof import('../utils/index')['ensureDecodeURIComponent']>
+    readonly ensureDecodeURIComponent: UnwrapRef<typeof import('../router/index')['ensureDecodeURIComponent']>
     readonly getActivePinia: UnwrapRef<typeof import('pinia')['getActivePinia']>
+    readonly getAllPages: UnwrapRef<typeof import('../router/index')['getAllPages']>
     readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>
-    readonly getCurrentPath: UnwrapRef<typeof import('../utils/index')['getCurrentPath']>
+    readonly getCurrentPath: UnwrapRef<typeof import('../router/index')['getCurrentPath']>
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
     readonly getCurrentWatcher: UnwrapRef<typeof import('vue')['getCurrentWatcher']>
-    readonly getLastPage: UnwrapRef<typeof import('../utils/index')['getLastPage']>
+    readonly getGraphemeLength: UnwrapRef<typeof import('../utils/string')['getGraphemeLength']>
+    readonly getLastPage: UnwrapRef<typeof import('../router/index')['getLastPage']>
+    readonly getValue: UnwrapRef<typeof import('../utils/object')['getValue']>
     readonly h: UnwrapRef<typeof import('vue')['h']>
+    readonly hasProperty: UnwrapRef<typeof import('../utils/object')['hasProperty']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
     readonly isApp: UnwrapRef<typeof import('../utils/platform')['isApp']>
+    readonly isArray: UnwrapRef<typeof import('../utils/object')['isArray']>
+    readonly isEmpty: UnwrapRef<typeof import('../utils/object')['isEmpty']>
     readonly isH5: UnwrapRef<typeof import('../utils/platform')['isH5']>
     readonly isHarmony: UnwrapRef<typeof import('../utils/platform')['isHarmony']>
+    readonly isJSON: UnwrapRef<typeof import('../utils/json')['isJSON']>
     readonly isMp: UnwrapRef<typeof import('../utils/platform')['isMp']>
     readonly isMpAplipay: UnwrapRef<typeof import('../utils/platform')['isMpAplipay']>
     readonly isMpToutiao: UnwrapRef<typeof import('../utils/platform')['isMpToutiao']>
     readonly isMpWeixin: UnwrapRef<typeof import('../utils/platform')['isMpWeixin']>
+    readonly isNotEmpty: UnwrapRef<typeof import('../utils/object')['isNotEmpty']>
+    readonly isNull: UnwrapRef<typeof import('../utils/object')['isNull']>
+    readonly isNumber: UnwrapRef<typeof import('../utils/number')['isNumber']>
+    readonly isObject: UnwrapRef<typeof import('../utils/object')['isObject']>
+    readonly isObjectEmpty: UnwrapRef<typeof import('../utils/object')['isObjectEmpty']>
     readonly isProxy: UnwrapRef<typeof import('vue')['isProxy']>
     readonly isReactive: UnwrapRef<typeof import('vue')['isReactive']>
     readonly isReadonly: UnwrapRef<typeof import('vue')['isReadonly']>
     readonly isRef: UnwrapRef<typeof import('vue')['isRef']>
     readonly isShallow: UnwrapRef<typeof import('vue')['isShallow']>
     readonly isShowLoadingOptions: UnwrapRef<typeof import('../utils/is')['isShowLoadingOptions']>
+    readonly isString: UnwrapRef<typeof import('../utils/object')['isString']>
     readonly isToastOptions: UnwrapRef<typeof import('../utils/is')['isToastOptions']>
+    readonly judgeIsExcludePath: UnwrapRef<typeof import('../router/interceptor')['judgeIsExcludePath']>
     readonly mapActions: UnwrapRef<typeof import('pinia')['mapActions']>
     readonly mapGetters: UnwrapRef<typeof import('pinia')['mapGetters']>
     readonly mapState: UnwrapRef<typeof import('pinia')['mapState']>
     readonly mapStores: UnwrapRef<typeof import('pinia')['mapStores']>
     readonly mapWritableState: UnwrapRef<typeof import('pinia')['mapWritableState']>
     readonly markRaw: UnwrapRef<typeof import('vue')['markRaw']>
+    readonly navigateToInterceptor: UnwrapRef<typeof import('../router/interceptor')['navigateToInterceptor']>
     readonly nextTick: UnwrapRef<typeof import('vue')['nextTick']>
     readonly onActivated: UnwrapRef<typeof import('vue')['onActivated']>
     readonly onAddToFavorites: UnwrapRef<typeof import('@dcloudio/uni-app')['onAddToFavorites']>
@@ -249,7 +302,8 @@ declare module 'vue' {
     readonly onUnmounted: UnwrapRef<typeof import('vue')['onUnmounted']>
     readonly onUpdated: UnwrapRef<typeof import('vue')['onUpdated']>
     readonly onWatcherCleanup: UnwrapRef<typeof import('vue')['onWatcherCleanup']>
-    readonly parseUrlToObj: UnwrapRef<typeof import('../utils/index')['parseUrlToObj']>
+    readonly parseJSON: UnwrapRef<typeof import('../utils/json')['parseJSON']>
+    readonly parseUrlToObj: UnwrapRef<typeof import('../router/index')['parseUrlToObj']>
     readonly platform: UnwrapRef<typeof import('../utils/platform')['default']>
     readonly provide: UnwrapRef<typeof import('vue')['provide']>
     readonly reactive: UnwrapRef<typeof import('vue')['reactive']>
@@ -257,9 +311,13 @@ declare module 'vue' {
     readonly ref: UnwrapRef<typeof import('vue')['ref']>
     readonly removeScript: UnwrapRef<typeof import('../utils/script')['removeScript']>
     readonly resolveComponent: UnwrapRef<typeof import('vue')['resolveComponent']>
+    readonly routeInterceptor: UnwrapRef<typeof import('../router/interceptor')['routeInterceptor']>
     readonly router: UnwrapRef<typeof import('../router/router')['default']>
+    readonly safeJsonParse: UnwrapRef<typeof import('../utils/json')['safeJsonParse']>
     readonly setActivePinia: UnwrapRef<typeof import('pinia')['setActivePinia']>
     readonly setMapStoreSuffix: UnwrapRef<typeof import('pinia')['setMapStoreSuffix']>
+    readonly setValue: UnwrapRef<typeof import('../utils/object')['setValue']>
+    readonly setupRoute: UnwrapRef<typeof import('../router/interceptor')['setupRoute']>
     readonly setupStore: UnwrapRef<typeof import('../store/index')['setupStore']>
     readonly shallowReactive: UnwrapRef<typeof import('vue')['shallowReactive']>
     readonly shallowReadonly: UnwrapRef<typeof import('vue')['shallowReadonly']>
@@ -268,6 +326,8 @@ declare module 'vue' {
     readonly storeToRefs: UnwrapRef<typeof import('pinia')['storeToRefs']>
     readonly themeColorOptions: UnwrapRef<typeof import('../composables/types/theme')['themeColorOptions']>
     readonly throttle: UnwrapRef<typeof import('../utils/index')['throttle']>
+    readonly toFloat: UnwrapRef<typeof import('../utils/number')['toFloat']>
+    readonly toInt: UnwrapRef<typeof import('../utils/number')['toInt']>
     readonly toRaw: UnwrapRef<typeof import('vue')['toRaw']>
     readonly toRef: UnwrapRef<typeof import('vue')['toRef']>
     readonly toRefs: UnwrapRef<typeof import('vue')['toRefs']>
@@ -294,6 +354,7 @@ declare module 'vue' {
     readonly useTheme: UnwrapRef<typeof import('../composables/useTheme')['useTheme']>
     readonly useThemeStore: UnwrapRef<typeof import('../store/themeStore')['useThemeStore']>
     readonly useToast: UnwrapRef<typeof import('wot-design-uni')['useToast']>
+    readonly useTokenStore: UnwrapRef<typeof import('../store/useTokenStore')['useTokenStore']>
     readonly useUserStore: UnwrapRef<typeof import('../store/user')['useUserStore']>
     readonly watch: UnwrapRef<typeof import('vue')['watch']>
     readonly watchEffect: UnwrapRef<typeof import('vue')['watchEffect']>
