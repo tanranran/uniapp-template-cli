@@ -70,17 +70,20 @@ uniapp-template-cli/
 ├── public/                   # 静态资源
 ├── src/                      # 源代码
 │   ├── api/                  # 接口请求
-│   ├── static/               # 静态资源
 │   ├── components/           # 全局组件
 │   ├── composables/          # 全局可组合函数
-│   ├── enums/                # 枚举常量
 │   ├── hooks/                # 自定义 Hooks
+│   ├── http/                 # 网络请求底层封装
 │   ├── layout/               # 布局组件
+│   ├── pages/                # 页面
+│   ├── pages-sub/            # 分包页面
 │   ├── router/               # 路由配置
+│   ├── static/               # 静态资源
 │   ├── store/                # 状态管理
+│   ├── enums/                # 枚举常量
 │   ├── styles/               # 全局样式
-│   ├── utils/                # 工具函数
 │   ├── types/                # 类型定义
+│   ├── utils/                # 工具函数
 │   ├── views/                # 页面视图
 │   ├── App.vue               # 根组件
 │   └── main.ts               # 入口文件
