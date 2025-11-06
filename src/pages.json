@@ -37,7 +37,11 @@
     // #endif
     {
       "path": "pages/index/paging",
-      "type": "page",
+      "type": "home",
+      "style": {
+        "navigationBarTitleText": "我是首页"
+      },
+      "needLogin": true,
       "name": "PAGES_INDEX_PAGING"
     },
     {

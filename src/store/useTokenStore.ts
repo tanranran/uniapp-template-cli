@@ -21,23 +21,23 @@ export const useTokenStore = defineStore(
       // 计算并存储过期时间
       const now = Date.now()
       const expireTime = now + val.expiresIn * 1000
+      console.log('有效期', expireTime)
       uni.setStorageSync('accessTokenExpireTime', expireTime)
     }
 
     /**
      * 判断token是否过期
      */
-    const isTokenExpired = computed(() => {
+    const isTokenExpired = () => {
       if (!tokenInfo.value) {
         return true
       }
-
       const now = Date.now()
       const expireTime = uni.getStorageSync('accessTokenExpireTime')
-
+      console.log('时间差', `${now - expireTime}`)
       if (!expireTime) return true
       return now >= expireTime
-    })
+    }
 
     /**
      * 登录成功后处理逻辑
@@ -132,11 +132,7 @@ export const useTokenStore = defineStore(
      * 实际的刷新操作应由调用方处理
      */
     const getValidToken = computed(() => {
-      // token已过期，返回空
-      if (isTokenExpired.value) {
-        return ''
-      }
-      return tokenInfo.value.token
+      return tokenInfo.value.token ?? ''
     })
 
     /**
@@ -152,10 +148,9 @@ export const useTokenStore = defineStore(
     /**
      * 检查是否已登录且token有效
      */
-    const hasValidLogin = computed(() => {
-      console.log('hasValidLogin', hasLoginInfo.value, !isTokenExpired.value)
-      return hasLoginInfo.value && !isTokenExpired.value
-    })
+    const hasLogin = () => {
+      return hasLoginInfo.value && !isTokenExpired()
+    }
 
     /**
      * 尝试获取有效的token，如果过期且可刷新，则刷新token
@@ -178,8 +173,7 @@ export const useTokenStore = defineStore(
       login,
       wxLogin,
       logout,
-      // 认证状态判断（最常用的）
-      hasLogin: hasValidLogin,
+      hasLogin: hasLogin,
       tryGetValidToken,
       validToken: getValidToken,
       // 调试或特殊场景可能需要直接访问的信息

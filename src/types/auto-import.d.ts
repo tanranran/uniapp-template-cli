@@ -29,6 +29,7 @@ declare global {
   const defineStore: typeof import('pinia').defineStore
   const effectScope: typeof import('vue').effectScope
   const ensureDecodeURIComponent: typeof import('../router/index').ensureDecodeURIComponent
+  const generateUUID: typeof import('../utils/index').generateUUID
   const getActivePinia: typeof import('pinia').getActivePinia
   const getAllPages: typeof import('../router/index').getAllPages
   const getCurrentInstance: typeof import('vue').getCurrentInstance
@@ -220,6 +221,7 @@ declare module 'vue' {
     readonly defineStore: UnwrapRef<typeof import('pinia')['defineStore']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly ensureDecodeURIComponent: UnwrapRef<typeof import('../router/index')['ensureDecodeURIComponent']>
+    readonly generateUUID: UnwrapRef<typeof import('../utils/index')['generateUUID']>
     readonly getActivePinia: UnwrapRef<typeof import('pinia')['getActivePinia']>
     readonly getAllPages: UnwrapRef<typeof import('../router/index')['getAllPages']>
     readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>

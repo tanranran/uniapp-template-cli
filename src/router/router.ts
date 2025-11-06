@@ -11,16 +11,19 @@ export const LOGIN_PAGE: _LocationUrl = '/pages-sub/login/login'
 export const NOT_FOUND_PAGE: _LocationUrl = '/pages-sub/404/index'
 
 export default {
-  push(options: UniNamespace.NavigateToOptions | _LocationUrl) {
-    debounce(() => {
-      if (typeof options === 'string') {
-        uni.navigateTo({
-          url: options
-        })
-      } else {
-        uni.navigateTo(options)
-      }
-    }, 500)
+  push(options: UniNamespace.NavigateToOptions | _LocationUrl | string, isReplace: boolean = false) {
+    const url = typeof options === 'string' ? options : options.url
+    if (isReplace) {
+      uni.redirectTo({
+        url,
+        ...(typeof options === 'object' ? options : {})
+      })
+    } else {
+      uni.navigateTo({
+        url,
+        ...(typeof options === 'object' ? options : {})
+      })
+    }
   },
   showTestA() {
     this.push({

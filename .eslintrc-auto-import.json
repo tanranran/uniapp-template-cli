@@ -48,6 +48,7 @@
     "defineStore": true,
     "effectScope": true,
     "ensureDecodeURIComponent": true,
+    "generateUUID": true,
     "getActivePinia": true,
     "getAllPages": true,
     "getCurrentInstance": true,

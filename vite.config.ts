@@ -39,6 +39,32 @@ export default async ({ command, mode }: ConfigEnv) => {
     },
 
     plugins: [
+      AutoVersion({
+        type: 'patch', // 可选: 'patch', 'minor', 'major'
+        inject: true
+      }),
+      await UniHelperManifest(),
+      UniPages({
+        dts: 'src/types/uni-pages.d.ts',
+        subPackages: ['src/pages-sub'],
+        onAfterMergePageMetaData: ctx => {
+          handlePageName(ctx, 'pageMetaData')
+          handlePageName(ctx, 'subPageMetaData')
+        },
+        exclude: ['**/components/**/*.*', '**/layout/**/*.*']
+      }),
+      UniHelperComponents({
+        resolvers: [WotResolver()],
+        extensions: ['vue'],
+        deep: true, // 是否递归扫描子目录，
+        directoryAsNamespace: false, // 是否把目录名作为命名空间前缀，true 时组件名为 目录名+组件名，
+        dts: 'src/types/components.d.ts', // 自动生成的组件类型声明文件路径（用于 TypeScript 支持）
+        dirs: ['src/components', 'src/layout']
+      }),
+      UniKuRoot({
+        enabledGlobalRef: true
+      }),
+      Uni(),
       {
         // 临时解决 dcloudio 官方的 @dcloudio/uni-mp-compiler 出现的编译 BUG
         // 参考 github issue: https://github.com/dcloudio/uni-app/issues/4952
@@ -51,37 +77,7 @@ export default async ({ command, mode }: ConfigEnv) => {
           }
         }
       },
-      AutoVersion({
-        type: 'patch', // 可选: 'patch', 'minor', 'major'
-        inject: true
-      }),
-      UniPages({
-        dts: 'src/types/uni-pages.d.ts',
-        subPackages: ['src/pages-sub'],
-        onAfterMergePageMetaData: ctx => {
-          handlePageName(ctx, 'pageMetaData')
-          handlePageName(ctx, 'subPageMetaData')
-        },
-        exclude: ['**/components/**/*.*', '**/layout/**/*.*']
-      }),
-      await UniHelperManifest(),
-      UniHelperComponents({
-        resolvers: [WotResolver()],
-        extensions: ['vue'],
-        deep: true, // 是否递归扫描子目录，
-        directoryAsNamespace: false, // 是否把目录名作为命名空间前缀，true 时组件名为 目录名+组件名，
-        dts: 'src/types/components.d.ts', // 自动生成的组件类型声明文件路径（用于 TypeScript 支持）
-        dirs: ['src/components', 'src/layout']
-      }),
-      UniKuRoot({
-        enabledGlobalRef: true
-      }),
       UnoCSS(),
-      ViteRestart({
-        // 通过这个插件，在修改vite.config.js文件则不需要重新运行也生效配置
-        restart: ['vite.config.js']
-      }),
-      Uni(),
       AutoImport({
         imports: [
           'vue',
@@ -126,6 +122,10 @@ export default async ({ command, mode }: ConfigEnv) => {
         logger: false
       }),
       CompressJson(),
+      ViteRestart({
+        // 通过这个插件，在修改vite.config.js文件则不需要重新运行也生效配置
+        restart: ['vite.config.js']
+      }),
       // h5环境增加 BUILD_TIME 和 BUILD_BRANCH
       UNI_PLATFORM === 'h5' && {
         name: 'html-transform',
@@ -172,7 +172,7 @@ export default async ({ command, mode }: ConfigEnv) => {
       drop: VITE_DELETE_CONSOLE === 'true' ? ['console', 'debugger'] : ['debugger']
     },
     build: {
-      sourcemap: false,
+      sourcemap: !isBuild,
       target: 'es2020',
       cssTarget: 'chrome61',
       cssCodeSplit: true, // CSS 代码分割

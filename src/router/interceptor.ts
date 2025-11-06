@@ -8,7 +8,7 @@ import { useTokenStore } from '@/store/useTokenStore.ts'
 export const FG_LOG_ENABLE = false
 
 export function judgeIsExcludePath(path: string) {
-  const allExcludeLoginPages = getAllPages('excludeLoginPath') // dev 环境下，需要每次都重新获取，否则新配置就不会生效
+  const allExcludeLoginPages = getAllPages('needLogin') // dev 环境下，需要每次都重新获取，否则新配置就不会生效
   return allExcludeLoginPages.some(page => page.path === path)
 }
 
@@ -34,21 +34,21 @@ export const navigateToInterceptor = {
       path = `${baseDir}/${path}`
     }
     // 处理路由不存在的情况
-    if (getAllPages().every(page => page.path !== path) && path !== '/') {
+    if (path !== '/' && !getAllPages().some(page => page.path !== path)) {
       console.warn('路由不存在:', path)
       router.notFound()
       return false // 明确表示阻止原路由继续执行
     }
     const tokenStore = useTokenStore()
-    FG_LOG_ENABLE && console.log('tokenStore.hasLogin:', tokenStore.hasLogin)
+    FG_LOG_ENABLE && console.log('tokenStore.hasLogin:', tokenStore.hasLogin())
     // 不管黑白名单，登录了就直接去吧（但是当前不能是登录页）
-    if (tokenStore.hasLogin) {
+    if (tokenStore.hasLogin()) {
       if (path !== LOGIN_PAGE) {
         return true // 明确表示允许路由继续执行
       } else {
         console.log('已经登录，但是还在登录页', myQuery.redirect)
         const url = myQuery.redirect || HOME_PAGE
-        uni.navigateTo({ url })
+        uni.navigateTo({ url }).then()
         return false // 明确表示阻止原路由继续执行
       }
     }
