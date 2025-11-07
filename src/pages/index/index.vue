@@ -1,10 +1,17 @@
 <script lang="ts" setup>
+  import { uuid } from '@/utils/uuid.ts'
+  import PrivacyPopup from '@/components/PrivacyPopup.vue'
   definePage({
     type: 'home',
     style: {
       navigationBarTitleText: '我是首页'
     }
   })
+
+  function onGenerateUUID() {
+    let u = uuid()
+    console.log('uuid:', u)
+  }
 </script>
 <template>
   <base-layout>
@@ -19,5 +26,6 @@
 
       <text class="bg-242629-E0E0E0">车费是数据1</text>
     </view>
+    <PrivacyPopup />
   </base-layout>
 </template>

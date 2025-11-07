@@ -21,11 +21,13 @@
   "preloadRule": {
     "pages/index/index": {
       "network": "all",
-      "packages": []
+      "packages": [
+        "pages-sub"
+      ]
     }
   },
   "pages": [
-    // #ifdef APP || MP-HARMONY || MP-WEIXIN || H5
+    // #ifdef APP || H5 || MP-HARMONY || MP-WEIXIN
     {
       "path": "pages/index/index",
       "type": "home",
@@ -65,7 +67,7 @@
     {
       "root": "pages-sub",
       "pages": [
-        // #ifdef APP || MP-HARMONY || MP-WEIXIN || H5
+        // #ifdef APP || H5 || MP-HARMONY || MP-WEIXIN
         {
           "path": "styles/index",
           "type": "page",

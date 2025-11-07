@@ -1,17 +1,11 @@
 <script lang="ts" setup>
-  import { HOME_PAGE } from '@/router'
-
   definePage({
     style: {
-      // 'custom' 表示开启自定义导航栏，默认 'default'
       navigationStyle: 'custom'
     }
   })
-
   function goBack() {
-    // 当pages.config.ts中配置了tabbar页面时，使用switchTab切换到首页
-    // 否则使用navigateTo返回首页
-    uni.switchTab({ url: HOME_PAGE })
+    router.home()
   }
 </script>
 

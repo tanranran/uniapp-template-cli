@@ -25,6 +25,19 @@ export default {
       })
     }
   },
+  home() {
+    this.push(
+      {
+        url: HOME_PAGE
+      },
+      true
+    )
+  },
+  notFound() {
+    this.push({
+      url: NOT_FOUND_PAGE
+    })
+  },
   showTestA() {
     this.push({
       url: '/pages/index/testA'
@@ -50,11 +63,6 @@ export default {
     }
     this.push({
       url: url
-    })
-  },
-  notFound() {
-    this.push({
-      url: NOT_FOUND_PAGE
     })
   }
 }

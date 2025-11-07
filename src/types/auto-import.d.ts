@@ -65,6 +65,7 @@ declare global {
   const isShowLoadingOptions: typeof import('../utils/is').isShowLoadingOptions
   const isString: typeof import('../utils/object').isString
   const isToastOptions: typeof import('../utils/is').isToastOptions
+  const isUUID: typeof import('../utils/uuid').isUUID
   const judgeIsExcludePath: typeof import('../router/interceptor').judgeIsExcludePath
   const mapActions: typeof import('pinia').mapActions
   const mapGetters: typeof import('pinia').mapGetters
@@ -168,6 +169,7 @@ declare global {
   const useToast: typeof import('wot-design-uni').useToast
   const useTokenStore: typeof import('../store/useTokenStore').useTokenStore
   const useUserStore: typeof import('../store/user').useUserStore
+  const uuid: typeof import('../utils/uuid').uuid
   const watch: typeof import('vue').watch
   const watchEffect: typeof import('vue').watchEffect
   const watchPostEffect: typeof import('vue').watchPostEffect
@@ -257,6 +259,7 @@ declare module 'vue' {
     readonly isShowLoadingOptions: UnwrapRef<typeof import('../utils/is')['isShowLoadingOptions']>
     readonly isString: UnwrapRef<typeof import('../utils/object')['isString']>
     readonly isToastOptions: UnwrapRef<typeof import('../utils/is')['isToastOptions']>
+    readonly isUUID: UnwrapRef<typeof import('../utils/uuid')['isUUID']>
     readonly judgeIsExcludePath: UnwrapRef<typeof import('../router/interceptor')['judgeIsExcludePath']>
     readonly mapActions: UnwrapRef<typeof import('pinia')['mapActions']>
     readonly mapGetters: UnwrapRef<typeof import('pinia')['mapGetters']>
@@ -358,6 +361,7 @@ declare module 'vue' {
     readonly useToast: UnwrapRef<typeof import('wot-design-uni')['useToast']>
     readonly useTokenStore: UnwrapRef<typeof import('../store/useTokenStore')['useTokenStore']>
     readonly useUserStore: UnwrapRef<typeof import('../store/user')['useUserStore']>
+    readonly uuid: UnwrapRef<typeof import('../utils/uuid')['uuid']>
     readonly watch: UnwrapRef<typeof import('vue')['watch']>
     readonly watchEffect: UnwrapRef<typeof import('vue')['watchEffect']>
     readonly watchPostEffect: UnwrapRef<typeof import('vue')['watchPostEffect']>

@@ -138,7 +138,6 @@ export default defineManifestConfig({
     // 默认不开启（undefined），这里设置为开启。
     mergeVirtualHostAttributes: true,
     usingComponents: true,
-    bigPackageSizeSupport: true,
     libVersion: 'latest'
     // 处理微信开发者工具报错
   },
