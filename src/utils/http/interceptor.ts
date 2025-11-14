@@ -1,6 +1,5 @@
-import type { CustomRequestOptions } from '@/http/types'
-import { stringifyQuery } from './tools/queryString'
-import { useTokenStore } from '@/store/useTokenStore'
+import type { CustomRequestOptions } from '@/utils/http/types.ts'
+import { useTokenStore } from '@/store/useTokenStore.ts'
 import type { App } from '@vue/runtime-core'
 
 // 请求基准地址
@@ -33,6 +32,7 @@ const httpInterceptor = {
       // #ifndef H5
       options.url = baseUrl + options.url
       // #endif
+      // TIPS: 如果需要对接多个后端服务，也可以在这里处理，拼接成所需要的地址
     }
     // 1. 请求超时
     options.timeout = 60000 // 60s

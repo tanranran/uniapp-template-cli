@@ -27,7 +27,7 @@ import { handlePageName, writePageConst } from './vite-plugins/vite-config-uni-p
 export default async ({ command, mode }: ConfigEnv) => {
   const { UNI_PLATFORM, VITE_USER_NODE_ENV } = process.env
   const env = loadEnv(mode, path.resolve(process.cwd(), 'env'))
-  const { VITE_APP_PORT, VITE_SERVER_BASEURL, VITE_APP_TITLE, VITE_DELETE_CONSOLE, VITE_APP_PUBLIC_BASE } = env
+  const { VITE_APP_PORT, VITE_SERVER_BASEURL, VITE_APP_TITLE, VITE_DELETE_CONSOLE, VITE_APP_PUBLIC_BASE, VITE_APP_PROXY_ENABLE, VITE_APP_PROXY_PREFIX } = env
   const isBuild = VITE_USER_NODE_ENV == 'production'
   console.log('UNI_PLATFORM -> ', UNI_PLATFORM) // 得到 mp-weixin, h5, app 等
 
@@ -90,6 +90,7 @@ export default async ({ command, mode }: ConfigEnv) => {
         ],
         dts: 'src/types/auto-import.d.ts', //'src/store/**',
         dirs: ['src/composables/**', 'src/store/**', 'src/utils/**', 'src/hooks/**', 'src/utils/**', 'src/router/**'], // 自动导入 hooks
+        exclude: ['src/utils/Apis.ts', 'src/utils/http/**'],
         eslintrc: {
           enabled: true,
           globalsPropValue: true
@@ -144,7 +145,8 @@ export default async ({ command, mode }: ConfigEnv) => {
         })
     ],
     define: {
-      __UNI_PLATFORM__: JSON.stringify(UNI_PLATFORM)
+      __UNI_PLATFORM__: JSON.stringify(UNI_PLATFORM),
+      __VITE_APP_PROXY__: JSON.stringify(VITE_APP_PROXY_ENABLE)
     },
     resolve: {
       alias: {
@@ -162,6 +164,17 @@ export default async ({ command, mode }: ConfigEnv) => {
       open: true,
       hmr: true,
       port: Number.parseInt(VITE_APP_PORT, 10),
+      // 仅 H5 端生效，其他端不生效（其他端走build，不走devServer)
+      proxy: JSON.parse(VITE_APP_PROXY_ENABLE)
+        ? {
+            [VITE_APP_PROXY_PREFIX]: {
+              target: VITE_SERVER_BASEURL,
+              changeOrigin: true,
+              // 后端有/api前缀则不做处理，没有则需要去掉
+              rewrite: path => path.replace(new RegExp(`^${VITE_APP_PROXY_PREFIX}`), '')
+            }
+          }
+        : undefined,
       // 预热文件以降低启动期间的初始页面加载时长
       warmup: {
         // 预热的客户端文件：首页、views、 components

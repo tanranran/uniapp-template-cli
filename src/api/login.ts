@@ -1,19 +1,19 @@
-import { http } from '@/http/http'
 import type { IAuthLoginRes, ILoginForm, IUserInfoRes } from '@/api/types/login'
+import { Apis } from '@/utils/Apis.ts'
 
 /**
  * 用户登录
  * @param loginForm 登录表单
  */
 export function login(loginForm: ILoginForm) {
-  return http.post<IAuthLoginRes>('/auth/login', loginForm)
+  return Apis.http.post<IAuthLoginRes>('/auth/login', loginForm)
 }
 
 /**
  * 退出登录
  */
 export function logout() {
-  return http.get<void>('/auth/logout')
+  return Apis.http.get<void>('/auth/logout')
 }
 
 /**
@@ -22,7 +22,7 @@ export function logout() {
  * @param data
  */
 export function wxLogin(data: { code: string }) {
-  return http.post<IAuthLoginRes>('/auth/wxLogin', data)
+  return Apis.http.post<IAuthLoginRes>('/auth/wxLogin', data)
 }
 
 /**
@@ -43,5 +43,5 @@ export function getWxCode() {
  * 获取用户信息
  */
 export function getUserInfo() {
-  return http.get<IUserInfoRes>('/user/info')
+  return Apis.http.get<IUserInfoRes>('/user/info')
 }

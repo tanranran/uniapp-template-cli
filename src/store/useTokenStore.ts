@@ -3,6 +3,7 @@ import { defineStore } from 'pinia'
 import { computed, ref } from 'vue' // 修复：导入 computed
 import { login as _login, logout as _logout, wxLogin as _wxLogin, getWxCode } from '@/api/login'
 import { useUserStore } from './user'
+import type { IResponse } from '@/utils/http/types.ts'
 
 // 初始化状态
 const tokenInfoState = {
@@ -43,8 +44,8 @@ export const useTokenStore = defineStore(
      * 登录成功后处理逻辑
      * @param tokenInfo 登录返回的token信息
      */
-    async function _postLogin(tokenInfo: IAuthLoginRes) {
-      setTokenInfo(tokenInfo)
+    async function _postLogin(tokenInfo: IResponse<IAuthLoginRes>) {
+      setTokenInfo(tokenInfo.data)
       const userStore = useUserStore()
       await userStore.fetchUserInfo()
     }

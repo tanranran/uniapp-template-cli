@@ -3,16 +3,18 @@ import App from './App.vue'
 import 'virtual:uno.css'
 import '@/styles/common.scss'
 import { setupStore } from '@/store'
-import { setupRequest } from '@/http/interceptor.ts'
 import { setupRoute } from '@/router/interceptor.ts'
+import { setupUtils } from '@/utils'
 export function createApp() {
   const app = createSSRApp(App)
+  //挂载全局工具类
+  setupUtils(app)
   // 挂载状态管理
   setupStore(app)
   //路由拦截器
   setupRoute(app)
-  //网络请求拦截器
-  setupRequest(app)
+  //网络请求
+  setupHttp(app)
   return {
     app
   }

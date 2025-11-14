@@ -1,8 +1,11 @@
 import { debounce as _debounce, throttle as _throttle } from 'wot-design-uni/components/common/util'
+import type { App } from '@vue/runtime-core'
 type DebounceOptions = {
   leading?: boolean // 是否在延迟时间开始时调用函数
   trailing?: boolean // 是否在延迟时间结束时调用函数
 }
+
+export function setupUtils(app: App<Element>) {}
 
 /**
  * 简化版 UUID v4 生成器

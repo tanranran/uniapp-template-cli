@@ -6,12 +6,17 @@
 // biome-ignore lint: disable
 export {}
 declare global {
+  const $u: typeof import('../utils/index').$u
   const CommonUtil: typeof import('wot-design-uni').CommonUtil
+  const ContentTypeEnum: typeof import('../utils/http/tools/enum').ContentTypeEnum
   const EffectScope: typeof import('vue').EffectScope
   const FG_LOG_ENABLE: typeof import('../router/interceptor').FG_LOG_ENABLE
   const HOME_PAGE: typeof import('../router/router').HOME_PAGE
+  const Http: typeof import('../utils/http/http').Http
   const LOGIN_PAGE: typeof import('../router/router').LOGIN_PAGE
   const NOT_FOUND_PAGE: typeof import('../router/router').NOT_FOUND_PAGE
+  const ResultEnum: typeof import('../utils/http/tools/enum').ResultEnum
+  const ShowMessage: typeof import('../utils/http/tools/enum').ShowMessage
   const ZPagingVirtualItem: typeof import('z-paging/types').ZPagingVirtualItem
   const acceptHMRUpdate: typeof import('pinia').acceptHMRUpdate
   const asyncLoadScript: typeof import('../utils/script').asyncLoadScript
@@ -41,6 +46,8 @@ declare global {
   const getValue: typeof import('../utils/object').getValue
   const h: typeof import('vue').h
   const hasProperty: typeof import('../utils/object').hasProperty
+  const http: typeof import('../utils/Apis').http
+  const httpInstance: typeof import('../utils/http/index').httpInstance
   const inject: typeof import('vue').inject
   const isApp: typeof import('../utils/platform').isApp
   const isArray: typeof import('../utils/object').isArray
@@ -121,6 +128,7 @@ declare global {
   const readonly: typeof import('vue').readonly
   const ref: typeof import('vue').ref
   const removeScript: typeof import('../utils/script').removeScript
+  const requestInterceptor: typeof import('../utils/http/interceptor').requestInterceptor
   const resolveComponent: typeof import('vue').resolveComponent
   const routeInterceptor: typeof import('../router/interceptor').routeInterceptor
   const router: typeof import('../router/router').default
@@ -128,13 +136,19 @@ declare global {
   const setActivePinia: typeof import('pinia').setActivePinia
   const setMapStoreSuffix: typeof import('pinia').setMapStoreSuffix
   const setValue: typeof import('../utils/object').setValue
+  const setupHttp: typeof import('../utils/http/index').setupHttp
+  const setupRequest: typeof import('../utils/http/interceptor').setupRequest
   const setupRoute: typeof import('../router/interceptor').setupRoute
   const setupStore: typeof import('../store/index').setupStore
+  const setupUtils: typeof import('../utils/index').setupUtils
   const shallowReactive: typeof import('vue').shallowReactive
   const shallowReadonly: typeof import('vue').shallowReadonly
   const shallowRef: typeof import('vue').shallowRef
+  const showLoading: typeof import('../utils/Apis').showLoading
+  const showToast: typeof import('../utils/Apis').showToast
   const store: typeof import('../store/index').default
   const storeToRefs: typeof import('pinia').storeToRefs
+  const stringifyQuery: typeof import('../utils/http/tools/queryString').stringifyQuery
   const themeColorOptions: typeof import('../composables/types/theme').themeColorOptions
   const throttle: typeof import('../utils/index').throttle
   const toFloat: typeof import('../utils/number').toFloat
@@ -188,6 +202,12 @@ declare global {
   export type { GlobalMessageOptions } from '../composables/useGlobalMessage'
   import('../composables/useGlobalMessage')
   // @ts-ignore
+  export type { ResultEnum, ContentTypeEnum } from '../utils/http/tools/enum'
+  import('../utils/http/tools/enum')
+  // @ts-ignore
+  export type { CustomRequestOptions, IUniUploadFileOptions, HttpRequestResult, IResponse, PageParams, PageResult } from '../utils/http/types'
+  import('../utils/http/types')
+  // @ts-ignore
   export type { CommonSingleType, CommonAllType } from '../utils/type'
   import('../utils/type')
   // @ts-ignore
@@ -201,11 +221,14 @@ declare module 'vue' {
   interface GlobalComponents {}
   interface ComponentCustomProperties {
     readonly CommonUtil: UnwrapRef<typeof import('wot-design-uni')['CommonUtil']>
+    readonly ContentTypeEnum: UnwrapRef<typeof import('../utils/http/tools/enum')['ContentTypeEnum']>
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
     readonly FG_LOG_ENABLE: UnwrapRef<typeof import('../router/interceptor')['FG_LOG_ENABLE']>
     readonly HOME_PAGE: UnwrapRef<typeof import('../router/router')['HOME_PAGE']>
     readonly LOGIN_PAGE: UnwrapRef<typeof import('../router/router')['LOGIN_PAGE']>
     readonly NOT_FOUND_PAGE: UnwrapRef<typeof import('../router/router')['NOT_FOUND_PAGE']>
+    readonly ResultEnum: UnwrapRef<typeof import('../utils/http/tools/enum')['ResultEnum']>
+    readonly ShowMessage: UnwrapRef<typeof import('../utils/http/tools/enum')['ShowMessage']>
     readonly ZPagingVirtualItem: UnwrapRef<typeof import('z-paging/types')['ZPagingVirtualItem']>
     readonly acceptHMRUpdate: UnwrapRef<typeof import('pinia')['acceptHMRUpdate']>
     readonly asyncLoadScript: UnwrapRef<typeof import('../utils/script')['asyncLoadScript']>
@@ -235,6 +258,8 @@ declare module 'vue' {
     readonly getValue: UnwrapRef<typeof import('../utils/object')['getValue']>
     readonly h: UnwrapRef<typeof import('vue')['h']>
     readonly hasProperty: UnwrapRef<typeof import('../utils/object')['hasProperty']>
+    readonly http: UnwrapRef<typeof import('../utils/Apis')['http']>
+    readonly httpInstance: UnwrapRef<typeof import('../utils/http/index')['httpInstance']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
     readonly isApp: UnwrapRef<typeof import('../utils/platform')['isApp']>
     readonly isArray: UnwrapRef<typeof import('../utils/object')['isArray']>
@@ -315,6 +340,7 @@ declare module 'vue' {
     readonly readonly: UnwrapRef<typeof import('vue')['readonly']>
     readonly ref: UnwrapRef<typeof import('vue')['ref']>
     readonly removeScript: UnwrapRef<typeof import('../utils/script')['removeScript']>
+    readonly requestInterceptor: UnwrapRef<typeof import('../utils/http/interceptor')['requestInterceptor']>
     readonly resolveComponent: UnwrapRef<typeof import('vue')['resolveComponent']>
     readonly routeInterceptor: UnwrapRef<typeof import('../router/interceptor')['routeInterceptor']>
     readonly router: UnwrapRef<typeof import('../router/router')['default']>
@@ -322,13 +348,17 @@ declare module 'vue' {
     readonly setActivePinia: UnwrapRef<typeof import('pinia')['setActivePinia']>
     readonly setMapStoreSuffix: UnwrapRef<typeof import('pinia')['setMapStoreSuffix']>
     readonly setValue: UnwrapRef<typeof import('../utils/object')['setValue']>
+    readonly setupHttp: UnwrapRef<typeof import('../utils/http/index')['setupHttp']>
+    readonly setupRequest: UnwrapRef<typeof import('../utils/http/interceptor')['setupRequest']>
     readonly setupRoute: UnwrapRef<typeof import('../router/interceptor')['setupRoute']>
     readonly setupStore: UnwrapRef<typeof import('../store/index')['setupStore']>
+    readonly setupUtils: UnwrapRef<typeof import('../utils/index')['setupUtils']>
     readonly shallowReactive: UnwrapRef<typeof import('vue')['shallowReactive']>
     readonly shallowReadonly: UnwrapRef<typeof import('vue')['shallowReadonly']>
     readonly shallowRef: UnwrapRef<typeof import('vue')['shallowRef']>
     readonly store: UnwrapRef<typeof import('../store/index')['default']>
     readonly storeToRefs: UnwrapRef<typeof import('pinia')['storeToRefs']>
+    readonly stringifyQuery: UnwrapRef<typeof import('../utils/http/tools/queryString')['stringifyQuery']>
     readonly themeColorOptions: UnwrapRef<typeof import('../composables/types/theme')['themeColorOptions']>
     readonly throttle: UnwrapRef<typeof import('../utils/index')['throttle']>
     readonly toFloat: UnwrapRef<typeof import('../utils/number')['toFloat']>
