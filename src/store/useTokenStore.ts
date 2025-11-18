@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 import { computed, ref } from 'vue' // 修复：导入 computed
 import { login as _login, logout as _logout, wxLogin as _wxLogin, getWxCode } from '@/api/login'
 import { useUserStore } from './user'
-import type { IResponse } from '@/utils/http/types.ts'
+import type { IResponse } from '@/http/types.ts'
 
 // 初始化状态
 const tokenInfoState = {

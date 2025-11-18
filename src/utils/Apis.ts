@@ -1,14 +1,19 @@
-import type { ToastOptions } from 'wot-design-uni/components/wd-toast/types.ts'
-import type { httpInstance } from '@/utils/http'
 // unplugin-auto-import-ignore
-export namespace Apis {
-  export const http = httpInstance
+import { httpInstance, Request } from '@/http'
+import type { ShowLoadingOption, ToastIcon, ToastOption } from '@/utils/ui.ts'
 
-  // export function showToast(option: UniNamespace.ShowToastOptions | ToastOptions | string) {
-  //   ui.showToast(option)
-  // }
-  //
-  // export function showLoading(option: UniNamespace.ShowLoadingOptions | ToastOptions | string) {
-  //   ui.showLoading(option)
-  // }
+export class Apis {
+  static http: Request = httpInstance
+
+  static showToast(option: ToastOption, icon?: ToastIcon) {
+    ui.showToast(option)
+  }
+
+  static showLoading(option: ShowLoadingOption) {
+    ui.showLoading(option)
+  }
+
+  static hideLoading(isSystem: boolean = true) {
+    ui.hideLoading(isSystem)
+  }
 }

@@ -14,7 +14,7 @@
   }
 
   function textHttp() {
-    http.post('/harmony/index/json')
+    Apis.http.post('/harmony/index/')
   }
 </script>
 <template>

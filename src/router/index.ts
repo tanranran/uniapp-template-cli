@@ -1,6 +1,13 @@
 import type { PageMetaDatum, SubPackages } from '@uni-helper/vite-plugin-uni-pages'
 import { pages, subPackages } from '@/pages.json'
+import type { App } from '@vue/runtime-core'
+import { routeInterceptor } from '@/router/interceptor.ts'
 export type PageInstance = Page.PageInstance<AnyObject, object> & { $page: Page.PageInstance<AnyObject, object> & { fullPath: string } }
+
+export function setupRoute(app: App<Element>) {
+  app.use(routeInterceptor)
+}
+
 /**
  * 获取当前页面路径
  * @returns 当前页面路径

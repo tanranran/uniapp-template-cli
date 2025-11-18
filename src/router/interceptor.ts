@@ -7,7 +7,7 @@ import { HOME_PAGE, LOGIN_PAGE } from '@/router/router.ts'
 import { useTokenStore } from '@/store/useTokenStore.ts'
 export const FG_LOG_ENABLE = false
 
-export function judgeIsExcludePath(path: string) {
+export function judgeIsNeedLoginPath(path: string) {
   const allExcludeLoginPages = getAllPages('needLogin') // dev 环境下，需要每次都重新获取，否则新配置就不会生效
   return allExcludeLoginPages.some(page => page.path === path)
 }
@@ -59,7 +59,7 @@ export const navigateToInterceptor = {
         .join('&')}`
     }
     const redirectQuery = `?redirect=${encodeURIComponent(fullPath)}`
-    if (judgeIsExcludePath(path)) {
+    if (judgeIsNeedLoginPath(path)) {
       FG_LOG_ENABLE && console.log('2 isNeedLogin(黑名单策略) url:', fullPath)
       router.login(redirectQuery)
       return false // 修改为false，阻止原路由继续执行
@@ -75,7 +75,4 @@ export const routeInterceptor = {
     uni.addInterceptor('redirectTo', navigateToInterceptor)
     uni.addInterceptor('switchTab', navigateToInterceptor)
   }
-}
-export function setupRoute(app: App<Element>) {
-  app.use(routeInterceptor)
 }

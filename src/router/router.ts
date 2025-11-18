@@ -11,7 +11,7 @@ export const LOGIN_PAGE: _LocationUrl = '/pages-sub/login/login'
 export const NOT_FOUND_PAGE: _LocationUrl = '/pages-sub/404/index'
 
 export default {
-  push(options: UniNamespace.NavigateToOptions | _LocationUrl | string, isReplace: boolean = false) {
+  push(options: UniApp.NavigateToOptions | _LocationUrl | string, isReplace: boolean = false) {
     const url = typeof options === 'string' ? options : options.url
     if (isReplace) {
       uni.redirectTo({

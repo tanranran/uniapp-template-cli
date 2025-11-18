@@ -2,8 +2,8 @@
   "name": "uniapp-template-cli-release",
   "appid": "__UNI__B746FDE",
   "description": "由 uniapp + Vue3 + Ts + Vite5 + UnoCss 构成的开发模板",
-  "versionName": "1.0.2025110701",
-  "versionCode": "2025110701",
+  "versionName": "1.0.2025111805",
+  "versionCode": "2025111805",
   "transformPx": false,
   "app-plus": {
     "usingComponents": true,

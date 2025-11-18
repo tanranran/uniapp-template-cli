@@ -78,14 +78,6 @@
         },
         // #endif
         {
-          "path": "webview",
-          "type": "page",
-          "style": {
-            "navigationBarTitleText": "..."
-          },
-          "name": "WEBVIEW"
-        },
-        {
           "path": "404/index",
           "type": "page",
           "style": {
@@ -100,6 +92,14 @@
             "navigationBarTitleText": "登录"
           },
           "name": "LOGIN_LOGIN"
+        },
+        {
+          "path": "webview/webview",
+          "type": "page",
+          "style": {
+            "navigationBarTitleText": "..."
+          },
+          "name": "WEBVIEW_WEBVIEW"
         }
       ]
     }

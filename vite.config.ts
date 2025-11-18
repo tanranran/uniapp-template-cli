@@ -90,7 +90,6 @@ export default async ({ command, mode }: ConfigEnv) => {
         ],
         dts: 'src/types/auto-import.d.ts', //'src/store/**',
         dirs: ['src/composables/**', 'src/store/**', 'src/utils/**', 'src/hooks/**', 'src/utils/**', 'src/router/**'], // 自动导入 hooks
-        exclude: ['src/utils/Apis.ts', 'src/utils/http/**'],
         eslintrc: {
           enabled: true,
           globalsPropValue: true
@@ -161,7 +160,7 @@ export default async ({ command, mode }: ConfigEnv) => {
     },
     server: {
       host: '0.0.0.0',
-      open: true,
+      open: false,
       hmr: true,
       port: Number.parseInt(VITE_APP_PORT, 10),
       // 仅 H5 端生效，其他端不生效（其他端走build，不走devServer)

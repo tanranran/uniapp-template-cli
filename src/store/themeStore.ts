@@ -1,7 +1,6 @@
 import type { SystemThemeState, ThemeMode } from '@/composables/types/theme'
 import { defineStore } from 'pinia'
 import { themeColorOptions } from '@/composables/types/theme'
-import theme from '../theme.json' with { type: 'json' }
 /**
  * 简化版系统主题状态管理
  * 仅支持跟随系统主题，不提供手动切换功能
@@ -35,23 +34,7 @@ export const useThemeStore = defineStore('theme', {
      * @returns 系统主题模式
      */
     getSystemTheme(): ThemeMode {
-      // #ifdef MP-WEIXIN
-      // 微信小程序使用 getAppBaseInfo
-      const appBaseInfo = uni.getAppBaseInfo()
-      if (appBaseInfo && appBaseInfo.theme) {
-        return appBaseInfo.theme as ThemeMode
-      }
-      // #endif
-
-      // #ifndef MP-WEIXIN
-      // 其他平台使用 getSystemInfoSync
-      const systemInfo = uni.getSystemInfoSync()
-      if (systemInfo && systemInfo.theme) {
-        return systemInfo.theme as ThemeMode
-      }
-      // #endif
-
-      return 'light' // 默认返回 light
+      return (ui.getSystemInfo().theme as ThemeMode) || 'light' // 默认返回 light
     },
 
     /**

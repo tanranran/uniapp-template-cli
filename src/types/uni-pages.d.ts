@@ -8,10 +8,10 @@ type _LocationUrl =
   "/pages/index/index" |
   "/pages/index/testA" |
   "/pages/index/testB" |
-  "/pages-sub/webview" |
   "/pages-sub/404/index" |
   "/pages-sub/login/login" |
-  "/pages-sub/styles/index";
+  "/pages-sub/styles/index" |
+  "/pages-sub/webview/webview";
 
 interface NavigateToOptions {
   url: _LocationUrl;
