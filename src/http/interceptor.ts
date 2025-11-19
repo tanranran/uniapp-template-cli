@@ -1,12 +1,13 @@
 import { useTokenStore } from '@/store/useTokenStore.ts'
 import { type RequestConfig, type RequestInterceptor, type RequestMeta, type RequestOptions, ResponseData, type ResponseResult } from '@/http/types.ts'
+import { parse } from '@/utils/json.ts'
 
 // 请求基准地址
 const baseUrl = import.meta.env.VITE_SERVER_BASEURL
 // 队列请求数
 let requestNum = 0
 // 重复请求
-const pendingRequests = new Map<string, UniApp.RequestTask>()
+const pendingRequests = new Map<string, RequestOptions>()
 
 const addLoading = () => {
   requestNum++
@@ -39,96 +40,104 @@ export const httpRequestConfig: RequestConfig = {
 // 请求/响应拦截器
 export const httpInterceptor: RequestInterceptor = {
   // 请求拦截器
-  request: (config: RequestOptions) => {
-    console.log('请求拦截器', config)
-    const meta: RequestMeta = config.meta || {}
-    const { url, method, data } = config
-    const requestKey = `${method}_${url}_${JSON.stringify(data)}`
+  request: (options: RequestOptions) => {
+    const meta: RequestMeta = options.meta || {}
+    const { url, method, data } = options
+    const requestKey = `${method}_${url}_${stringify(data)}`
     // 存在相同请求则取消前一个
     if (pendingRequests.has(requestKey)) {
-      // pendingRequests.get(requestKey)?.abort()
+      const previousRequest = pendingRequests.get(requestKey)
+      previousRequest?.cancel()
     }
-    // pendingRequests.set(requestKey, method)
+    pendingRequests.set(requestKey, options)
     meta.requestKey = requestKey
     meta.loading && addLoading()
     const tokenStore = useTokenStore()
     const token = tokenStore.validToken
     if (token) {
-      config.header.Authorization = `Bearer ${token}`
+      options.header.Authorization = `Bearer ${token}`
     }
-    return config
+    return options
   },
   // 响应拦截器
-  response: async <T>(response: ResponseResult) => {
+  response: async <T>(options: RequestOptions, response: ResponseResult) => {
     console.log('响应拦截器', response)
     const meta: RequestMeta = response.config?.meta || {}
     meta.loading && removeLoading()
     pendingRequests.delete(meta.requestKey ?? '')
-
+    if (options.cancelFlag) {
+      return new ResponseData<T>(-1, '取消请求')
+    }
     const { statusCode, errMsg, data } = response
     const responseData = new ResponseData<T>()
     let responseMsg = ''
     let responseCode = -1
     if ([200, 401].indexOf(statusCode) > -1) {
-      if (typeof data == 'string') {
-        responseCode = (data as any)?.errorCode ?? (data as any)?.code ?? -1
-        responseMsg = (data as any)?.errorMsg ?? (data as any)?.message ?? ''
+      let dataObj = parse<any>(data)
+      if (dataObj) {
+        responseCode = dataObj?.errorCode ?? dataObj?.code ?? -1
+        responseMsg = dataObj?.errorMsg ?? dataObj?.message ?? ''
+        responseData.data = parse(dataObj?.data)
       }
     } else {
-      responseMsg = handleNetworkError(statusCode, errMsg ?? '')
+      responseMsg = handleNetworkError(statusCode, '')
     }
     responseData.code = responseCode
     responseData.msg = responseMsg
+    responseData.request = options
     return responseData
   }
 }
 
-const handleNetworkError = (status: number, message: string) => {
-  let errMessage = '未知错误'
+const handleNetworkError = (status: number, defaultMessage: string) => {
+  if (defaultMessage) {
+    return defaultMessage
+  }
+  let message = '未知错误'
   if (status) {
     switch (status) {
       case 400:
-        errMessage = message || '错误的请求'
+        message = '请求错误(400)'
         break
       case 401:
-        errMessage = message || '未授权，请重新登录'
+        message = '未授权，请重新登录(401)'
         break
       case 403:
-        errMessage = message || '拒绝访问'
+        message = '拒绝访问(403)'
         break
       case 404:
-        errMessage = message || '请求错误,未找到该资源'
+        message = '请求出错(404)'
         break
       case 405:
-        errMessage = message || '请求方法未允许'
+        message = '方法不允许(405)'
         break
       case 408:
-        errMessage = message || '请求超时'
+        message = '请求超时(408)'
         break
       case 500:
-        errMessage = message || '服务器端出错'
+        message = '服务器错误(500)'
         break
       case 501:
-        errMessage = message || '网络未实现'
+        message = '服务未实现(501)'
         break
       case 502:
-        errMessage = message || '网络错误'
+        message = '网络错误(502)'
         break
       case 503:
-        errMessage = message || '服务不可用'
+        message = '服务不可用(503)'
         break
       case 504:
-        errMessage = message || '网络超时'
+        message = '网络超时(504)'
         break
       case 505:
-        errMessage = message || 'http版本不支持该请求'
+        message = 'HTTP版本不受支持(505)'
         break
       default:
-        errMessage = message || `其他连接错误 --${status}`
+        message = `连接出错(${status})!`
     }
   } else {
-    errMessage = message || `无法连接到服务器！`
+    message = `无法连接到服务器！`
   }
 
-  return errMessage
+  return message
 }

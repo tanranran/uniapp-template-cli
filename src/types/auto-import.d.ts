@@ -116,6 +116,7 @@ declare global {
   const onUnmounted: typeof import('vue').onUnmounted
   const onUpdated: typeof import('vue').onUpdated
   const onWatcherCleanup: typeof import('vue').onWatcherCleanup
+  const parse: typeof import('../utils/json').parse
   const parseJSON: typeof import('../utils/json').parseJSON
   const parseUrlToObj: typeof import('../router/index').parseUrlToObj
   const platform: typeof import('../utils/platform').default
@@ -138,6 +139,7 @@ declare global {
   const shallowRef: typeof import('vue').shallowRef
   const store: typeof import('../store/index').default
   const storeToRefs: typeof import('pinia').storeToRefs
+  const stringify: typeof import('../utils/json').stringify
   const themeColorOptions: typeof import('../composables/types/theme').themeColorOptions
   const throttle: typeof import('../utils/index').throttle
   const toFloat: typeof import('../utils/number').toFloat
@@ -316,6 +318,7 @@ declare module 'vue' {
     readonly onUnmounted: UnwrapRef<typeof import('vue')['onUnmounted']>
     readonly onUpdated: UnwrapRef<typeof import('vue')['onUpdated']>
     readonly onWatcherCleanup: UnwrapRef<typeof import('vue')['onWatcherCleanup']>
+    readonly parse: UnwrapRef<typeof import('../utils/json')['parse']>
     readonly parseJSON: UnwrapRef<typeof import('../utils/json')['parseJSON']>
     readonly parseUrlToObj: UnwrapRef<typeof import('../router/index')['parseUrlToObj']>
     readonly platform: UnwrapRef<typeof import('../utils/platform')['default']>
@@ -338,6 +341,7 @@ declare module 'vue' {
     readonly shallowRef: UnwrapRef<typeof import('vue')['shallowRef']>
     readonly store: UnwrapRef<typeof import('../store/index')['default']>
     readonly storeToRefs: UnwrapRef<typeof import('pinia')['storeToRefs']>
+    readonly stringify: UnwrapRef<typeof import('../utils/json')['stringify']>
     readonly themeColorOptions: UnwrapRef<typeof import('../composables/types/theme')['themeColorOptions']>
     readonly throttle: UnwrapRef<typeof import('../utils/index')['throttle']>
     readonly toFloat: UnwrapRef<typeof import('../utils/number')['toFloat']>

@@ -16,4 +16,8 @@ export class Apis {
   static hideLoading(isSystem: boolean = true) {
     ui.hideLoading(isSystem)
   }
+
+  static showAlert(title: string, msg: string) {
+    ui.showAlert(title, msg)
+  }
 }

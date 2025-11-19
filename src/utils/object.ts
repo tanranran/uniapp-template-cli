@@ -45,14 +45,16 @@ export function isNull(property: CommonAllType): boolean {
 export function isEmpty(property: CommonAllType): boolean {
   if (isNull(property)) {
     return true
-  } else if (Array.isArray(property) || property instanceof Array) {
+  } else if (isString(property)) {
+    return property == '' || property.length == 0
+  } else if (Array.isArray(property)) {
     return property.length == 0
   } else if (property instanceof Map) {
-    return (property as Map<any, any>).size === 0
+    return property.size === 0
   } else if (isObjectEmpty(property)) {
     return true
   }
-  return property == ''
+  return false
 }
 
 /**

@@ -33,6 +33,13 @@ export default {
     }
   },
 
+  showAlert(title: string, msg: string) {
+    useGlobalMessage().alert({
+      title: title,
+      msg: msg
+    })
+  },
+
   /**
    * 兼容微信小程序端获取系统信息的方法
    * 在微信小程序端使用新的API替代getSystemInfoSync，在其他端仍然使用getSystemInfoSync

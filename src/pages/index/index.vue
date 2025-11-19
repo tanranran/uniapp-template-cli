@@ -14,7 +14,18 @@
   }
 
   function textHttp() {
-    Apis.http.post('/harmony/index/')
+    Apis.http.post('/harmony/index/json', {}, {}).then(res => {
+      if (res.isOK(true, true)) {
+        console.log(res.data)
+      }
+    })
+    setTimeout(() => {
+      Apis.http.post('/harmony/index/json').then(res => {
+        if (res.isOK(true, true)) {
+          console.log(res.data)
+        }
+      })
+    }, 30)
   }
 </script>
 <template>

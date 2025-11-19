@@ -1,3 +1,5 @@
+import type { MessageOptions, MessageResult } from 'wot-design-uni/components/wd-message-box/types.ts'
+
 /**
  * 请求配置项Meta类型定义
  */
@@ -22,16 +24,42 @@ export interface RequestConfig {
   meta?: RequestMeta
 }
 
+export type IRequestOptions = UniApp.RequestOptions & {
+  header?: Record<string, any>
+  meta?: RequestMeta
+  timeout?: number
+}
+
 /**
  * 请求参数类型定义
  */
-export interface RequestOptions extends UniApp.RequestOptions {
-  url: string
-  header: Record<string, any>
-  params?: Record<string, any>
+export class RequestOptions implements IRequestOptions {
+  url: string = ''
+  header: Record<string, any> = {}
+  data?: string | AnyObject | ArrayBuffer | Record<string, any>
   complete?: (response: any) => void
+  method?: 'OPTIONS' | 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'TRACE' | 'CONNECT'
+  dataType?: string
+  responseType?: string
+  timeout?: number
   meta?: RequestMeta
   task?: UniApp.RequestTask
+  cancelFlag?: boolean //取消请求的标记，如果task已经取消，则此标志位为true 否则false
+
+  constructor(options: UniApp.RequestOptions) {
+    Object.assign(this, options)
+  }
+
+  /**
+   * 取消请求
+   */
+  cancel() {
+    if (this.cancelFlag) {
+      return
+    }
+    this.cancelFlag = true
+    this.task?.abort()
+  }
 }
 
 /**
@@ -39,22 +67,47 @@ export interface RequestOptions extends UniApp.RequestOptions {
  */
 export interface RequestInterceptor {
   request?: (options: RequestOptions) => RequestOptions
-  response?: <T = any>(response: ResponseResult) => Promise<ResponseData<T>>
+  response?: <T = any>(options: RequestOptions, response: ResponseResult) => Promise<ResponseData<T>>
 }
 
 export interface ResponseResult extends UniApp.RequestSuccessCallbackResult {
   config: RequestOptions
   errMsg?: string
 }
+
 export class ResponseData<T> {
   code: number = 0
   msg: string = ''
   data?: T
+  request?: RequestOptions
+  constructor(code?: number, msg?: string, data?: T) {
+    this.code = code ?? 0
+    this.msg = msg ?? ''
+    this.data = data
+  }
 
-  isOK() {
-    return this.code === 0
+  isOK(showTips: boolean = true, showDialog: boolean = false, defaultMessage: string = '') {
+    let success = this.code === 0
+    if (!success && showTips) {
+      let errorMsg = this.msg
+      if (isEmpty(errorMsg)) {
+        errorMsg = defaultMessage
+      }
+      if (isNotEmpty(errorMsg)) {
+        if (showDialog) {
+          Apis.showAlert('提示', errorMsg)
+        } else {
+          Apis.showToast({
+            icon: 'error',
+            title: errorMsg
+          })
+        }
+      }
+    }
+    return success
   }
 }
+
 type IResponse<T = any> =
   | {
       code: number

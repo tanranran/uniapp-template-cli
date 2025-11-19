@@ -1,6 +1,6 @@
 import type { App } from '@vue/runtime-core'
 import { httpRequestConfig, httpInterceptor } from '@/http/interceptor.ts'
-import { type RequestConfig, type RequestInterceptor, type RequestMeta, type RequestOptions, ResponseData } from '@/http/types.ts'
+import { type IRequestOptions, type RequestConfig, type RequestInterceptor, type RequestMeta, RequestOptions, ResponseData } from '@/http/types.ts'
 
 export class Request {
   public config: RequestConfig
@@ -44,14 +44,15 @@ export class Request {
    * @param options
    * @returns
    */
-  get<T>(url: string, data?: Record<string, any>, options: { header?: Record<string, any>; meta?: RequestMeta } = {}) {
-    return this.request<T>({
-      method: 'GET',
-      url,
-      data,
-      header: options.header ?? {},
-      meta: options.meta
+  get<T>(url: string, data?: Record<string, any>, options: IRequestOptions = {}) {
+    let requestOptions = new RequestOptions({
+      method: 'POST',
+      url: url,
+      data: data,
+      ...options
     })
+    requestOptions.meta = options.meta
+    return this.request<T>(requestOptions)
   }
 
   /**
@@ -62,14 +63,15 @@ export class Request {
    * @param options 请求头，默认为json格式
    * @returns
    */
-  post<T>(url: string, data?: Record<string, any>, options: { header?: Record<string, any>; meta?: RequestMeta } = {}) {
-    return this.request<T>({
+  post<T>(url: string, data?: Record<string, any>, options: IRequestOptions = {}) {
+    let requestOptions = new RequestOptions({
       method: 'POST',
-      url,
-      data,
-      header: options.header ?? {},
-      meta: options.meta
+      url: url,
+      data: data,
+      ...options
     })
+    requestOptions.meta = options.meta
+    return this.request<T>(requestOptions)
   }
 
   request<T>(options: RequestOptions): Promise<ResponseData<T>> {
@@ -81,7 +83,7 @@ export class Request {
     options.dataType = options.dataType || this.config.dataType
     options.responseType = options.responseType || this.config.responseType
     options.url = this.getUrl(options)
-    options.params = options.params || {}
+    options.data = options.data || {}
     options.header = Object.assign({}, this.config.header || {}, options.header || {})
     options.method = (options.method || this.config.method) as RequestOptions['method']
     options.timeout = options.timeout || this.config.timeout
@@ -94,8 +96,12 @@ export class Request {
         response.config = options
         // 判断是否存在拦截器
         if (this.interceptor?.response) {
-          const resInterceptors = await this.interceptor.response<T>(response)
-          resolve(resInterceptors)
+          const resInterceptors = await this.interceptor.response<T>(options, response)
+          if (options.cancelFlag) {
+            reject(resInterceptors)
+          } else {
+            resolve(resInterceptors)
+          }
         } else {
           resolve(response)
         }

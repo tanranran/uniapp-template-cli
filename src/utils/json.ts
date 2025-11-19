@@ -15,6 +15,38 @@ export function isJSON(str: any): boolean {
   }
 }
 
+export function parse<T = any>(value: string | T): T | null {
+  if (typeof value === 'string') {
+    try {
+      return JSON.parse(value) as T
+    } catch {
+      return null
+    }
+  }
+  return value as T
+}
+
+export function stringify(value?: any): string {
+  try {
+    if (isNull(value)) {
+      return ''
+    }
+    const seen = new WeakSet()
+    return JSON.stringify(value, (key, val) => {
+      if (typeof val === 'object' && val !== null) {
+        if (seen.has(val)) {
+          return '[Circular Reference]'
+        }
+        seen.add(val)
+      }
+      return val
+    })
+  } catch (error) {
+    console.warn('Stringify failed:', error)
+    return ''
+  }
+}
+
 /**
  * 尝试解析 JSON 字符串，如果解析失败则返回 null。
  * @param {string} str 要解析的字符串
