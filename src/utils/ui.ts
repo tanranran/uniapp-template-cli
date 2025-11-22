@@ -5,6 +5,12 @@ export type ToastIcon = 'success' | 'loading' | 'error' | 'none' | 'fail' | 'exc
 export type ToastOption = UniApp.ShowToastOptions | ToastOptions | string
 export type ShowLoadingOption = UniApp.ShowLoadingOptions | ToastOptions | string
 export default {
+
+  /**
+   * 显示消息提示框
+   * 兼容 uni.showToast 和 Wot Design Toast
+   * @param option 提示内容或配置项
+   */
   showToast(option: ToastOption, icon?: ToastIcon) {
     if (isToastOptions(option)) {
       uni.showToast(option).then()
@@ -15,6 +21,11 @@ export default {
     }
   },
 
+  /**
+   * 显示加载提示框
+   * 兼容 uni.showLoading 和 Wot Design Loading
+   * @param option 加载提示内容或配置项
+   */
   showLoading(option: ShowLoadingOption) {
     if (isShowLoadingOptions(option)) {
       uni.showLoading(option).then()
