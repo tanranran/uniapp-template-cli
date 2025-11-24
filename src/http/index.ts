@@ -46,7 +46,7 @@ export class Request {
    */
   get<T>(url: string, data?: Record<string, any>, options: IRequestOptions = {}) {
     let requestOptions = new RequestOptions({
-      method: 'POST',
+      method: 'GET',
       url: url,
       data: data,
       ...options
@@ -126,7 +126,7 @@ export class Request {
 
     // 非H5正常拼接
     // #ifndef H5
-    options.url = this.config.baseUrl + options.url
+    url = this.config.baseUrl + options.url
     // #endif
     return url
   }

@@ -24,7 +24,8 @@ export interface RequestConfig {
   meta?: RequestMeta
 }
 
-export type IRequestOptions = UniApp.RequestOptions & {
+export type IRequestOptions = Omit<UniApp.RequestOptions, 'url'> & {
+  url?: string
   header?: Record<string, any>
   meta?: RequestMeta
   timeout?: number
@@ -110,17 +111,17 @@ export class ResponseData<T> {
 
 type IResponse<T = any> =
   | {
-      code: number
-      data: T
-      message: string
-      [key: string]: any // 允许额外属性
-    }
+    code: number
+    data: T
+    message: string
+    [key: string]: any // 允许额外属性
+  }
   | {
-      code: number
-      data: T
-      msg: string
-      [key: string]: any // 允许额外属性
-    }
+    code: number
+    data: T
+    msg: string
+    [key: string]: any // 允许额外属性
+  }
 
 // 分页请求参数
 export interface PageParams {
