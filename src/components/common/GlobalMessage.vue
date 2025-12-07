@@ -1,17 +1,17 @@
 <script lang="ts" setup>
-import { deepClone, isFunction } from 'wot-design-uni/components/common/util';
+import { deepClone, isFunction } from 'wot-design-uni/components/common/util'
 
-const { messageOptions, currentPage } = storeToRefs(useGlobalMessage());
+const { messageOptions, currentPage } = storeToRefs(useGlobalMessage())
 
-const messageBox = useMessage('globalMessage');
-const currentPath = getCurrentPath();
+const messageBox = useMessage('globalMessage')
+const currentPath = getCurrentPath()
 
 // #ifdef MP-ALIPAY
-const hackAlipayVisible = ref(false);
+const hackAlipayVisible = ref(false)
 
 nextTick(() => {
-  hackAlipayVisible.value = true;
-});
+  hackAlipayVisible.value = true
+})
 // #endif
 
 watch(
@@ -19,25 +19,25 @@ watch(
   (newVal) => {
     if (newVal) {
       if (currentPage.value === currentPath) {
-        const option = deepClone(newVal);
+        const option = deepClone(newVal)
         messageBox
           .show(option)
           .then((res) => {
             if (isFunction(option.success)) {
-              option.success(res);
+              option.success(res)
             }
           })
           .catch((err) => {
             if (isFunction(option.fail)) {
-              option.fail(err);
+              option.fail(err)
             }
-          });
+          })
       }
     } else {
-      messageBox.close();
+      messageBox.close()
     }
   }
-);
+)
 </script>
 
 <script lang="ts">
@@ -47,7 +47,7 @@ export default {
     addGlobalClass: true,
     styleIsolation: 'shared'
   }
-};
+}
 </script>
 
 <template>

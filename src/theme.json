@@ -2,7 +2,7 @@
   "light": {
     "bgColor": "#F9F9F9",
     "bgColorBottom": "#F9F9F9",
-    //下拉刷新背景色
+    // 下拉刷新背景色
     "bgColorTop": "#F9F9F9",
     "bgTxtStyle": "dark",
     "navBgColor": "#FFFFFF",

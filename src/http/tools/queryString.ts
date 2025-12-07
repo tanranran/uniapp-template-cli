@@ -5,8 +5,7 @@
  * @returns 序列化后的查询字符串
  */
 export function stringifyQuery(obj: Record<string, any>): string {
-  if (!obj || typeof obj !== 'object' || Array.isArray(obj))
-    return ''
+  if (!obj || typeof obj !== 'object' || Array.isArray(obj)) return ''
 
   return Object.entries(obj)
     .filter(([_, value]) => value !== undefined && value !== null)
@@ -17,8 +16,8 @@ export function stringifyQuery(obj: Record<string, any>): string {
       // 处理数组类型
       if (Array.isArray(value)) {
         return value
-          .filter(item => item !== undefined && item !== null)
-          .map(item => `${encodedKey}=${encodeURIComponent(item)}`)
+          .filter((item) => item !== undefined && item !== null)
+          .map((item) => `${encodedKey}=${encodeURIComponent(item)}`)
           .join('&')
       }
 

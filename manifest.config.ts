@@ -1,31 +1,32 @@
+import { readFileSync } from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
 // manifest.config.ts
 import { defineManifestConfig } from '@uni-helper/vite-plugin-uni-manifest'
 import { loadEnv } from 'vite'
-import { readFileSync } from 'fs'
+
 const packageJsonPath = path.resolve(__dirname, 'package.json')
 const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf-8'))
 // 手动解析命令行参数获取 mode
 function getMode() {
-  const args = process.argv.slice(2) //发布[ 'build', '-p', 'mp-weixin' ] 运行 [ '-p', 'mp-weixin' ]
-  const modeFlagIndex = args.findIndex(arg => arg === '--mode')
+  const args = process.argv.slice(2) // 发布[ 'build', '-p', 'mp-weixin' ] 运行 [ '-p', 'mp-weixin' ]
+  const modeFlagIndex = args.findIndex((arg) => arg === '--mode')
   return modeFlagIndex !== -1 ? args[modeFlagIndex + 1] : args[0] === 'build' ? 'production' : 'development' // 默认 development
 }
 // 获取环境变量的范例
 const env = loadEnv(getMode(), path.resolve(process.cwd(), 'env'))
 const { VITE_APP_TITLE, VITE_UNI_APPID, VITE_WX_APPID, VITE_APP_PUBLIC_BASE, VITE_FALLBACK_LOCALE, VITE_USER_NODE_ENV } = env
-const isBuild = VITE_USER_NODE_ENV == 'production'
+const isBuild = VITE_USER_NODE_ENV === 'production'
 
 export default defineManifestConfig({
-  name: `${VITE_APP_TITLE}-${isBuild ? 'debug' : 'release'}`,
-  appid: VITE_UNI_APPID,
-  description: packageJson?.description ?? '',
-  versionName: packageJson?.version ?? '1.0.0',
-  versionCode: packageJson?.versionCode ?? '100',
-  transformPx: false,
-  locale: VITE_FALLBACK_LOCALE, // 'zh-Hans'
-  h5: {
+  'name': `${VITE_APP_TITLE}-${isBuild ? 'debug' : 'release'}`,
+  'appid': VITE_UNI_APPID,
+  'description': packageJson?.description ?? '',
+  'versionName': packageJson?.version ?? '1.0.0',
+  'versionCode': packageJson?.versionCode ?? '100',
+  'transformPx': false,
+  'locale': VITE_FALLBACK_LOCALE, // 'zh-Hans'
+  'h5': {
     router: {
       base: VITE_APP_PUBLIC_BASE
     },
@@ -88,14 +89,14 @@ export default defineManifestConfig({
         ios: {
           appstore: 'static/app/icons/1024x1024.png',
           ipad: {
-            app: 'static/app/icons/76x76.png',
+            'app': 'static/app/icons/76x76.png',
             'app@2x': 'static/app/icons/152x152.png',
-            notification: 'static/app/icons/20x20.png',
+            'notification': 'static/app/icons/20x20.png',
             'notification@2x': 'static/app/icons/40x40.png',
             'proapp@2x': 'static/app/icons/167x167.png',
-            settings: 'static/app/icons/29x29.png',
+            'settings': 'static/app/icons/29x29.png',
             'settings@2x': 'static/app/icons/58x58.png',
-            spotlight: 'static/app/icons/40x40.png',
+            'spotlight': 'static/app/icons/40x40.png',
             'spotlight@2x': 'static/app/icons/80x80.png'
           },
           iphone: {
@@ -113,20 +114,20 @@ export default defineManifestConfig({
     }
   },
   /* 快应用特有相关 */
-  quickapp: {},
+  'quickapp': {},
   /* 小程序特有相关 */
   'mp-weixin': {
     appid: VITE_WX_APPID,
     projectname: `${VITE_APP_TITLE}-${isBuild ? 'debug' : 'release'}`,
     setting: {
       urlCheck: false,
-      minified: isBuild, //上传代码时是否自动压缩脚本文件
-      minifyWXSS: isBuild, //上传代码时是否自动压缩样式文件
-      minifyWXML: isBuild, //上传代码时是否自动压缩 WXML 文件
-      postcss: false, //上传代码时样式是否自动补全
-      uglifyFileName: isBuild, //	上传时进行代码保护
-      swc: true, //开启 swc 编译模式
-      ignoreUploadUnusedFiles: isBuild //上传时是否过滤无依赖文件
+      minified: isBuild, // 上传代码时是否自动压缩脚本文件
+      minifyWXSS: isBuild, // 上传代码时是否自动压缩样式文件
+      minifyWXML: isBuild, // 上传代码时是否自动压缩 WXML 文件
+      postcss: false, // 上传代码时样式是否自动补全
+      uglifyFileName: isBuild, //上传时进行代码保护
+      swc: true, // 开启 swc 编译模式
+      ignoreUploadUnusedFiles: isBuild // 上传时是否过滤无依赖文件
     },
     darkmode: true,
     themeLocation: 'theme.json',
@@ -163,8 +164,8 @@ export default defineManifestConfig({
   'mp-toutiao': {
     usingComponents: true
   },
-  uniStatistics: {
+  'uniStatistics': {
     enable: false
   },
-  vueVersion: '3'
+  'vueVersion': '3'
 })

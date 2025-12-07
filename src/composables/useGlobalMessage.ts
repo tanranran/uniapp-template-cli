@@ -14,7 +14,7 @@ interface GlobalMessage {
 export const useGlobalMessage = defineStore('global-message', {
   state: (): GlobalMessage => ({
     messageOptions: null,
-    currentPage: '',
+    currentPage: ''
   }),
   actions: {
     show(option: GlobalMessageOptions | string) {
@@ -22,11 +22,11 @@ export const useGlobalMessage = defineStore('global-message', {
       this.messageOptions = {
         ...(CommonUtil.isString(option) ? { title: option } : option),
         cancelButtonProps: {
-          round: false,
+          round: false
         },
         confirmButtonProps: {
-          round: false,
-        },
+          round: false
+        }
       }
     },
     alert(option: GlobalMessageOptions | string) {
@@ -47,6 +47,6 @@ export const useGlobalMessage = defineStore('global-message', {
     close() {
       this.messageOptions = null
       this.currentPage = ''
-    },
-  },
+    }
+  }
 })

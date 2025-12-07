@@ -133,12 +133,13 @@ declare global {
   const setMapStoreSuffix: typeof import('pinia').setMapStoreSuffix
   const setValue: typeof import('../utils/object').setValue
   const setupRoute: typeof import('../router/index').setupRoute
-  const setupStore: typeof import('../store/index').setupStore
+  const setupStore: typeof import('../stores/index').setupStore
   const shallowReactive: typeof import('vue').shallowReactive
   const shallowReadonly: typeof import('vue').shallowReadonly
   const shallowRef: typeof import('vue').shallowRef
-  const store: typeof import('../store/index').default
+  const store: typeof import('@/stores/index').default
   const storeToRefs: typeof import('pinia').storeToRefs
+  const stores: typeof import('../stores/index').default
   const stringify: typeof import('../utils/json').stringify
   const themeColorOptions: typeof import('../composables/types/theme').themeColorOptions
   const throttle: typeof import('../utils/index').throttle
@@ -164,14 +165,14 @@ declare global {
   const useMessage: typeof import('wot-design-uni').useMessage
   const useModel: typeof import('vue').useModel
   const useNotify: typeof import('wot-design-uni').useNotify
-  const useScroll: typeof import('../hooks/useScroll').useScroll
+  const useScroll: typeof import('../composables/useScroll').useScroll
   const useSlots: typeof import('vue').useSlots
   const useTemplateRef: typeof import('vue').useTemplateRef
   const useTheme: typeof import('../composables/useTheme').useTheme
-  const useThemeStore: typeof import('../store/themeStore').useThemeStore
+  const useThemeStore: typeof import('../stores/theme').useThemeStore
   const useToast: typeof import('wot-design-uni').useToast
-  const useTokenStore: typeof import('../store/useTokenStore').useTokenStore
-  const useUserStore: typeof import('../store/user').useUserStore
+  const useToken: typeof import('../stores/useToken').useToken
+  const useUserStore: typeof import('../stores/user').useUserStore
   const uuid: typeof import('../utils/uuid').uuid
   const watch: typeof import('vue').watch
   const watchEffect: typeof import('vue').watchEffect
@@ -335,12 +336,12 @@ declare module 'vue' {
     readonly setMapStoreSuffix: UnwrapRef<typeof import('pinia')['setMapStoreSuffix']>
     readonly setValue: UnwrapRef<typeof import('../utils/object')['setValue']>
     readonly setupRoute: UnwrapRef<typeof import('../router/index')['setupRoute']>
-    readonly setupStore: UnwrapRef<typeof import('../store/index')['setupStore']>
+    readonly setupStore: UnwrapRef<typeof import('../stores/index')['setupStore']>
     readonly shallowReactive: UnwrapRef<typeof import('vue')['shallowReactive']>
     readonly shallowReadonly: UnwrapRef<typeof import('vue')['shallowReadonly']>
     readonly shallowRef: UnwrapRef<typeof import('vue')['shallowRef']>
-    readonly store: UnwrapRef<typeof import('../store/index')['default']>
     readonly storeToRefs: UnwrapRef<typeof import('pinia')['storeToRefs']>
+    readonly stores: UnwrapRef<typeof import('../stores/index')['default']>
     readonly stringify: UnwrapRef<typeof import('../utils/json')['stringify']>
     readonly themeColorOptions: UnwrapRef<typeof import('../composables/types/theme')['themeColorOptions']>
     readonly throttle: UnwrapRef<typeof import('../utils/index')['throttle']>
@@ -366,14 +367,14 @@ declare module 'vue' {
     readonly useMessage: UnwrapRef<typeof import('wot-design-uni')['useMessage']>
     readonly useModel: UnwrapRef<typeof import('vue')['useModel']>
     readonly useNotify: UnwrapRef<typeof import('wot-design-uni')['useNotify']>
-    readonly useScroll: UnwrapRef<typeof import('../hooks/useScroll')['useScroll']>
+    readonly useScroll: UnwrapRef<typeof import('../composables/useScroll')['useScroll']>
     readonly useSlots: UnwrapRef<typeof import('vue')['useSlots']>
     readonly useTemplateRef: UnwrapRef<typeof import('vue')['useTemplateRef']>
     readonly useTheme: UnwrapRef<typeof import('../composables/useTheme')['useTheme']>
-    readonly useThemeStore: UnwrapRef<typeof import('../store/themeStore')['useThemeStore']>
+    readonly useThemeStore: UnwrapRef<typeof import('../stores/theme')['useThemeStore']>
     readonly useToast: UnwrapRef<typeof import('wot-design-uni')['useToast']>
-    readonly useTokenStore: UnwrapRef<typeof import('../store/useTokenStore')['useTokenStore']>
-    readonly useUserStore: UnwrapRef<typeof import('../store/user')['useUserStore']>
+    readonly useToken: UnwrapRef<typeof import('../stores/useToken')['useToken']>
+    readonly useUserStore: UnwrapRef<typeof import('../stores/user')['useUserStore']>
     readonly uuid: UnwrapRef<typeof import('../utils/uuid')['uuid']>
     readonly watch: UnwrapRef<typeof import('vue')['watch']>
     readonly watchEffect: UnwrapRef<typeof import('vue')['watchEffect']>

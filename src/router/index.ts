@@ -1,7 +1,8 @@
 import type { PageMetaDatum, SubPackages } from '@uni-helper/vite-plugin-uni-pages'
-import { pages, subPackages } from '@/pages.json'
 import type { App } from '@vue/runtime-core'
+import { pages, subPackages } from '@/pages.json'
 import { routeInterceptor } from '@/router/interceptor.ts'
+
 export type PageInstance = Page.PageInstance<AnyObject, object> & { $page: Page.PageInstance<AnyObject, object> & { fullPath: string } }
 
 export function setupRoute(app: App<Element>) {
@@ -72,7 +73,7 @@ export function parseUrlToObj(url: string) {
     }
   }
   const query: Record<string, string> = {}
-  queryStr.split('&').forEach(item => {
+  queryStr.split('&').forEach((item) => {
     const [key, value] = item.split('=')
     // console.log(key, value)
     query[key] = ensureDecodeURIComponent(value) // 这里需要统一 decodeURIComponent 一下，可以兼容h5和微信y
@@ -88,19 +89,19 @@ export function parseUrlToObj(url: string) {
 export function getAllPages(key?: string) {
   // 这里处理主包
   const mainPages = (pages as PageMetaDatum[])
-    .filter(page => !key || page[key])
-    .map(page => ({
+    .filter((page) => !key || page[key])
+    .map((page) => ({
       ...page,
       path: `/${page.path}`
     }))
   // 这里处理分包
   const subPages: PageMetaDatum[] = []
-  ;(subPackages as SubPackages).forEach(subPageObj => {
+  ;(subPackages as SubPackages).forEach((subPageObj) => {
     // console.log(subPageObj)
     const { root } = subPageObj
     subPageObj.pages
-      .filter(page => !key || page[key])
-      .forEach(page => {
+      .filter((page) => !key || page[key])
+      .forEach((page) => {
         subPages.push({
           ...page,
           path: `/${root}/${page.path}`

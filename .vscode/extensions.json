@@ -1,0 +1,20 @@
+{
+  "recommendations": [
+    "vue.volar",
+    "MS-CEINTL.vscode-language-pack-zh-hans", // vscode 中文（简体）语言包
+    "mhutchie.git-graph", // git 提交记录
+    "donjayamanne.githistory", // git 历史记录
+    "eamodio.gitlens", // git 实用插件
+    "christian-kohler.npm-intellisense", // npm Intellisense
+    "dbaeumer.vscode-eslint",
+    "antfu.unocss",
+    "antfu.iconify",
+    "evils.uniapp-vscode",
+    "uni-helper.uni-helper-vscode",
+    "uni-helper.uni-app-schemas-vscode",
+    "uni-helper.uni-highlight-vscode",
+    "uni-helper.uni-ui-snippets-vscode",
+    "uni-helper.uni-app-snippets-vscode",
+    "streetsidesoftware.code-spell-checker"
+  ]
+}

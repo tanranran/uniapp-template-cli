@@ -3,6 +3,8 @@
   "compilerOptions": {
     "composite": true,
     "target": "ESNext",
+    "jsx": "preserve",
+    "jsxImportSource": "vue",
     "lib": [
       // 包含的库文件（DOM用于浏览器环境）
       "ESNext",
@@ -10,85 +12,53 @@
       "DOM.Iterable",
       "ES6"
     ],
+    "useDefineForClassFields": true,
+    // 允许默认导入
+    "experimentalDecorators": true,
+    "baseUrl": ".",
     "module": "ESNext",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    // 与 Vite 的 esbuild 兼容
+    "resolveJsonModule": true,
+    "types": ["node", "@types/node", "@dcloudio/types", "@uni-helper/uni-types", "@uni-helper/uni-app-types", "@uni-helper/vite-plugin-uni-pages", "miniprogram-api-typings", "wot-design-uni/global", "z-paging/types", "./src/types/async-component.d.ts", "./src/types/async-import.d.ts"],
     // 模块规范
     //    "moduleResolution": "Bundler",
     // 更适合 Vite 的模块解析策略
     "allowImportingTsExtensions": true,
-    // 允许导入 .ts 扩展名
-    "isolatedModules": true,
-    // 与 Vite 的 esbuild 兼容
-    "resolveJsonModule": true,
-    "jsx": "preserve",
-    "jsxImportSource": "vue",
-    "noImplicitThis": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
     "strict": true,
-    // 开启所有严格类型检查
-    "verbatimModuleSyntax": true,
-    "useDefineForClassFields": true,
-    "esModuleInterop": true,
-    // 兼容CommonJS和ES模块
-    "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true,
-    // 跳过库文件类型检查以提升性能
-    "allowSyntheticDefaultImports": true,
-    // 允许默认导入
-    "experimentalDecorators": true,
+    "strictNullChecks": true,
+    // switch 语句需要 break
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    // 检查隐式返回
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    // 不检查未使用的变量
+    "noUnusedLocals": false,
+    // 不检查未使用的参数,
+    "noUnusedParameters": false,
+    // 生成 source map 文件
+    "removeComments": false,
     // 启用装饰器
     // 支持装饰器语法
     "sourceMap": true,
-    // 生成 source map 文件
-    "removeComments": false,
-    //不检查未使用的变量
-    "noUnusedLocals": false,
-    //不检查未使用的参数,
-    "noUnusedParameters": false,
-    // 检查隐式返回
-    "noImplicitReturns": true,
-    // switch 语句需要 break
-    "noFallthroughCasesInSwitch": true,
-    "baseUrl": ".",
-    "paths": {
-      "@/*": [
-        "./src/*"
-      ]
-    },
-    "types": [
-      "node",
-      "@types/node",
-      "@dcloudio/types",
-      "@uni-helper/uni-types",
-      "@uni-helper/uni-app-types",
-      "@uni-helper/vite-plugin-uni-pages",
-      "miniprogram-api-typings",
-      "wot-design-uni/global",
-      "z-paging/types",
-      "./src/types/async-component.d.ts",
-      "./src/types/async-import.d.ts"
-    ]
+    // 跳过库文件类型检查以提升性能
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    // 兼容CommonJS和ES模块
+    "forceConsistentCasingInFileNames": true,
+    // 允许导入 .ts 扩展名
+    "isolatedModules": true,
+    // 开启所有严格类型检查
+    "verbatimModuleSyntax": true,
+    "skipLibCheck": true
   },
   "vueCompilerOptions": {
     "target": 3,
-    "plugins": [
-      "@uni-helper/uni-types/volar-plugin"
-    ]
+    "plugins": ["@uni-helper/uni-types/volar-plugin"]
   },
-  "include": [
-    "package.json",
-    "src/**/*.ts",
-    "src/**/*.js",
-    "src/**/*.d.ts",
-    "src/**/*.tsx",
-    "src/**/*.jsx",
-    "src/**/*.vue",
-    "src/**/*.json",
-    "uno-color-mapping.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "unpackage",
-    "dist"
-  ]
+  "include": ["package.json", "src/**/*.ts", "src/**/*.js", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.jsx", "src/**/*.vue", "src/**/*.json", "uno-color-mapping.ts"],
+  "exclude": ["node_modules", "unpackage", "dist"]
 }

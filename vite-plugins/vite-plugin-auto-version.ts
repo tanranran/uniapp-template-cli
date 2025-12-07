@@ -1,9 +1,10 @@
-// vite-plugin-auto-version.ts
-import { readFileSync, writeFileSync } from 'fs'
-import { resolve } from 'path'
 import type { Plugin } from 'vite'
-import { execSync } from 'child_process'
+import { execSync } from 'node:child_process'
+// vite-plugin-auto-version.ts
+import { readFileSync, writeFileSync } from 'node:fs'
+import { resolve } from 'node:path'
 import dayjs from 'dayjs'
+
 interface AutoVersionPluginOptions {
   file?: string // package.json 路径
   type?: 'patch' | 'minor' | 'major' // 版本类型
@@ -183,10 +184,10 @@ function ProcessVersionCode(version: string): string {
   }
 
   // 规则3: 今天日期开头，则末尾版本号自增
-  if (datePrefix == todayDate) {
-    let endingStr = version.substring(8)
+  if (datePrefix === todayDate) {
+    const endingStr = version.substring(8)
     if (endingStr) {
-      endVersionCode = `${parseInt(endingStr) + 1}`.padStart(2, '0')
+      endVersionCode = `${Number.parseInt(endingStr) + 1}`.padStart(2, '0')
     }
     return `${todayDate}${endVersionCode}`
   }
@@ -208,7 +209,7 @@ function replaceManifest(manifest: string, path: string, value: string) {
   const lastItem = arr[len - 1]
 
   let i = 0
-  let manifestArr = manifest.split(/\n/)
+  const manifestArr = manifest.split(/\n/)
 
   // 遍历manifest的每一行，查找并替换指定路径的值
   for (let index = 0; index < manifestArr.length; index++) {

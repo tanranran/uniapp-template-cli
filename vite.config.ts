@@ -1,34 +1,35 @@
-import { ConfigEnv, defineConfig, loadEnv } from 'vite'
+import type { ConfigEnv } from 'vite'
+import path from 'node:path'
+import process from 'node:process'
+import CompressJson from '@binbinji/unplugin-compress-json/vite'
 import Uni from '@uni-helper/plugin-uni'
 import UniHelperComponents from '@uni-helper/vite-plugin-uni-components'
+import { WotResolver } from '@uni-helper/vite-plugin-uni-components/resolvers'
 // @see https://github.com/uni-helper/vite-plugin-uni-manifest
 import UniHelperManifest from '@uni-helper/vite-plugin-uni-manifest'
-import UnoCSS from '@unocss/vite'
-import UniKuRoot from '@uni-ku/root'
 // @see https://uni-helper.js.org/vite-plugin-uni-pages
 import UniPages from '@uni-helper/vite-plugin-uni-pages'
-import AutoImport from 'unplugin-auto-import/vite'
-import { WotResolver } from '@uni-helper/vite-plugin-uni-components/resolvers'
 /**
  * 分包优化、模块异步跨包调用、组件异步跨包引用
  * @see https://github.com/uni-ku/bundle-optimizer
  */
 import Optimization from '@uni-ku/bundle-optimizer'
-import CompressJson from '@binbinji/unplugin-compress-json/vite'
-import ViteRestart from 'vite-plugin-restart'
-import { visualizer } from 'rollup-plugin-visualizer'
-import { AutoVersion } from './vite-plugins/vite-plugin-auto-version'
+import UniKuRoot from '@uni-ku/root'
+import UnoCSS from '@unocss/vite'
 import dayjs from 'dayjs'
-import process from 'node:process'
-import path from 'node:path'
-import { handlePageName, writePageConst } from './vite-plugins/vite-config-uni-pages'
+import { visualizer } from 'rollup-plugin-visualizer'
+import AutoImport from 'unplugin-auto-import/vite'
+import { defineConfig, loadEnv } from 'vite'
+import ViteRestart from 'vite-plugin-restart'
+import { handlePageName } from './vite-plugins/vite-config-uni-pages'
+import { AutoVersion } from './vite-plugins/vite-plugin-auto-version'
 
 // https://vitejs.dev/config/
-export default async ({ command, mode }: ConfigEnv) => {
+export default async ({ mode }: ConfigEnv) => {
   const { UNI_PLATFORM, VITE_USER_NODE_ENV } = process.env
   const env = loadEnv(mode, path.resolve(process.cwd(), 'env'))
   const { VITE_APP_PORT, VITE_SERVER_BASEURL, VITE_APP_TITLE, VITE_DELETE_CONSOLE, VITE_APP_PUBLIC_BASE, VITE_APP_PROXY_ENABLE, VITE_APP_PROXY_PREFIX } = env
-  const isBuild = VITE_USER_NODE_ENV == 'production'
+  const isBuild = VITE_USER_NODE_ENV === 'production'
   console.log('UNI_PLATFORM -> ', UNI_PLATFORM) // 得到 mp-weixin, h5, app 等
 
   return defineConfig({
@@ -47,7 +48,7 @@ export default async ({ command, mode }: ConfigEnv) => {
       UniPages({
         dts: 'src/types/uni-pages.d.ts',
         subPackages: ['src/pages-sub'],
-        onAfterMergePageMetaData: ctx => {
+        onAfterMergePageMetaData: (ctx) => {
           handlePageName(ctx, 'pageMetaData')
           handlePageName(ctx, 'subPageMetaData')
         },
@@ -71,7 +72,7 @@ export default async ({ command, mode }: ConfigEnv) => {
         // 自定义插件禁用 vite:vue 插件的 devToolsEnabled，强制编译 vue 模板时 inline 为 true
         name: 'fix-vite-plugin-vue',
         configResolved(config) {
-          const plugin = config.plugins.find(p => p.name === 'vite:vue')
+          const plugin = config.plugins.find((p) => p.name === 'vite:vue')
           if (plugin && plugin.api && plugin.api.options) {
             plugin.api.options.devToolsEnabled = false
           }
@@ -88,8 +89,8 @@ export default async ({ command, mode }: ConfigEnv) => {
             'z-paging/types': ['zPaging', 'ZPagingVirtualItem']
           }
         ],
-        dts: 'src/types/auto-import.d.ts', //'src/store/**',
-        dirs: ['src/composables/**', 'src/store/**', 'src/utils/**', 'src/hooks/**', 'src/utils/**', 'src/router/**'], // 自动导入 hooks
+        dts: 'src/types/auto-import.d.ts', // 'src/stores/**',
+        dirs: ['src/composables/**', 'src/stores/**', 'src/utils/**', 'src/hooks/**', 'src/utils/**', 'src/router/**'], // 自动导入 hooks
         eslintrc: {
           enabled: true,
           globalsPropValue: true
@@ -99,13 +100,13 @@ export default async ({ command, mode }: ConfigEnv) => {
       // UnoCssInject(),
       Optimization({
         enable: {
-          optimization: true,
+          'optimization': true,
           'async-import': true,
           'async-component': true
         },
         dts: {
-          enable: true,
-          base: 'src/types',
+          'enable': true,
+          'base': 'src/types',
           'async-import': {
             enable: true,
             base: 'src/types',
@@ -170,7 +171,7 @@ export default async ({ command, mode }: ConfigEnv) => {
               target: VITE_SERVER_BASEURL,
               changeOrigin: true,
               // 后端有/api前缀则不做处理，没有则需要去掉
-              rewrite: path => path.replace(new RegExp(`^${VITE_APP_PROXY_PREFIX}`), '')
+              rewrite: (path) => path.replace(new RegExp(`^${VITE_APP_PROXY_PREFIX}`), '')
             }
           }
         : undefined,

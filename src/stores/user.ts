@@ -1,7 +1,7 @@
+import type { IUserInfoRes } from '@/api/types/login.ts'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { getUserInfo } from '@/api/login.ts'
-import type { IUserInfoRes } from '@/api/types/login.ts'
 
 const initState: IUserInfoRes = {
   avatar: '',
@@ -17,8 +17,10 @@ export const useUserStore = defineStore(
     const userInfo = ref<IUserInfoRes>({ ...initState })
 
     // 设置用户信息 可设置部分信息（比如更新 token）
-    const setUserInfo = (val: IUserInfoRes): void => {
-      userInfo.value = val
+    const setUserInfo = (val?: IUserInfoRes): void => {
+      if (val) {
+        userInfo.value = val
+      }
     }
 
     // 清除用户信息
@@ -31,7 +33,7 @@ export const useUserStore = defineStore(
      */
     const fetchUserInfo = async () => {
       const res = await getUserInfo()
-      setUserInfo(res)
+      setUserInfo(res.data)
       return res
     }
 

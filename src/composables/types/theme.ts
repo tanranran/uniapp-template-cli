@@ -42,5 +42,5 @@ export const themeColorOptions: ThemeColorOption[] = [
   { name: '薄荷绿', value: 'green', primary: '#07C160' },
   { name: '樱花粉', value: 'pink', primary: '#FF69B4' },
   { name: '紫罗兰', value: 'purple', primary: '#8A2BE2' },
-  { name: '朱砂红', value: 'red', primary: '#FF4757' },
+  { name: '朱砂红', value: 'red', primary: '#FF4757' }
 ]

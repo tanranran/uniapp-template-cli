@@ -14,7 +14,7 @@ export function isNumber(value: any): boolean {
     }
     // 如果已经是数字类型，直接判断是否是 NaN
     if (typeof value === 'number') {
-      return !isNaN(value)
+      return !Number.isNaN(value)
     }
     // 如果不是字符串类型，比如对象、布尔值等，不视为合法数字
     if (typeof value !== 'string') {
@@ -28,7 +28,7 @@ export function isNumber(value: any): boolean {
     }
     // 最后尝试转换为数字并判断是否为 NaN
     const num = Number(str)
-    return !isNaN(num)
+    return !Number.isNaN(num)
   } catch (e) {
     return false
   }
@@ -39,8 +39,8 @@ export function toInt(value: any, defaultValue: number = 0): number {
     if (value === null || value === undefined) {
       return defaultValue
     }
-    const parsedValue = parseInt(value)
-    if (isNaN(parsedValue)) {
+    const parsedValue = Number.parseInt(value)
+    if (Number.isNaN(parsedValue)) {
       return defaultValue
     }
     return parsedValue
@@ -57,8 +57,8 @@ export function toInt(value: any, defaultValue: number = 0): number {
  */
 export function toFloat(value: string, defaultValue: number = 0): number {
   try {
-    const parsedValue = parseFloat(value)
-    if (isNaN(parsedValue)) {
+    const parsedValue = Number.parseFloat(value)
+    if (Number.isNaN(parsedValue)) {
       return defaultValue
     }
     return parsedValue

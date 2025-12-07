@@ -1,9 +1,9 @@
 import type { IAuthLoginRes, ILoginForm } from '@/api/types/login'
+import type { ResponseData } from '@/http/types.ts'
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue' // 修复：导入 computed
 import { login as _login, logout as _logout, wxLogin as _wxLogin, getWxCode } from '@/api/login'
 import { useUserStore } from './user'
-import type { IResponse } from '@/http/types.ts'
 
 // 初始化状态
 const tokenInfoState = {
@@ -11,7 +11,7 @@ const tokenInfoState = {
   expiresIn: 0
 }
 
-export const useTokenStore = defineStore(
+export const useToken = defineStore(
   'token',
   () => {
     // 定义用户信息
@@ -44,8 +44,10 @@ export const useTokenStore = defineStore(
      * 登录成功后处理逻辑
      * @param tokenInfo 登录返回的token信息
      */
-    async function _postLogin(tokenInfo: IResponse<IAuthLoginRes>) {
-      setTokenInfo(tokenInfo.data)
+    async function _postLogin(tokenInfo: ResponseData<IAuthLoginRes>) {
+      if (tokenInfo.data) {
+        setTokenInfo(tokenInfo.data)
+      }
       const userStore = useUserStore()
       await userStore.fetchUserInfo()
     }
@@ -174,7 +176,7 @@ export const useTokenStore = defineStore(
       login,
       wxLogin,
       logout,
-      hasLogin: hasLogin,
+      hasLogin,
       tryGetValidToken,
       validToken: getValidToken,
       // 调试或特殊场景可能需要直接访问的信息

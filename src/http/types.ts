@@ -1,10 +1,8 @@
-import type { MessageOptions, MessageResult } from 'wot-design-uni/components/wd-message-box/types.ts'
-
 /**
  * 请求配置项Meta类型定义
  */
 export interface RequestMeta {
-  //是否显示loading
+  // 是否显示loading
   loading?: boolean
   // 请求唯一标识
   requestKey?: string
@@ -45,7 +43,7 @@ export class RequestOptions implements IRequestOptions {
   timeout?: number
   meta?: RequestMeta
   task?: UniApp.RequestTask
-  cancelFlag?: boolean //取消请求的标记，如果task已经取消，则此标志位为true 否则false
+  cancelFlag?: boolean // 取消请求的标记，如果task已经取消，则此标志位为true 否则false
 
   constructor(options: UniApp.RequestOptions) {
     Object.assign(this, options)
@@ -88,7 +86,7 @@ export class ResponseData<T> {
   }
 
   isOK(showTips: boolean = true, showDialog: boolean = false, defaultMessage: string = '') {
-    let success = this.code === 0
+    const success = this.code === 0
     if (!success && showTips) {
       let errorMsg = this.msg
       if (isEmpty(errorMsg)) {
@@ -108,20 +106,6 @@ export class ResponseData<T> {
     return success
   }
 }
-
-type IResponse<T = any> =
-  | {
-    code: number
-    data: T
-    message: string
-    [key: string]: any // 允许额外属性
-  }
-  | {
-    code: number
-    data: T
-    msg: string
-    [key: string]: any // 允许额外属性
-  }
 
 // 分页请求参数
 export interface PageParams {

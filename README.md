@@ -66,33 +66,71 @@
 
 ```
 uniapp-template-cli/
+├── .vscode/                  # VSCode 配置
+│   ├── settings.json         # 编辑器设置
+│   └── extensions.json       # 推荐扩展
+├── .husky/                     # Git hooks
+│   └── pre-commit             # 提交前检查
 ├── env/                      # 环境变量配置
 ├── public/                   # 静态资源
 ├── src/                      # 源代码
 │   ├── api/                  # 接口请求
-│   ├── components/           # 全局组件
-│   ├── composables/          # 全局可组合函数
-│   ├── hooks/                # 自定义 Hooks
+│   ├── components/           # 公共组件
+│   │   ├── common/            # 通用基础组件
+│   │   │   ├── GlobalLoading.vue  # 全局加载组件
+│   │   │   └── ...            # 其他通用组件
+│   │   └── business/          # 业务组件
+│   │   │   ├── PrivacyPopup.vue  # 隐私协议弹框
+│   │   │   └── ...            # 其他业务组件
+│   │   └── layout/            # 布局组件
+│   │       ├── BaseLayout.vue     # 页面组件
+│   ├── composables/          # 组合式函数（Hooks）
+│   │   ├── useDebounce.ts     # 防抖
+│   │   ├── useThrottle.ts     # 节流
+│   │   ├── useLocalStorage.ts # 本地存储
+│   │   └── index.ts            # 统一导出
+│   ├── directives/             # 自定义指令
+│   │   ├── v-loading.ts
+│   │   ├── v-permission.ts
+│   │   └── index.ts
+│   ├── router/                 # 路由配置
+│   │   ├── index.ts            # 路由工具
+│   │   ├── interceptor.ts           # 路由拦截器
+│   │   └── router.ts            # 路由集合
 │   ├── http/                 # 网络请求底层封装
 │   ├── layout/               # 布局组件
 │   ├── pages/                # 页面
 │   ├── pages-sub/            # 分包页面
 │   ├── router/               # 路由配置
 │   ├── static/               # 静态资源
-│   ├── store/                # 状态管理
+│   ├── stores/                 # Pinia 状态管理
+│   │   ├── modules/            # 状态模块
+│   │   │   ├── user.ts         # 用户状态
+│   │   │   ├── app.ts          # 应用状态
+│   │   │   ├── permission.ts   # 权限状态
+│   │   │   └── order.ts        # 订单状态
+│   │   └── index.ts            # Store 入口
 │   ├── enums/                # 枚举常量
 │   ├── styles/               # 全局样式
-│   ├── types/                # 类型定义
-│   ├── utils/                # 工具函数
-│   ├── views/                # 页面视图
+│   ├── types/                # TypeScript 类型定义
+│   ├── utils/                  # 工具函数
+│   │   ├── Apis.ts           # 内部公共工具入口
+│   │   ├── date.ts             # 日期工具
+│   │   ├── common.ts           # 通用工具
+│   │   └── index.ts
 │   ├── App.vue               # 根组件
 │   └── main.ts               # 入口文件
 ├── vite-plugins/             # Vite插件
+├── .prettierignore             # Prettier 忽略文件
+├── .prettierrc                 # Prettier 配置
+├── .eslint.config.mjs               # ESLint 配置
+├── .gitignore                  # Git 忽略文件
 ├── index.html                # HTML 模板
 ├── manifest.config.ts        # 应用的配置文件
 ├── pages.config.ts           # 页面配置文件
 ├── tsconfig.json             # TypeScript 配置
 ├── uno.config.ts             # UnoCSS 配置
 ├── uno-color-mapping.ts      # UnoCSS 日夜间颜色映射
-└── vite.config.ts            # Vite 配置
+├── vite.config.ts            # Vite 配置
+└── README.md                   # 项目说明
 ```

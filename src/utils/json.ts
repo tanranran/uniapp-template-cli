@@ -66,7 +66,7 @@ export function parseJSON(str: string): any | null {
  * @param defaultValue - 默认值
  * @returns 转换后的 对象，转换失败返回 defaultValue
  */
-export const safeJsonParse = <T = string>(jsonString: string | null, defaultValue?: T): T | undefined => {
+export function safeJsonParse<T = string>(jsonString: string | null, defaultValue?: T): T | undefined {
   if (typeof jsonString !== 'string') {
     return defaultValue
   }

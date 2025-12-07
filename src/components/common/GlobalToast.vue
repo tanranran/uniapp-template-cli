@@ -14,16 +14,18 @@ nextTick(() => {
 })
 // #endif
 
-watch(() => toastOptions.value, (newVal) => {
-  if (newVal && newVal.show) {
-    if (currentPage.value === currentPath) {
-      toast.show(toastOptions.value)
+watch(
+  () => toastOptions.value,
+  (newVal) => {
+    if (newVal && newVal.show) {
+      if (currentPage.value === currentPath) {
+        toast.show(toastOptions.value)
+      }
+    } else {
+      toast.close()
     }
   }
-  else {
-    toast.close()
-  }
-})
+)
 </script>
 
 <script lang="ts">
@@ -31,8 +33,8 @@ export default {
   options: {
     virtualHost: true,
     addGlobalClass: true,
-    styleIsolation: 'shared',
-  },
+    styleIsolation: 'shared'
+  }
 }
 </script>
 

@@ -25,8 +25,8 @@ export default defineUniPages({
   },
   preloadRule: {
     'pages/index/index': {
-      'network': 'all',
-      'packages': ['pages-sub']
+      network: 'all',
+      packages: ['pages-sub']
     }
   }
 })

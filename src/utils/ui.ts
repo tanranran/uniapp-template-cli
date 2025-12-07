@@ -1,11 +1,11 @@
 import type { ToastOptions } from 'wot-design-uni/components/wd-toast/types.ts'
 import { isShowLoadingOptions, isToastOptions } from '@/utils/is.ts'
 import { getValue } from '@/utils/object.ts'
+
 export type ToastIcon = 'success' | 'loading' | 'error' | 'none' | 'fail' | 'exception'
 export type ToastOption = UniApp.ShowToastOptions | ToastOptions | string
 export type ShowLoadingOption = UniApp.ShowLoadingOptions | ToastOptions | string
 export default {
-
   /**
    * 显示消息提示框
    * 兼容 uni.showToast 和 Wot Design Toast
@@ -15,7 +15,7 @@ export default {
     if (isToastOptions(option)) {
       uni.showToast(option).then()
     } else if (typeof option === 'string') {
-      uni.showToast({ title: option, icon: icon }).then()
+      uni.showToast({ title: option, icon }).then()
     } else {
       useGlobalToast().show(option)
     }
@@ -46,8 +46,8 @@ export default {
 
   showAlert(title: string, msg: string) {
     useGlobalMessage().alert({
-      title: title,
-      msg: msg
+      title,
+      msg
     })
   },
 

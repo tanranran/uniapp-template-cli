@@ -1,6 +1,7 @@
 import type { App } from '@vue/runtime-core'
-import { httpRequestConfig, httpInterceptor } from '@/http/interceptor.ts'
-import { type IRequestOptions, type RequestConfig, type RequestInterceptor, type RequestMeta, RequestOptions, ResponseData } from '@/http/types.ts'
+import type { IRequestOptions, RequestConfig, RequestInterceptor, ResponseData } from '@/http/types.ts'
+import { httpInterceptor, httpRequestConfig } from '@/http/interceptor.ts'
+import { RequestOptions } from '@/http/types.ts'
 
 export class Request {
   public config: RequestConfig
@@ -45,10 +46,10 @@ export class Request {
    * @returns
    */
   get<T>(url: string, data?: Record<string, any>, options: IRequestOptions = {}) {
-    let requestOptions = new RequestOptions({
+    const requestOptions = new RequestOptions({
       method: 'GET',
-      url: url,
-      data: data,
+      url,
+      data,
       ...options
     })
     requestOptions.meta = options.meta
@@ -64,10 +65,10 @@ export class Request {
    * @returns
    */
   post<T>(url: string, data?: Record<string, any>, options: IRequestOptions = {}) {
-    let requestOptions = new RequestOptions({
+    const requestOptions = new RequestOptions({
       method: 'POST',
-      url: url,
-      data: data,
+      url,
+      data,
       ...options
     })
     requestOptions.meta = options.meta

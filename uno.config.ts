@@ -1,7 +1,8 @@
-import { defineConfig, presetIcons, transformerDirectives, transformerVariantGroup } from 'unocss'
-import transformerCompileClass from '@unocss/transformer-compile-class'
 import { presetUni } from '@uni-helper/unocss-preset-uni'
+import transformerCompileClass from '@unocss/transformer-compile-class'
+import { defineConfig, presetIcons, transformerDirectives, transformerVariantGroup } from 'unocss'
 import { generateDarkColorRules, generateDarkColorShortcuts } from './uno-color-mapping'
+
 export default defineConfig({
   presets: [
     presetUni(),
@@ -9,7 +10,7 @@ export default defineConfig({
       scale: 1.2,
       warn: true,
       extraProperties: {
-        display: 'inline-block',
+        'display': 'inline-block',
         'vertical-align': 'middle'
       }
     })
@@ -20,7 +21,7 @@ export default defineConfig({
     // 启用 () 分组功能
     // 支持css class组合，eg: `<div class="hover:(bg-gray-400 font-medium) font-(light mono)">测试 unocss</div>`
     transformerVariantGroup(),
-    //将一组类合并编译为一个单独的类【在类名字符串前添加 :uno: 来标记它们以进行合并编译。】
+    // 将一组类合并编译为一个单独的类【在类名字符串前添加 :uno: 来标记它们以进行合并编译。】
     transformerCompileClass()
   ],
   shortcuts: [

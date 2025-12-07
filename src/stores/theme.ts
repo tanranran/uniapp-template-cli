@@ -25,7 +25,7 @@ export const useThemeStore = defineStore('theme', {
   }),
 
   getters: {
-    isDark: state => state.theme === 'dark'
+    isDark: (state) => state.theme === 'dark'
   },
 
   actions: {

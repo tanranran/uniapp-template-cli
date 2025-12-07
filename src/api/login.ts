@@ -33,8 +33,8 @@ export function getWxCode() {
   return new Promise<UniApp.LoginRes>((resolve, reject) => {
     uni.login({
       provider: 'weixin',
-      success: res => resolve(res),
-      fail: err => reject(new Error(err))
+      success: (res) => resolve(res),
+      fail: (err) => reject(new Error(err))
     })
   })
 }

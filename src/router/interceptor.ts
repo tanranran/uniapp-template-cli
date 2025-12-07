@@ -1,15 +1,15 @@
 /**
  * 路由拦截，通常也是登录拦截
  */
-import type { App } from '@vue/runtime-core'
 import { getAllPages, getLastPage, parseUrlToObj } from '@/router'
 import { HOME_PAGE, LOGIN_PAGE } from '@/router/router.ts'
-import { useTokenStore } from '@/store/useTokenStore.ts'
+import { useToken } from '@/stores/useToken.ts'
+
 export const FG_LOG_ENABLE = false
 
 export function judgeIsNeedLoginPath(path: string) {
   const allExcludeLoginPages = getAllPages('needLogin') // dev 环境下，需要每次都重新获取，否则新配置就不会生效
-  return allExcludeLoginPages.some(page => page.path === path)
+  return allExcludeLoginPages.some((page) => page.path === path)
 }
 
 export const navigateToInterceptor = {
@@ -34,12 +34,12 @@ export const navigateToInterceptor = {
       path = `${baseDir}/${path}`
     }
     // 处理路由不存在的情况
-    if (path !== '/' && !getAllPages().some(page => page.path !== path)) {
+    if (path !== '/' && !getAllPages().some((page) => page.path !== path)) {
       console.warn('路由不存在:', path)
       router.notFound()
       return false // 明确表示阻止原路由继续执行
     }
-    const tokenStore = useTokenStore()
+    const tokenStore = useToken()
     FG_LOG_ENABLE && console.log('tokenStore.hasLogin:', tokenStore.hasLogin())
     // 不管黑白名单，登录了就直接去吧（但是当前不能是登录页）
     if (tokenStore.hasLogin()) {
@@ -55,7 +55,7 @@ export const navigateToInterceptor = {
     let fullPath = path
     if (Object.keys(myQuery).length) {
       fullPath += `?${Object.keys(myQuery)
-        .map(key => `${key}=${myQuery[key]}`)
+        .map((key) => `${key}=${myQuery[key]}`)
         .join('&')}`
     }
     const redirectQuery = `?redirect=${encodeURIComponent(fullPath)}`

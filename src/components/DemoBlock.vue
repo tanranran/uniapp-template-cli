@@ -3,28 +3,28 @@ const props = defineProps({
   // 标题
   title: {
     type: String,
-    default: '',
+    default: ''
   },
   // 自定义类名
   customClass: {
     type: String,
-    default: '',
+    default: ''
   },
   // 垂直间距
   ver: {
     type: [Number, String],
-    default: 10,
+    default: 10
   },
   // 水平间距
   hor: {
     type: [Number, String],
-    default: 15,
+    default: 15
   },
   // 是否透明
   transparent: {
     type: Boolean,
-    default: false,
-  },
+    default: false
+  }
 })
 
 const style = computed(() => {
@@ -37,19 +37,13 @@ export default {
   options: {
     addGlobalClass: true,
     virtualHost: true,
-    styleIsolation: 'shared',
-  },
+    styleIsolation: 'shared'
+  }
 }
 </script>
 
 <template>
-  <view
-    class="mb-3 box-border w-full px-3 text-gray-500 last:mb-0 dark:text-gray-300"
-    :class="[
-      transparent ? '' : 'bg-white dark:bg-[var(--wot-dark-background2)]',
-      customClass,
-    ]"
-  >
+  <view class="mb-3 box-border w-full px-3 text-gray-500 last:mb-0 dark:text-gray-300" :class="[transparent ? '' : 'bg-white dark:bg-[var(--wot-dark-background2)]', customClass]">
     <view class="px-4 py-3 text-26rpx">
       {{ title }}
     </view>

@@ -1,5 +1,6 @@
-import { useTokenStore } from '@/store/useTokenStore.ts'
-import { type RequestConfig, type RequestInterceptor, type RequestMeta, type RequestOptions, ResponseData, type ResponseResult } from '@/http/types.ts'
+import type { RequestConfig, RequestInterceptor, RequestMeta, RequestOptions, ResponseResult } from '@/http/types.ts'
+import { ResponseData } from '@/http/types.ts'
+import { useToken } from '@/stores/useToken.ts'
 import { parse } from '@/utils/json.ts'
 
 // 请求基准地址
@@ -9,14 +10,14 @@ let requestNum = 0
 // 重复请求
 const pendingRequests = new Map<string, RequestOptions>()
 
-const addLoading = () => {
+function addLoading() {
   requestNum++
   if (requestNum === 1) {
     Apis.showLoading('加载中...')
   }
 }
 
-const removeLoading = () => {
+function removeLoading() {
   requestNum--
   if (requestNum === 0) {
     Apis.hideLoading()
@@ -52,7 +53,7 @@ export const httpInterceptor: RequestInterceptor = {
     pendingRequests.set(requestKey, options)
     meta.requestKey = requestKey
     meta.loading && addLoading()
-    const tokenStore = useTokenStore()
+    const tokenStore = useToken()
     const token = tokenStore.validToken
     if (token) {
       options.header.Authorization = `Bearer ${token}`
@@ -72,8 +73,8 @@ export const httpInterceptor: RequestInterceptor = {
     const responseData = new ResponseData<T>()
     let responseMsg = ''
     let responseCode = -1
-    if ([200, 401].indexOf(statusCode) > -1) {
-      let dataObj = parse<any>(data)
+    if ([200, 401].includes(statusCode)) {
+      const dataObj = parse<any>(data)
       if (dataObj) {
         responseCode = dataObj?.errorCode ?? dataObj?.code ?? -1
         responseMsg = dataObj?.errorMsg ?? dataObj?.message ?? ''
@@ -89,7 +90,7 @@ export const httpInterceptor: RequestInterceptor = {
   }
 }
 
-const handleNetworkError = (status: number, defaultMessage: string) => {
+function handleNetworkError(status: number, defaultMessage: string) {
   if (defaultMessage) {
     return defaultMessage
   }

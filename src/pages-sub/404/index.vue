@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-  definePage({
-    style: {
-      navigationStyle: 'custom'
-    }
-  })
-  function goBack() {
-    router.home()
+definePage({
+  style: {
+    navigationStyle: 'custom'
   }
+})
+function goBack() {
+  router.home()
+}
 </script>
 
 <template>

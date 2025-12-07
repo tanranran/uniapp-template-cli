@@ -1,6 +1,7 @@
 // unplugin-auto-import-ignore
-import { httpInstance, Request } from '@/http'
+import type { Request } from '@/http'
 import type { ShowLoadingOption, ToastIcon, ToastOption } from '@/utils/ui.ts'
+import { httpInstance } from '@/http'
 
 export class Apis {
   static http: Request = httpInstance

@@ -1,10 +1,10 @@
 <template>
-  <view :style="{ height: height, backgroundColor: bgColor }" class="base-layout flex-col">
-    <slot v-if="success" />
+  <view :style="{ height, backgroundColor: bgColor }" class="base-layout flex-col">
+    <slot v-if="success"></slot>
     <view v-if="!success" class=":uno: wh-full flex-center flex-1">
       <view v-if="state.showLoading" class="flex-col-center">
-        <wd-loading :color="'#777777'" size="46" />
-        <text class="text-#777 m-t-10rpx">加载中...</text>
+        <wd-loading color="#777777" size="46" />
+        <text class="m-t-10rpx text-#777">加载中...</text>
       </view>
 
       <view v-if="state.showEmpty" class="flex-col-center text-#777">
@@ -20,6 +20,7 @@
     </view>
   </view>
 </template>
+
 <script lang="ts" setup>
 defineOptions({
   name: 'BaseLayout',
@@ -31,18 +32,18 @@ defineOptions({
   }
 })
 
+const props = withDefaults(defineProps<Props>(), {
+  height: 'calc(100vh - var(--window-top))',
+  autoLoading: false,
+  showLogin: false
+})
+
 interface Props {
   height?: string
   autoLoading?: boolean
   showLogin?: boolean
   bgColor?: string
 }
-
-const props = withDefaults(defineProps<Props>(), {
-  height: 'calc(100vh - var(--window-top))',
-  autoLoading: false,
-  showLogin: false
-})
 
 const state = reactive({
   showLoading: false,

@@ -87,7 +87,7 @@ function createColorRule(pattern: RegExp, property: string): Rule {
   return [
     pattern,
     ([_, lightColor, darkColor]) => {
-      const isValidHex = (color: string) => /^([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(color)
+      const isValidHex = (color: string) => /^(?:[A-F0-9]{6}|[A-F0-9]{3})$/i.test(color)
 
       if (!lightColor || !darkColor || !isValidHex(lightColor) || !isValidHex(darkColor)) {
         return null
@@ -106,17 +106,17 @@ function createColorRule(pattern: RegExp, property: string): Rule {
 export function generateDarkColorRules() {
   return [
     // 文字颜色规则
-    createColorRule(/^color-(.+)-(.+)$/, 'color'),
-    createColorRule(/^text-(.+)-(.+)$/, 'color'),
+    createColorRule(/^color-([A-F0-9]+)-([A-F0-9]+)$/i, 'color'),
+    createColorRule(/^text-([A-F0-9]+)-([A-F0-9]+)$/i, 'color'),
 
     // 背景颜色规则
-    createColorRule(/^bg-(.+)-(.+)$/, 'background-color'),
+    createColorRule(/^bg-([A-F0-9]+)-([A-F0-9]+)$/i, 'background-color'),
 
     // 边框颜色规则
-    createColorRule(/^border-(.+)-(.+)$/, 'border-color'),
-    createColorRule(/^border-t-(.+)-(.+)$/, 'border-top-color'),
-    createColorRule(/^border-r-(.+)-(.+)$/, 'border-right-color'),
-    createColorRule(/^border-b-(.+)-(.+)$/, 'border-bottom-color'),
-    createColorRule(/^border-l-(.+)-(.+)$/, 'border-left-color')
+    createColorRule(/^border-([A-F0-9]+)-([A-F0-9]+)$/i, 'border-color'),
+    createColorRule(/^border-t-([A-F0-9]+)-([A-F0-9]+)$/i, 'border-top-color'),
+    createColorRule(/^border-r-([A-F0-9]+)-([A-F0-9]+)$/i, 'border-right-color'),
+    createColorRule(/^border-b-([A-F0-9]+)-([A-F0-9]+)$/i, 'border-bottom-color'),
+    createColorRule(/^border-l-([A-F0-9]+)-([A-F0-9]+)$/i, 'border-left-color')
   ]
 }

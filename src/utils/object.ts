@@ -24,8 +24,8 @@ export function isArray(value: any): value is any[] {
  * @param property
  * @returns
  */
-export function isString(property: string | Object | ArrayBuffer | undefined | null): property is string {
-  return typeof property === 'string' || property instanceof String
+export function isString(property: CommonAllType): property is string {
+  return typeof property === 'string'
 }
 
 /**
@@ -46,9 +46,9 @@ export function isEmpty(property: CommonAllType): boolean {
   if (isNull(property)) {
     return true
   } else if (isString(property)) {
-    return property == '' || property.length == 0
+    return property === '' || property.length === 0
   } else if (Array.isArray(property)) {
-    return property.length == 0
+    return property.length === 0
   } else if (property instanceof Map) {
     return property.size === 0
   } else if (isObjectEmpty(property)) {
@@ -66,13 +66,13 @@ export function isNotEmpty(property: CommonAllType): boolean {
   return !isEmpty(property)
 }
 
-export function isObjectEmpty(obj: object | null | undefined): boolean {
+export function isObjectEmpty(obj: CommonAllType): boolean {
   try {
     if (isNull(obj)) {
       return true
     }
     if (obj instanceof ArrayBuffer || obj instanceof Uint8Array) {
-      return obj.byteLength == 0
+      return obj.byteLength === 0
     }
     return Object.keys(obj!).length === 0
   } catch (e) {
@@ -96,7 +96,6 @@ export function hasProperty(obj: object, propertyKey: PropertyKey) {
  * @param obj
  * @param key
  * @param value
- * @returns
  */
 export function setValue(obj: object, key: string, value: CommonAllType) {
   try {

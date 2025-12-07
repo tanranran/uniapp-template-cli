@@ -65,6 +65,6 @@ export function useTheme() {
     // 状态（只读）
     theme: computed(() => store.theme),
     isDark: computed(() => store.isDark),
-    themeVars: computed(() => store.themeVars),
+    themeVars: computed(() => store.themeVars)
   }
 }
