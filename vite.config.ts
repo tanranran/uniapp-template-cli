@@ -23,6 +23,7 @@ import { defineConfig, loadEnv } from 'vite'
 import ViteRestart from 'vite-plugin-restart'
 import { handlePageName } from './vite-plugins/vite-config-uni-pages'
 import { AutoVersion } from './vite-plugins/vite-plugin-auto-version'
+import { codeInspectorPlugin } from 'code-inspector-plugin'
 
 // https://vitejs.dev/config/
 export default async ({ mode }: ConfigEnv) => {
@@ -126,6 +127,10 @@ export default async ({ mode }: ConfigEnv) => {
       ViteRestart({
         // 通过这个插件，在修改vite.config.js文件则不需要重新运行也生效配置
         restart: ['vite.config.js']
+      }),
+      //点击页面上的 DOM，它能够自动打开你的 IDE 并将光标定位到 DOM 对应的源代码位置。[Mac 系统默认组合键是 Option + Shift；Window 的默认组合键是 Alt + Shift，在浏览器控制台会输出相关组合键提示]
+      codeInspectorPlugin({
+        bundler: 'vite'
       }),
       // h5环境增加 BUILD_TIME 和 BUILD_BRANCH
       UNI_PLATFORM === 'h5' && {
