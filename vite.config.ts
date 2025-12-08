@@ -16,6 +16,7 @@ import UniPages from '@uni-helper/vite-plugin-uni-pages'
 import Optimization from '@uni-ku/bundle-optimizer'
 import UniKuRoot from '@uni-ku/root'
 import UnoCSS from '@unocss/vite'
+import { codeInspectorPlugin } from 'code-inspector-plugin'
 import dayjs from 'dayjs'
 import { visualizer } from 'rollup-plugin-visualizer'
 import AutoImport from 'unplugin-auto-import/vite'
@@ -23,7 +24,6 @@ import { defineConfig, loadEnv } from 'vite'
 import ViteRestart from 'vite-plugin-restart'
 import { handlePageName } from './vite-plugins/vite-config-uni-pages'
 import { AutoVersion } from './vite-plugins/vite-plugin-auto-version'
-import { codeInspectorPlugin } from 'code-inspector-plugin'
 
 // https://vitejs.dev/config/
 export default async ({ mode }: ConfigEnv) => {
@@ -215,6 +215,7 @@ export default async ({ mode }: ConfigEnv) => {
                 if (id.includes('element-plus')) {
                   return 'element-plus'
                 }
+                return undefined
               }
             }
           : {}
