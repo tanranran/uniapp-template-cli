@@ -1,6 +1,6 @@
 <template>
   <view :style="{ height, backgroundColor: bgColor }" class="base-layout flex-col">
-    <slot v-if="success"></slot>
+    <slot v-if="success" />
     <view v-if="!success" class=":uno: wh-full flex-center flex-1">
       <view v-if="state.showLoading" class="flex-col-center">
         <wd-loading color="#777777" size="46" />
