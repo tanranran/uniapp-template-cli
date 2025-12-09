@@ -3,7 +3,7 @@
 </h1>
 
 
-由 `uniapp` + `Vue3` + `Ts` + `Vite6` + `UnoCss` 构成，使用了最新的前端技术栈，无需依靠 `HBuilderX`，通过命令行方式运行 `web`、`小程序` 和 `App`（编辑器推荐 `WebStorm`，可选 `VSCode`）。
+由 `uniapp` + `Vue3` + `Ts` + `Vite5` + `UnoCss` 构成，使用了最新的前端技术栈，无需依靠 `HBuilderX`，通过命令行方式运行 `web`、`小程序` 和 `App`（编辑器推荐 `WebStorm`，可选 `VSCode`）。
 
 ## 平台兼容性
 
