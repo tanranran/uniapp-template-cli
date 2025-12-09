@@ -1,8 +1,16 @@
 {
+  "git.enableSmartCommit": true,
+  "git.confirmSync": false,
+  "git.autofetch": true,
+  "emmet.includeLanguages": {
+    "vue-html": "html",
+    "vue": "html"
+  },
   // 配置语言的文件关联
   "files.associations": {
     "pages.json": "jsonc", // pages.json 可以写注释
-    "manifest.json": "jsonc" // manifest.json 可以写注释
+    "manifest.json": "jsonc", // manifest.json 可以写注释
+    "*.cz-config.js": "javascript"
   },
   "stylelint.enable": false, // 禁用 stylelint
   "css.validate": false, // 禁用 CSS 内置验证
@@ -40,6 +48,7 @@
   // 保存
   "files.autoSave": "afterDelay",
   "files.autoSaveDelay": 1000,
+  "typescript.preferences.importModuleSpecifier": "relative",
   // 路径智能提示
   "path-intellisense.autoSlash": true,
   // 错误高亮
