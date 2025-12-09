@@ -1,6 +1,6 @@
 <template>
   <base-layout ref="page">
-    <z-paging ref="paging" cell-height-mode="dynamic" :force-close-inner-list="true" use-virtual-list @query="queryList" @virtual-list-change="(vList: any) => (dataList = vList)">
+    <z-paging ref="paging" cell-height-mode="dynamic" :force-close-inner-list="true" use-virtual-list @query="queryList" @virtual-list-change="vList => dataList = vList">
       <view v-for="item in dataList" :id="`zp-id-${item.zp_index}`" :key="item.zp_index" class="block">
         <text>测试列表XXXXXXXXXX</text>
       </view>

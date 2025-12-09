@@ -48,6 +48,7 @@ export default uni({
         order: [['script', 'template'], 'style']
       }
     ],
+    'vue/comma-dangle': 'off',
     'vue/comment-directive': 'off',
     'vue/custom-event-name-casing': 'off',
     'vue/event-name-casing': 'off',

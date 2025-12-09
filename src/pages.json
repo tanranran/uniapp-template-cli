@@ -27,7 +27,7 @@
     }
   },
   "pages": [
-    // #ifdef APP || MP-HARMONY || MP-WEIXIN || H5
+    // #ifdef APP || MP-HARMONY || MP-WEIXIN
     {
       "path": "pages/index/index",
       "type": "home",
@@ -37,6 +37,14 @@
       "name": "PAGES_INDEX_INDEX"
     },
     // #endif
+    {
+      "path": "pages/index/index",
+      "type": "home",
+      "style": {
+        "navigationBarTitleText": "日历组件测试"
+      },
+      "name": "PAGES_INDEX_INDEX"
+    },
     {
       "path": "pages/index/paging",
       "type": "home",

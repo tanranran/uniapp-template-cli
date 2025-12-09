@@ -18,7 +18,7 @@ export const useGlobalLoading = defineStore('global-loading', {
   getters: {},
   actions: {
     // 加载提示
-    loading(option: ToastOptions | string) {
+    loading(option: ToastOptions | string = '加载中...') {
       this.currentPage = getCurrentPath()
       this.loadingOptions = CommonUtil.deepMerge(
         {
@@ -33,6 +33,9 @@ export const useGlobalLoading = defineStore('global-loading', {
         },
         typeof option === 'string' ? { msg: option } : option
       ) as ToastOptions
+    },
+    show(option: ToastOptions | string = '加载中...') {
+      this.loading(option)
     },
     // 关闭Toast
     close() {

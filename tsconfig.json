@@ -17,14 +17,28 @@
     "experimentalDecorators": true,
     "baseUrl": ".",
     "module": "ESNext",
+    // 模块规范
+    "moduleResolution": "Bundler",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": [
+        "./src/*"
+      ]
     },
     // 与 Vite 的 esbuild 兼容
     "resolveJsonModule": true,
-    "types": ["node", "@types/node", "@dcloudio/types", "@uni-helper/uni-types", "@uni-helper/uni-app-types", "@uni-helper/vite-plugin-uni-pages", "miniprogram-api-typings", "wot-design-uni/global", "z-paging/types", "./src/types/async-component.d.ts", "./src/types/async-import.d.ts"],
-    // 模块规范
-    //    "moduleResolution": "Bundler",
+    "types": [
+      "node",
+      "@types/node",
+      "@dcloudio/types",
+      "@uni-helper/uni-types",
+      "@uni-helper/uni-app-types",
+      "@uni-helper/vite-plugin-uni-pages",
+      "miniprogram-api-typings",
+      "wot-design-uni/global",
+      "z-paging/types",
+      "./src/types/async-component.d.ts",
+      "./src/types/async-import.d.ts"
+    ],
     // 更适合 Vite 的模块解析策略
     "allowImportingTsExtensions": true,
     "strict": true,
@@ -57,8 +71,24 @@
   },
   "vueCompilerOptions": {
     "target": 3,
-    "plugins": ["@uni-helper/uni-types/volar-plugin"]
+    "plugins": [
+      "@uni-helper/uni-types/volar-plugin"
+    ]
   },
-  "include": ["package.json", "src/**/*.ts", "src/**/*.js", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.jsx", "src/**/*.vue", "src/**/*.json", "uno-color-mapping.ts"],
-  "exclude": ["node_modules", "unpackage", "dist"]
+  "include": [
+    "package.json",
+    "src/**/*.ts",
+    "src/**/*.js",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.jsx",
+    "src/**/*.vue",
+    "src/**/*.json",
+    "uno-color-mapping.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "unpackage",
+    "dist"
+  ]
 }
