@@ -7,7 +7,7 @@ module.exports = {
   singleQuote: true, // 使用单引号（'）而不是双引号（"）。
   quoteProps: 'preserve', // 仅在对象属性名需要时（例如属性名包含特殊字符）才为其添加引号。
   jsxSingleQuote: true, // 在 JSX 中使用单引号而不是双引号。
-  trailingComma: 'none', // 仅在ES5 中需要的位置添加逗号
+  trailingComma: 'es5', // 仅在ES5 中需要的位置添加逗号
   bracketSpacing: true, // 在对象字面量的大括号 {} 内侧打印空格。例如 { foo: bar } 而不是 {foo:bar}。
   bracketSameLine: false, // 将>多行 HTML（HTML、JSX、Vue、Angular）元素放在最后一行的末尾，而不是单独放在下一行（不适用于自闭合元素）。
   arrowParens: 'always', // 在唯一的箭头函数参数周围始终包含括号。
@@ -20,5 +20,5 @@ module.exports = {
   // Prettier 可以限制自己只格式化在文件顶部包含特殊注释（称为 pragma）的文件。这在逐渐将大型、未格式化的代码库过渡到 Prettier 时非常有用<bool>，默认false
   requirePragma: false,
   // Prettier可以在文件的顶部插入一个 @format 的特殊注释，以表明该文件已经被Prettier格式化过了。在使用 --require-pragma 参数处理一连串的文件时这个功能将十分有用。如果文件顶部已经有一个do-clock，这个选项将新建一行注释，并打上 @format 标记<bool>，默认false
-  insertPragma: false
+  insertPragma: false,
 }

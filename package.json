@@ -68,7 +68,7 @@
     "format": "prettier --write \"**/*.{js,ts,tsx,vue,json,css,scss,md}\"",
     "format:check": "prettier --check \"**/*.{js,ts,tsx,vue,json,css,scss,md}\"",
     "lint": "eslint",
-    "lint-fix": "eslint --fix --ext .js --ext .jsx --ext .vue src/"
+    "lint-fix": "eslint --fix ./ --ext ts,tsx,vue,json,js,jsx,.vue"
   },
   "dependencies": {
     "@dcloudio/uni-app": "3.0.0-alpha-4080420251023001",
@@ -107,7 +107,7 @@
     "@uni-helper/uni-types": "1.0.0-alpha.6",
     "@uni-helper/unocss-preset-uni": "^0.2.11",
     "@uni-helper/vite-plugin-uni-components": "^0.2.3",
-    "@uni-helper/vite-plugin-uni-manifest": "^0.2.9",
+    "@uni-helper/vite-plugin-uni-manifest": "^0.2.11",
     "@uni-helper/vite-plugin-uni-pages": "^0.3.20",
     "@uni-ku/bundle-optimizer": "^1.3.16",
     "@uni-ku/root": "^1.4.1",

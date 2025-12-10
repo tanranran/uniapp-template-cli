@@ -5,6 +5,9 @@ export default uni({
   vue: true,
   markdown: false,
   ignores: [
+    'node_modules',
+    '.nuxt',
+    'dist',
     // 忽略uni_modules目录
     '**/uni_modules/',
     // 忽略原生插件目录

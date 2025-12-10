@@ -55,6 +55,7 @@ export default async ({ mode }: ConfigEnv) => {
         },
         exclude: ['**/components/**/*.*', '**/layout/**/*.*']
       }),
+      // Components 需要在 Uni 之前引入
       UniHelperComponents({
         resolvers: [WotResolver()],
         extensions: ['vue'],
