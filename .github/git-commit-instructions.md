@@ -3,7 +3,7 @@ Make sure it includes an accurate and informative subject line that succinctly s
 
 Below is the commit message template:
 
-<type>(<scope>): <subject>
+[type]: <subject>
 // blank line
 <body>
 // blank line

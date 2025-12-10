@@ -9,8 +9,7 @@
   // 配置语言的文件关联
   "files.associations": {
     "pages.json": "jsonc", // pages.json 可以写注释
-    "manifest.json": "jsonc", // manifest.json 可以写注释
-    "*.cz-config.js": "javascript"
+    "manifest.json": "jsonc" // manifest.json 可以写注释
   },
   "stylelint.enable": false, // 禁用 stylelint
   "css.validate": false, // 禁用 CSS 内置验证
@@ -35,11 +34,25 @@
   //自动格式化
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": "active",
   "editor.formatOnSave": true,
+  "files.eol": "\n",  // 新文件默认使用 LF
+  "files.insertFinalNewline": true,  // 文件末尾自动添加空行（推荐）
+  "files.trimTrailingWhitespace": true,  // 自动删除行尾空格
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll.stylelint": "explicit"
   },
   "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[scss]": {
@@ -48,7 +61,6 @@
   // 保存
   "files.autoSave": "afterDelay",
   "files.autoSaveDelay": 1000,
-  "typescript.preferences.importModuleSpecifier": "relative",
   // 路径智能提示
   "path-intellisense.autoSlash": true,
   // 错误高亮
@@ -158,5 +170,18 @@
     "Wechat",
     "WechatMiniprogram",
     "Weixin"
-  ]
+  ],
+  "eslint.probe": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "html",
+    "vue",
+    "markdown",
+    "json",
+    "jsonc"
+  ],
+  "stylelint.validate": ["css", "scss", "vue"],
+  "stylelint.customSyntax": "postcss-scss"
 }
