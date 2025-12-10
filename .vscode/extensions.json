@@ -5,12 +5,11 @@
     "MS-CEINTL.vscode-language-pack-zh-hans", // vscode 中文（简体）语言包
     "mhutchie.git-graph", // git 提交记录
     "donjayamanne.githistory", // git 历史记录
-    "eamodio.gitlens", // git 实用插件
     "christian-kohler.npm-intellisense", // npm Intellisense
     "dbaeumer.vscode-eslint", // ESLint 代码规范
     "stylelint.vscode-stylelint", // CSS/SCSS/Less 规范
-    "streetsidesoftware.code-spell-checker" // 拼写检查
-    "antfu.unocss",
+    "streetsidesoftware.code-spell-checker", // 拼写检查
+    "antfu.unocss", // UnoCSS 原子化 CSS 引擎
     "antfu.iconify",
     "evils.uniapp-vscode",
     "uni-helper.uni-helper-vscode",
