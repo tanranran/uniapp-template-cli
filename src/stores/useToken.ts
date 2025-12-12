@@ -36,7 +36,8 @@ export const useToken = defineStore(
       const now = Date.now()
       const expireTime = uni.getStorageSync('accessTokenExpireTime')
       console.log('时间差', `${now - expireTime}`)
-      if (!expireTime) return true
+      if (!expireTime)
+        return true
       return now >= expireTime
     }
 

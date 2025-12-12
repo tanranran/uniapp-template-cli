@@ -13,8 +13,8 @@ function uuidv4ByRandomValues(): UUID {
   const bytes = new Uint8Array(16)
   crypto.getRandomValues(bytes)
   // Per RFC4122, set version (4) and variant (1)
-  bytes[6] = (bytes[6]! & 0x0f) | 0x40
-  bytes[8] = (bytes[8]! & 0x3f) | 0x80
+  bytes[6] = (bytes[6]! & 0x0F) | 0x40
+  bytes[8] = (bytes[8]! & 0x3F) | 0x80
   const hex = [...bytes].map((b) => b.toString(16).padStart(2, '0'))
   return `${hex.slice(0, 4).join('')}-${hex[4]}${hex[5]}-${hex[6]}${hex[7]}-${hex[8]}${hex[9]}-${hex.slice(10, 16).join('')}` as UUID
 }
@@ -40,11 +40,13 @@ function uuidv4ByMath(): UUID {
  * @returns RFC4122 标准 UUID
  */
 export function uuid(): UUID {
-  if (isSecureContext()) return crypto.randomUUID() as UUID
+  if (isSecureContext())
+    return crypto.randomUUID() as UUID
   if (typeof crypto !== 'undefined' && (crypto as any).getRandomValues) {
     return uuidv4ByRandomValues()
   }
-  if (isNode()) return uuidv4ByNode()
+  if (isNode())
+    return uuidv4ByNode()
   return uuidv4ByMath()
 }
 

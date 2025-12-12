@@ -125,7 +125,7 @@ export default defineManifestConfig({
       minifyWXSS: isBuild, // 上传代码时是否自动压缩样式文件
       minifyWXML: isBuild, // 上传代码时是否自动压缩 WXML 文件
       postcss: false, // 上传代码时样式是否自动补全
-      uglifyFileName: isBuild, //上传时进行代码保护
+      uglifyFileName: isBuild, // 上传时进行代码保护
       swc: true, // 开启 swc 编译模式
       ignoreUploadUnusedFiles: isBuild // 上传时是否过滤无依赖文件
     },

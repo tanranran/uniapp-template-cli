@@ -36,8 +36,8 @@ export default {
   options: {
     virtualHost: true,
     addGlobalClass: true,
-    styleIsolation: 'shared',
-  },
+    styleIsolation: 'shared'
+  }
 }
 </script>
 

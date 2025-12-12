@@ -15,7 +15,8 @@ export default function UnoCssInject({ srcDir, mainEntry = 'main.ts' }: UnoCssIn
     transform: {
       order: 'post',
       handler(code, id) {
-        if (id === mainEntryFile) return `\nimport "virtual:uno.css";\n${code}`
+        if (id === mainEntryFile)
+          return `\nimport "virtual:uno.css";\n${code}`
       }
     },
     generateBundle: {

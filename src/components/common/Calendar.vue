@@ -209,29 +209,55 @@ onMounted(() => {
   <view class="calendar-container">
     <!-- 视图切换 -->
     <view class="view-switcher">
-      <button class="view-btn" :class="[{ active: currentView === 'day' }]" @click="switchView('day')">日</button>
-      <button class="view-btn" :class="[{ active: currentView === 'month' }]" @click="switchView('month')">月</button>
-      <button class="view-btn" :class="[{ active: currentView === 'year' }]" @click="switchView('year')">年</button>
+      <button class="view-btn" :class="[{ active: currentView === 'day' }]" @click="switchView('day')">
+        日
+      </button>
+      <button class="view-btn" :class="[{ active: currentView === 'month' }]" @click="switchView('month')">
+        月
+      </button>
+      <button class="view-btn" :class="[{ active: currentView === 'year' }]" @click="switchView('year')">
+        年
+      </button>
     </view>
 
     <!-- 日视图（月日历） -->
     <view v-if="currentView === 'day'" class="day-view">
       <!-- 年月导航 -->
       <view class="nav-header">
-        <button class="nav-btn" @click="changeMonth(-1)">&lt;</button>
-        <view class="nav-title">{{ currentDate.getFullYear() }}年{{ currentDate.getMonth() + 1 }}月</view>
-        <button class="nav-btn" @click="changeMonth(1)">&gt;</button>
+        <button class="nav-btn" @click="changeMonth(-1)">
+          &lt;
+        </button>
+        <view class="nav-title">
+          {{ currentDate.getFullYear() }}年{{ currentDate.getMonth() + 1 }}月
+        </view>
+        <button class="nav-btn" @click="changeMonth(1)">
+          &gt;
+        </button>
       </view>
 
       <!-- 星期标题 -->
       <view class="week-header">
-        <view class="week-day">日</view>
-        <view class="week-day">一</view>
-        <view class="week-day">二</view>
-        <view class="week-day">三</view>
-        <view class="week-day">四</view>
-        <view class="week-day">五</view>
-        <view class="week-day">六</view>
+        <view class="week-day">
+          日
+        </view>
+        <view class="week-day">
+          一
+        </view>
+        <view class="week-day">
+          二
+        </view>
+        <view class="week-day">
+          三
+        </view>
+        <view class="week-day">
+          四
+        </view>
+        <view class="week-day">
+          五
+        </view>
+        <view class="week-day">
+          六
+        </view>
       </view>
 
       <!-- 日期网格 -->
@@ -243,21 +269,27 @@ onMounted(() => {
           :class="{
             'current-month': item.isCurrentMonth,
             'other-month': !item.isCurrentMonth,
-            'today': item.isToday
+            'today': item.isToday,
           }"
           @click="handleDateClick(item.date, getDateMark(item.date))"
         >
-          <view class="day-number">{{ item.day }}</view>
+          <view class="day-number">
+            {{ item.day }}
+          </view>
           <view
             v-if="getDateMark(item.date)"
             class="date-mark"
             :style="{
               backgroundColor: getMarkBgColor(getDateMark(item.date)?.type || ''),
-              color: getMarkColor(getDateMark(item.date)?.type || '')
+              color: getMarkColor(getDateMark(item.date)?.type || ''),
             }"
           >
-            <view class="mark-amount">{{ getDateMark(item.date)?.amount }}</view>
-            <view class="mark-title">{{ getDateMark(item.date)?.title }}</view>
+            <view class="mark-amount">
+              {{ getDateMark(item.date)?.amount }}
+            </view>
+            <view class="mark-title">
+              {{ getDateMark(item.date)?.title }}
+            </view>
           </view>
         </view>
       </view>
@@ -267,9 +299,15 @@ onMounted(() => {
     <view v-if="currentView === 'month'" class="month-view">
       <!-- 年份导航 -->
       <view class="nav-header">
-        <button class="nav-btn" @click="changeYear(-1)">&lt;</button>
-        <view class="nav-title">{{ currentDate.getFullYear() }}年</view>
-        <button class="nav-btn" @click="changeYear(1)">&gt;</button>
+        <button class="nav-btn" @click="changeYear(-1)">
+          &lt;
+        </button>
+        <view class="nav-title">
+          {{ currentDate.getFullYear() }}年
+        </view>
+        <button class="nav-btn" @click="changeYear(1)">
+          &gt;
+        </button>
       </view>
 
       <!-- 月份网格 -->
@@ -279,11 +317,13 @@ onMounted(() => {
           :key="index"
           class="month-item"
           :class="{
-            'current-month': item.isCurrentMonth
+            'current-month': item.isCurrentMonth,
           }"
           @click="handleDateClick(item.date)"
         >
-          <view class="month-name">{{ item.monthName }}</view>
+          <view class="month-name">
+            {{ item.monthName }}
+          </view>
           <view class="month-amount">
             {{ item.isCurrentMonth ? '1笔' : '3笔' }}
           </view>
@@ -298,9 +338,15 @@ onMounted(() => {
     <view v-if="currentView === 'year'" class="year-view">
       <!-- 年份范围导航 -->
       <view class="nav-header">
-        <button class="nav-btn" @click="changeYear(-10)">&lt;</button>
-        <view class="nav-title">{{ yearData.length > 0 ? `${yearData[0].year}-${yearData[yearData.length - 1].year}` : '' }}</view>
-        <button class="nav-btn" @click="changeYear(10)">&gt;</button>
+        <button class="nav-btn" @click="changeYear(-10)">
+          &lt;
+        </button>
+        <view class="nav-title">
+          {{ yearData.length > 0 ? `${yearData[0].year}-${yearData[yearData.length - 1].year}` : '' }}
+        </view>
+        <button class="nav-btn" @click="changeYear(10)">
+          &gt;
+        </button>
       </view>
 
       <!-- 年份网格 -->
@@ -310,11 +356,13 @@ onMounted(() => {
           :key="index"
           class="year-item"
           :class="{
-            'current-year': item.isCurrentYear
+            'current-year': item.isCurrentYear,
           }"
           @click="handleDateClick(new Date(item.year, 0, 1))"
         >
-          <view class="year-name">{{ item.year }}年</view>
+          <view class="year-name">
+            {{ item.year }}年
+          </view>
           <view class="year-amount">
             {{ item.isCurrentYear ? '5笔' : '3笔' }}
           </view>

@@ -1,17 +1,23 @@
-# 依赖
-node_modules
+/node_modules/**
 uni_modules
 package-lock.json
 yarn.lock
 pnpm-lock.yaml
 pnpm-workspace.yaml
+**/*.svg
+**/*.sh
+**/*.yaml
 
 # 构建输出
-dist
+/dist/*
+/public/*
 build
 coverage
 *.min.js
 *.min.css
+.local
+.output.js
+
 
 # 日志
 *.log

@@ -137,7 +137,7 @@ function handleNetworkError(status: number, defaultMessage: string) {
         message = `连接出错(${status})!`
     }
   } else {
-    message = `无法连接到服务器！`
+    message = '无法连接到服务器！'
   }
 
   return message

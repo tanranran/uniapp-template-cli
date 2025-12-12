@@ -100,11 +100,15 @@ function handleDateClick(date: string, mark?: any) {
 
       <!-- 日历组件测试 -->
       <view class="mb-4">
-        <text class="mb-2 block text-lg font-bold">日历组件测试</text>
+        <text class="mb-2 block text-lg font-bold">
+          日历组件测试
+        </text>
         <Calendar :date-marks="dateMarks" @view-change="handleViewChange" @date-change="handleDateChange" @date-click="handleDateClick" />
       </view>
 
-      <text class="bg-242629-E0E0E0">车费是数据1</text>
+      <text class="bg-242629-E0E0E0">
+        车费是数据1
+      </text>
     </view>
     <PrivacyPopup />
   </base-layout>

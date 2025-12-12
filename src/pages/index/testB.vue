@@ -1,7 +1,3 @@
-<template>
-  <wd-button @click="loading.show()">测试loading</wd-button>
-</template>
-
 <script lang="ts" setup>
 definePage({
   style: {
@@ -11,4 +7,8 @@ definePage({
 const loading = useGlobalLoading()
 </script>
 
-<style></style>
+<template>
+  <wd-button @click="loading.show()">
+    测试loading
+  </wd-button>
+</template>

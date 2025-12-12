@@ -101,7 +101,7 @@ export function setValue(obj: object, key: string, value: CommonAllType) {
   try {
     Reflect.set(obj, key, value)
   } catch (e) {
-    console.error(`setValue`, e)
+    console.error('setValue', e)
   }
 }
 
@@ -123,7 +123,7 @@ export function getValue<T>(obj: object | undefined | null | unknown, key: strin
     }
     return value
   } catch (e) {
-    console.error(`getValue`, e)
+    console.error('getValue', e)
     return defaultValue
   }
 }
