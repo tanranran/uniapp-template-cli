@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import type { WebViewOnMessageEvent } from '@uni-helper/uni-types'
+
 definePage({
   style: {
     navigationBarTitleText: '...'
@@ -6,13 +8,13 @@ definePage({
 })
 const url = ref()
 onLoad((op) => {
-  if (op?.title) {
+  if (op?.['title']) {
     uni.setNavigationBarTitle({
-      title: op.title
+      title: op['title']
     })
   }
-  if (op?.url || op?.src) {
-    url.value = decodeURIComponent(op?.url || op?.src)
+  if (op?.['url'] || op?.['src']) {
+    url.value = decodeURIComponent(op?.['url'] || op?.['src'])
   }
 })
 

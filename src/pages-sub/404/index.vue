@@ -13,8 +13,6 @@ function goBack() {
   <view class="h-screen flex flex-col items-center justify-center">
     <view>404</view>
     <view>页面不存在</view>
-    <button class="mt-6 w-40 text-center" @click="goBack">
-      返回首页
-    </button>
+    <button class="mt-6 w-40 text-center" @click="goBack">返回首页</button>
   </view>
 </template>

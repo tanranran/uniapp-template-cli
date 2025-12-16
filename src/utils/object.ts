@@ -74,7 +74,11 @@ export function isObjectEmpty(obj: CommonAllType): boolean {
     if (obj instanceof ArrayBuffer || obj instanceof Uint8Array) {
       return obj.byteLength === 0
     }
-    return Object.keys(obj!).length === 0
+    // 使用类型检查确保 obj 是对象类型
+    if (typeof obj === 'object' && obj !== null) {
+      return Object.keys(obj).length === 0
+    }
+    return false
   } catch (e) {
     console.error(`$isObjectEmpty_${e}`)
     return true

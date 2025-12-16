@@ -214,8 +214,7 @@ function replaceManifest(manifest: string, path: string, value: string) {
   // 遍历manifest的每一行，查找并替换指定路径的值
   for (let index = 0; index < manifestArr.length; index++) {
     const item = manifestArr[index]
-    if (new RegExp(`"${arr[i]}"`).test(item))
-      ++i
+    if (new RegExp(`"${arr[i]}"`).test(item)) ++i
     if (i === len) {
       // 检查当前行是否有逗号，用于保持原有的格式
       const hasComma = /,/.test(item)

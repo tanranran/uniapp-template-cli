@@ -1,30 +1,23 @@
 <script lang="ts" setup>
-const props = defineProps({
-  // 标题
-  title: {
-    type: String,
-    default: ''
-  },
-  // 自定义类名
-  customClass: {
-    type: String,
-    default: ''
-  },
-  // 垂直间距
-  ver: {
-    type: [Number, String],
-    default: 10
-  },
-  // 水平间距
-  hor: {
-    type: [Number, String],
-    default: 15
-  },
-  // 是否透明
-  transparent: {
-    type: Boolean,
-    default: false
-  }
+interface Props {
+  /** 标题 */
+  title?: string
+  /** 自定义类名 */
+  customClass?: string
+  /** 垂直间距 */
+  ver?: number | string
+  /** 水平间距 */
+  hor?: number | string
+  /** 是否透明 */
+  transparent?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  title: '',
+  customClass: '',
+  ver: 10,
+  hor: 15,
+  transparent: false
 })
 
 const style = computed(() => {
@@ -43,7 +36,7 @@ export default {
 </script>
 
 <template>
-  <view class="mb-3 box-border w-full px-3 text-gray-500 last:mb-0 dark:text-gray-300" :class="[transparent ? '' : 'bg-white dark:bg-[var(--wot-dark-background2)]', customClass]">
+  <view :class="[transparent ? '' : 'bg-white dark:bg-[var(--wot-dark-background2)]', customClass]" class="mb-3 box-border w-full px-3 text-gray-500 last:mb-0 dark:text-gray-300">
     <view class="px-4 py-3 text-26rpx">
       {{ title }}
     </view>

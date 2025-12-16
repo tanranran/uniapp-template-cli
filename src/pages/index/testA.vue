@@ -13,7 +13,7 @@ definePage({
     <wd-button
       @click="
         ui.showToast({
-          msg: '测试Toast',
+          msg: '测试Toast'
         })
       "
     />

@@ -1,9 +1,10 @@
 <script lang="ts" setup>
-defineProps({
-  text: {
-    type: String,
-    default: ''
-  }
+interface Props {
+  text?: string
+}
+
+withDefaults(defineProps<Props>(), {
+  text: ''
 })
 </script>
 

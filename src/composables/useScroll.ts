@@ -23,8 +23,7 @@ export function useScroll<T>({ fetchData, pageSize = 10 }: UseScrollOptions<T>):
   const page = ref(1)
 
   const loadData = async () => {
-    if (loading.value || finished.value)
-      return
+    if (loading.value || finished.value) return
 
     loading.value = true
     error.value = null

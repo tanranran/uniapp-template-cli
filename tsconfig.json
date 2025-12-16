@@ -19,7 +19,19 @@
       "@/*": ["./src/*"]
     },
     "resolveJsonModule": true, // 允许导入 .json 文件
-    "types": ["node", "@types/node", "@dcloudio/types", "@uni-helper/uni-types", "@uni-helper/uni-app-types", "@uni-helper/vite-plugin-uni-pages", "miniprogram-api-typings", "wot-design-uni/global", "z-paging/types", "./src/types/async-component.d.ts", "./src/types/async-import.d.ts"], // 指定需要包含的类型声明文件包
+    "types": [
+      "node",
+      "@types/node",
+      "@dcloudio/types",
+      "@uni-helper/uni-types",
+      "@uni-helper/uni-app-types",
+      "@uni-helper/vite-plugin-uni-pages",
+      "miniprogram-api-typings",
+      "wot-design-uni/global",
+      "z-paging/types",
+      "./src/types/async-component.d.ts",
+      "./src/types/async-import.d.ts"
+    ], // 指定需要包含的类型声明文件包
     "allowImportingTsExtensions": true, // 允许导入带 .ts 或 .tsx 扩展名的文件
     "strict": true, // 启用所有严格类型检查选项
     "strictBindCallApply": true, // 对 bind, call, apply 方法进行更严格的类型检查

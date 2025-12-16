@@ -11,7 +11,7 @@ export function checkIsLoadScript(src: string): boolean {
 }
 
 // 异步加载script脚本
-export async function asyncLoadScript({ src, id }: { src: string, id: string }): Promise<void> {
+export async function asyncLoadScript({ src, id }: { src: string; id: string }): Promise<void> {
   const isLoad = checkIsLoadScript(src)
   return new Promise((resolve) => {
     if (isLoad) {

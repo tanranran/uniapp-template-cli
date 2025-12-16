@@ -90,7 +90,7 @@
           "name": "STYLES_INDEX"
         },
         {
-          "path": "webview/webview",
+          "path": "WebView",
           "type": "page",
           "style": {
             "navigationBarTitleText": "..."

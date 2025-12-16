@@ -1,26 +1,18 @@
 import { readFileSync } from 'node:fs'
 import path from 'node:path'
-import process from 'node:process'
 // manifest.config.ts
 import { defineManifestConfig } from '@uni-helper/vite-plugin-uni-manifest'
-import { loadEnv } from 'vite'
+import { env } from './getEnv'
 
 const packageJsonPath = path.resolve(__dirname, 'package.json')
 const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf-8'))
-// 手动解析命令行参数获取 mode
-function getMode() {
-  const args = process.argv.slice(2) // 发布[ 'build', '-p', 'mp-weixin' ] 运行 [ '-p', 'mp-weixin' ]
-  const modeFlagIndex = args.findIndex((arg) => arg === '--mode')
-  return modeFlagIndex !== -1 ? args[modeFlagIndex + 1] : args[0] === 'build' ? 'production' : 'development' // 默认 development
-}
-// 获取环境变量的范例
-const env = loadEnv(getMode(), path.resolve(process.cwd(), 'env'))
+
 const { VITE_APP_TITLE, VITE_UNI_APPID, VITE_WX_APPID, VITE_APP_PUBLIC_BASE, VITE_FALLBACK_LOCALE, VITE_USER_NODE_ENV } = env
 const isBuild = VITE_USER_NODE_ENV === 'production'
 
 export default defineManifestConfig({
   'name': `${VITE_APP_TITLE}-${isBuild ? 'debug' : 'release'}`,
-  'appid': VITE_UNI_APPID,
+  'appid': `${VITE_UNI_APPID}`,
   'description': packageJson?.description ?? '',
   'versionName': packageJson?.version ?? '1.0.0',
   'versionCode': packageJson?.versionCode ?? '100',

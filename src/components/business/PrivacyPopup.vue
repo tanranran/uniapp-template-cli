@@ -8,6 +8,11 @@ interface Props {
   protocol?: string // 协议名称
 }
 
+interface Emits {
+  (e: 'agree'): void
+  (e: 'disagree'): void
+}
+
 withDefaults(defineProps<Props>(), {
   title: '用户隐私保护提示',
   desc: '感谢您使用本应用，您使用本应用的服务之前请仔细阅读并同意',
@@ -15,7 +20,8 @@ withDefaults(defineProps<Props>(), {
   protocol: '《用户隐私保护指引》'
 })
 
-const emit = defineEmits(['agree', 'disagree'])
+const emit = defineEmits<Emits>()
+
 const showPopup = ref<boolean>(false) // 是否展示popup
 
 const privacyResolves = ref(new Set()) // onNeedPrivacyAuthorization的reslove
@@ -106,9 +112,7 @@ export default {
         <text>{{ subDesc }}</text>
       </view>
       <view class="wd-privacy-popup__footer">
-        <button id="disagree-btn" class="is-block is-round is-medium is-plain wd-privacy-popup__footer-disagree wd-button" @click="handleDisagree">
-          拒绝
-        </button>
+        <button id="disagree-btn" class="is-block is-round is-medium is-plain wd-privacy-popup__footer-disagree wd-button" @click="handleDisagree">拒绝</button>
         <button id="agree-btn" class="wd-button is-block is-round is-medium is-primary wd-privacy-popup__footer-agree" open-type="agreePrivacyAuthorization" @agreeprivacyauthorization="handleAgree">
           同意
         </button>

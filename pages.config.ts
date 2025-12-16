@@ -1,12 +1,14 @@
 import { defineUniPages } from '@uni-helper/vite-plugin-uni-pages'
+import { env } from './getEnv'
 
+const { VITE_APP_TITLE } = env
 export default defineUniPages({
   globalStyle: {
     navigationStyle: 'default',
     // 导航栏配置
     navigationBarBackgroundColor: '@navBgColor',
     navigationBarTextStyle: '@navTxtStyle',
-    navigationBarTitleText: 'uniapp-template-cli',
+    navigationBarTitleText: `${VITE_APP_TITLE}`,
     // 页面背景配置
     backgroundColor: '@bgColor',
     backgroundTextStyle: '@bgTxtStyle',

@@ -18,12 +18,17 @@ export default uni({
     // unplugin-auto-import 生成的类型文件，每次提交都改变，所以加入这里吧，与 .gitignore 配合使用
     'auto-import.d.ts',
     // vite-plugin-uni-pages 生成的类型文件，每次切换分支都一堆不同的，所以直接 .gitignore
-    'uni-pages.d.ts',
+    '**/uni-pages.d.ts',
+    // @uni-ku/bundle-optimizer 生成的类型文件
+    '**/async-import.d.ts',
+    '**/async-component.d.ts',
     // 插件生成的文件
     'src/pages.json',
     'src/manifest.json',
     // 忽略自动生成文件
-    'src/service/**'
+    'src/service/**',
+    // HTML 入口文件
+    'index.html'
   ],
   // https://eslint-config.antfu.me/rules
   rules: {
@@ -41,6 +46,7 @@ export default uni({
     '@typescript-eslint/no-use-before-define': ['error', { functions: false, classes: true, variables: true }],
     '@typescript-eslint/no-var-requires': 'error',
     '@typescript-eslint/no-explicit-any': 'off',
+    'dot-notation': 'off', // 禁用点号访问检查，允许使用方括号访问属性
 
     // ==================== Vue 规则 ====================
     // https://eslint.vuejs.org/rules/
@@ -72,8 +78,8 @@ export default uni({
         math: 'always'
       }
     ],
-    'vue/max-attributes-per-line': ['warn', { singleline: 5, multiline: 1 }],
-    'vue/multi-word-component-names': ['warn', { ignores: ['index', '404'] }],
+    'vue/max-attributes-per-line': 'off', // 禁用，让 Prettier 的 singleAttributePerLine 处理
+    'vue/multi-word-component-names': ['warn', { ignores: ['index', '404', 'App', 'App.ku', 'login', 'paging'] }],
     'vue/no-arrow-functions-in-watch': 'off',
     'vue/no-deprecated-v-on-native-modifier': 'error',
     'vue/no-dupe-keys': 'error',
@@ -92,28 +98,36 @@ export default uni({
     'vue/valid-v-on': 'error',
     'vue/valid-v-slot': 'error',
     'vue/v-for-delimiter-style': ['error', 'in'],
+    'vue/singleline-html-element-content-newline': 'off', // 禁用单行元素内容换行检查，避免与 Prettier 冲突
+    'vue/comma-dangle': 'off', // 禁用 Vue 文件中的尾随逗号检查，避免与 Prettier 冲突
 
     // ==================== 样式规则 ====================
     '@stylistic/brace-style': ['error', '1tbs'],
-    '@stylistic/comma-dangle': ['error', 'never'],
-    '@stylistic/indent': ['error', 2, { SwitchCase: 1 }],
+    '@stylistic/comma-dangle': 'off', // 禁用尾随逗号检查，避免与 Prettier 冲突
+    '@stylistic/indent': 'off', // 禁用缩进检查，避免与 Prettier 冲突
+    '@stylistic/member-delimiter-style': 'off', // 禁用类型成员分隔符检查，避免与 Prettier 冲突
     '@stylistic/quotes': ['error', 'single', { avoidEscape: true }],
     '@stylistic/semi': ['error', 'never'],
     'style/arrow-parens': ['error', 'always'],
+    'style/comma-dangle': 'off', // 禁用尾随逗号检查，避免与 Prettier 冲突
     'style/comma-spacing': ['error', { before: false, after: true }],
+    'style/indent': 'off', // 禁用缩进检查
+    'style/indent-binary-ops': 'off', // 禁用二元操作符缩进检查
     'style/key-spacing': ['error', { beforeColon: false, afterColon: true }],
+    'style/member-delimiter-style': 'off', // 禁用类型成员分隔符检查，避免与 Prettier 冲突
     'style/space-before-blocks': ['error', 'always'],
     'style/space-infix-ops': ['error'],
 
     // ==================== 其他规则 ====================
-    'antfu/if-newline': 'error',
+    'antfu/if-newline': 'off', // 禁用 if 换行检查，避免与 Prettier 冲突
+    'antfu/curly': 'off', // 禁用强制大括号检查，允许单行 if 语句
     'eslint-comments/no-unlimited-disable': 'error',
     'eslint-comments/require-description': 'error',
     'generator-star-spacing': ['error', { before: true, after: true }],
     'jsdoc/check-param-names': 'off',
     'jsdoc/require-returns-description': 'off',
     'no-case-declarations': 'error',
-    'no-console': ['warn', { allow: ['error', 'warn'] }],
+    'no-console': 'off', // 禁用 console 检查，允许使用所有 console 方法
     'no-constant-condition': ['warn', { checkLoops: false }],
     'no-dupe-args': 'error',
     'no-dupe-keys': 'error',
@@ -139,9 +153,10 @@ export default uni({
     'prefer-rest-params': 'error',
     'prefer-spread': 'error',
     'prefer-template': 'error',
-    'unicorn/number-literal-case': 'error',
+    'unicorn/number-literal-case': 'off', // 禁用数字字面量大小写检查，避免与 Prettier 冲突
     'unused-imports/no-unused-vars': 'off',
-    '@stylistic/operator-linebreak': ['error', 'before']
+    '@stylistic/operator-linebreak': 'off', // 禁用操作符换行位置检查
+    'style/operator-linebreak': 'off' // 同时禁用 style/ 前缀的规则
   },
   formatters: {
     /**

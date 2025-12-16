@@ -90,16 +90,12 @@ defineExpose<BaseLayoutRef>({
     <view v-if="!success" class=":uno: wh-full flex-center flex-1">
       <view v-if="state.showLoading" class="flex-col-center">
         <wd-loading color="#777777" size="46" />
-        <text class="m-t-10rpx text-#777">
-          加载中...
-        </text>
+        <text class="m-t-10rpx text-#777">加载中...</text>
       </view>
 
       <view v-if="state.showEmpty" class="flex-col-center text-#777">
         <wd-icon name="file" size="46" />
-        <text class="m-t-10rpx">
-          暂无数据
-        </text>
+        <text class="m-t-10rpx">暂无数据</text>
       </view>
 
       <view v-if="state.showError" class="flex-col-center text-#777">
@@ -107,9 +103,7 @@ defineExpose<BaseLayoutRef>({
         <text class="m-t-10rpx">
           {{ state.errorStr || '加载失败' }}
         </text>
-        <wd-button class="m-t-10rpx" type="warning" @click="handleRetry">
-          重新加载
-        </wd-button>
+        <wd-button class="m-t-10rpx" type="warning" @click="handleRetry">重新加载</wd-button>
       </view>
     </view>
   </view>

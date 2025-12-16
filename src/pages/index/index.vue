@@ -1,13 +1,11 @@
 <script lang="ts" setup>
-import type { DateMark } from '@/components/common/Calendar.vue'
 import PrivacyPopup from '@/components/business/PrivacyPopup.vue'
-import Calendar from '@/components/common/Calendar.vue'
 import { uuid } from '@/utils/uuid'
 
 definePage({
   type: 'home',
   style: {
-    navigationBarTitleText: '日历组件测试'
+    navigationBarTitleText: '首页'
   }
 })
 
@@ -30,59 +28,6 @@ function textHttp() {
     })
   }, 30)
 }
-
-// 测试数据：日期标记
-const dateMarks: DateMark[] = [
-  {
-    date: '2025-06-03',
-    type: 'income' as const,
-    amount: '4004',
-    title: '闪货贷'
-  },
-  {
-    date: '2025-06-08',
-    type: 'recharge' as const,
-    amount: '1580',
-    title: '信用卡'
-  },
-  {
-    date: '2025-06-15',
-    type: 'expense' as const,
-    amount: '3835',
-    title: '分期乐'
-  },
-  {
-    date: '2025-06-17',
-    type: 'income' as const,
-    amount: '2429',
-    title: '分期乐'
-  },
-  {
-    date: '2025-06-20',
-    type: 'expense' as const,
-    amount: '2000',
-    title: '平安普惠'
-  },
-  {
-    date: '2025-06-26',
-    type: 'recharge' as const,
-    amount: '15221',
-    title: '买单侠'
-  }
-]
-
-// 事件处理函数
-function handleViewChange(view: string) {
-  console.log('视图切换:', view)
-}
-
-function handleDateChange(date: string) {
-  console.log('日期变化:', date)
-}
-
-function handleDateClick(date: string, mark?: any) {
-  console.log('点击日期:', date, '标记:', mark)
-}
 </script>
 
 <template>
@@ -97,18 +42,7 @@ function handleDateClick(date: string, mark?: any) {
         <!--    <wd-cell is-link title="uni-echarts" @click="router.push('/subEcharts/echarts/index')" /> -->
         <!--    <wd-cell is-link title="uni-echarts-async" @click="router.push('/subAsyncEcharts/asyncEcharts/index')" /> -->
       </wd-cell-group>
-
-      <!-- 日历组件测试 -->
-      <view class="mb-4">
-        <text class="mb-2 block text-lg font-bold">
-          日历组件测试
-        </text>
-        <Calendar :date-marks="dateMarks" @view-change="handleViewChange" @date-change="handleDateChange" @date-click="handleDateClick" />
-      </view>
-
-      <text class="bg-242629-E0E0E0">
-        车费是数据1
-      </text>
+      <text class="bg-242629-E0E0E0">车费是数据1</text>
     </view>
     <PrivacyPopup />
   </base-layout>
