@@ -117,9 +117,9 @@ export class Request {
       return options.url
     }
     // #ifdef H5
-    if (JSON.parse(import.meta.env.VITE_APP_PROXY_ENABLE || 'false')) {
+    if (JSON.parse(import.meta.env['VITE_APP_PROXY_ENABLE'] || 'false')) {
       // 自动拼接代理前缀
-      url = (import.meta.env.VITE_APP_PROXY_PREFIX || '') + options.url
+      url = (import.meta.env['VITE_APP_PROXY_PREFIX'] || '') + options.url
     } else {
       url = this.config.baseUrl + options.url
     }
@@ -139,5 +139,5 @@ export const httpInstance = new Request()
 export function setupHttp(app: App<Element>) {
   httpInstance.setInterceptor(httpInterceptor)
   httpInstance.setConfig(httpRequestConfig)
-  app.config.globalProperties.$http = httpInstance
+  app.config.globalProperties['$http'] = httpInstance
 }

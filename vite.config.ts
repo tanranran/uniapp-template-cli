@@ -5,7 +5,7 @@ import * as path from 'node:path'
 import * as process from 'node:process'
 import CompressJson from '@binbinji/unplugin-compress-json/vite'
 import Uni from '@uni-helper/plugin-uni'
-import UniHelperComponents from '@uni-helper/vite-plugin-uni-components'
+import UniComponents from '@uni-helper/vite-plugin-uni-components'
 import { WotResolver } from '@uni-helper/vite-plugin-uni-components/resolvers'
 // @see https://github.com/uni-helper/vite-plugin-uni-manifest
 import UniHelperManifest from '@uni-helper/vite-plugin-uni-manifest'
@@ -15,7 +15,7 @@ import UniPages from '@uni-helper/vite-plugin-uni-pages'
  * 分包优化、模块异步跨包调用、组件异步跨包引用
  * @see https://github.com/uni-ku/bundle-optimizer
  */
-import Optimization from '@uni-ku/bundle-optimizer'
+import UniOptimization from '@uni-ku/bundle-optimizer'
 import UniKuRoot from '@uni-ku/root'
 import UnoCSS from '@unocss/vite'
 import { codeInspectorPlugin } from 'code-inspector-plugin'
@@ -26,6 +26,7 @@ import { defineConfig, loadEnv } from 'vite'
 import viteImagemin from 'vite-plugin-imagemin'
 import ViteRestart from 'vite-plugin-restart'
 import { handlePageName } from './vite-plugins/vite-config-uni-pages'
+import openDevTools from './vite-plugins/vite-open-dev-tools'
 import { AutoVersion } from './vite-plugins/vite-plugin-auto-version'
 
 // https://vitejs.dev/config/
@@ -59,7 +60,7 @@ export default async ({ mode }: ConfigEnv) => {
         exclude: ['**/components/**/*.*', '**/layout/**/*.*']
       }),
       // Components 需要在 Uni 之前引入
-      UniHelperComponents({
+      UniComponents({
         resolvers: [WotResolver()],
         extensions: ['vue'],
         deep: true, // 是否递归扫描子目录，
@@ -102,7 +103,7 @@ export default async ({ mode }: ConfigEnv) => {
         },
         vueTemplate: true
       }),
-      Optimization({
+      UniOptimization({
         enable: {
           'optimization': true,
           'async-import': true,
@@ -171,7 +172,9 @@ export default async ({ mode }: ConfigEnv) => {
           open: true,
           gzipSize: true,
           brotliSize: true
-        })
+        }),
+      // 自动打开开发者工具插件 (必须修改 .env 文件中的 VITE_WX_APPID)
+      openDevTools({ mode }),
     ],
     define: {
       __UNI_PLATFORM__: JSON.stringify(UNI_PLATFORM),

@@ -1,10 +1,11 @@
+import type { PageContext } from '@uni-helper/vite-plugin-uni-pages'
 import fs from 'node:fs'
 import path from 'node:path'
 import * as prettier from 'prettier'
 
-export function handlePageName(ctx, inKey) {
+export function handlePageName(ctx: PageContext, inKey: string) {
   if (!(inKey in ctx)) return
-  ctx[inKey].forEach((page) => {
+    (ctx[inKey as keyof PageContext] as any[]).forEach((page: any) => {
     // 配置优先级高于自动生成
     if (page.name) return
     // 将路径中的 /.- 替换为下划线，并转换为大写，作为路由名称
@@ -21,9 +22,9 @@ export function handlePageName(ctx, inKey) {
   })
 }
 
-export async function writePageConst(ctx) {
-  const pageConstEntries = []
-  ;[...ctx.pageMetaData, ...ctx.subPageMetaData].forEach((page) => {
+export async function writePageConst(ctx: any) {
+  const pageConstEntries: string[] = []
+  ;[...ctx.pageMetaData, ...ctx.subPageMetaData].forEach((page: any) => {
     // 使用标题作为注释
     const comment = `/** ${page.style?.navigationBarTitleText || ''} */`
     // name 作为唯一键
@@ -40,7 +41,7 @@ export async function writePageConst(ctx) {
   export const PageUrlConst = {\n${pageConstEntries.join('\n')}\n}
   `
   const filepath = path.resolve(__dirname, '../src/router/pageConst.ts')
-  console.log('生成路径', filepath)
+  console.warn('生成路径', filepath)
   try {
     // 确保目录存在
     const dir = path.dirname(filepath)
@@ -56,9 +57,10 @@ export async function writePageConst(ctx) {
     fs.writeFileSync(filepath, formattedContent, {
       encoding: 'utf-8'
     })
-    console.log(`✅ 页面路径常量文件已成功生成：${filepath}`)
+    console.warn(`✅ 页面路径常量文件已成功生成：${filepath}`)
   } catch (error) {
-    console.error(`❌ 生成页面路径常量文件失败：${error.message}`)
+    const err = error as Error
+    console.error(`❌ 生成页面路径常量文件失败：${err.message}`)
     console.error('错误详情：', error)
   }
 }

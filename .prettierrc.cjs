@@ -1,4 +1,5 @@
 // Prettier配置文档：https://prettier.io/docs/en/options.html
+/** @type {import('prettier').Config & import('prettier-plugin-tailwindcss').PluginOptions} */
 module.exports = {
   printWidth: 200, // 指定每行的最大长度。当代码超过 300 个字符时，Prettier 会尝试将其换行
   tabWidth: 2, // 指定一个制表符（Tab）等于多少个空格。这里设置为 2。
@@ -20,5 +21,6 @@ module.exports = {
   // Prettier 可以限制自己只格式化在文件顶部包含特殊注释（称为 pragma）的文件。这在逐渐将大型、未格式化的代码库过渡到 Prettier 时非常有用<bool>，默认false
   requirePragma: false,
   // Prettier可以在文件的顶部插入一个 @format 的特殊注释，以表明该文件已经被Prettier格式化过了。在使用 --require-pragma 参数处理一连串的文件时这个功能将十分有用。如果文件顶部已经有一个do-clock，这个选项将新建一行注释，并打上 @format 标记<bool>，默认false
-  insertPragma: false
+  insertPragma: false,
+  plugins: ['prettier-plugin-tailwindcss']
 }

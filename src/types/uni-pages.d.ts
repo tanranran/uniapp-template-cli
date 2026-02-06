@@ -11,24 +11,26 @@ type _LocationUrl =
   "/pages-sub/404/index" |
   "/pages-sub/login/login" |
   "/pages-sub/styles/index" |
-  "/pages-sub/webview/webview";
+  "/pages-sub/webview/webView";
 
 interface NavigateToOptions {
-  url: _LocationUrl
+  url: _LocationUrl;
 }
 interface RedirectToOptions extends NavigateToOptions {}
 
-interface SwitchTabOptions {}
-
-type ReLaunchOptions = NavigateToOptions | SwitchTabOptions
-
-declare interface Uni {
-  navigateTo(options: UniNamespace.NavigateToOptions & NavigateToOptions): void
-  redirectTo(options: UniNamespace.RedirectToOptions & RedirectToOptions): void
-  switchTab(options: UniNamespace.SwitchTabOptions & SwitchTabOptions): void
-  reLaunch(options: UniNamespace.ReLaunchOptions & ReLaunchOptions): void
+interface SwitchTabOptions {
+  
 }
 
-declare module 'virtual:uni-pages' {
-  export type LocationUrl = _LocationUrl
+type ReLaunchOptions = NavigateToOptions | SwitchTabOptions;
+
+declare interface Uni {
+  navigateTo(options: UniNamespace.NavigateToOptions & NavigateToOptions): void;
+  redirectTo(options: UniNamespace.RedirectToOptions & RedirectToOptions): void;
+  switchTab(options: UniNamespace.SwitchTabOptions & SwitchTabOptions): void;
+  reLaunch(options: UniNamespace.ReLaunchOptions & ReLaunchOptions): void;
+}
+
+declare module "virtual:uni-pages" {
+  export type LocationUrl = _LocationUrl;
 }

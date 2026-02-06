@@ -7,13 +7,13 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    BaseLayout: (typeof import('./../components/layout/BaseLayout.vue'))['default']
+    BaseLayout: typeof import('./../components/layout/BaseLayout.vue')['default']
     Calendar: (typeof import('./../components/common/Calendar.vue'))['default']
-    DemoBlock: (typeof import('./../components/DemoBlock.vue'))['default']
-    GlobalLoading: (typeof import('./../components/common/GlobalLoading.vue'))['default']
-    GlobalMessage: (typeof import('./../components/common/GlobalMessage.vue'))['default']
-    GlobalToast: (typeof import('./../components/common/GlobalToast.vue'))['default']
-    PrivacyPopup: (typeof import('./../components/business/PrivacyPopup.vue'))['default']
+    DemoBlock: typeof import('./../components/DemoBlock.vue')['default']
+    GlobalLoading: typeof import('./../components/common/GlobalLoading.vue')['default']
+    GlobalMessage: typeof import('./../components/common/GlobalMessage.vue')['default']
+    GlobalToast: typeof import('./../components/common/GlobalToast.vue')['default']
+    PrivacyPopup: typeof import('./../components/business/PrivacyPopup.vue')['default']
     WdButton: (typeof import('wot-design-uni/components/wd-button/wd-button.vue'))['default']
     WdCell: (typeof import('wot-design-uni/components/wd-cell/wd-cell.vue'))['default']
     WdCellGroup: (typeof import('wot-design-uni/components/wd-cell-group/wd-cell-group.vue'))['default']

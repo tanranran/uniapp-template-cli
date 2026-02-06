@@ -63,6 +63,23 @@
     "target": 3, // 指定 Vue 的目标版本
     "plugins": ["@uni-helper/uni-types/volar-plugin"] // 为 Volar（Vue 的语言服务）配置插件
   },
-  "include": ["package.json", "src/**/*.ts", "src/**/*.js", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.jsx", "src/**/*.vue", "src/**/*.json", "uno-color-mapping.ts"], // 指定需要包含在编译中的文件
+  "include": [
+    "package.json",
+    "src/**/*.ts",
+    "src/**/*.js",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.jsx",
+    "src/**/*.vue",
+    "src/**/*.json",
+    "getEnv.ts",
+    "vite.config.ts",
+    "pages.config.ts",
+    "manifest.config.ts",
+    "uno.config.ts",
+    "vite-plugins/**/*.js",
+    "vite-plugins/**/*.ts",
+    "uno-color-mapping.ts"
+  ], // 指定需要包含在编译中的文件
   "exclude": ["node_modules", "unpackage", "dist"] // 指定需要从编译中排除的文件
 }

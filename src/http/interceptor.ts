@@ -56,7 +56,7 @@ export const httpInterceptor: RequestInterceptor = {
     const tokenStore = useToken()
     const token = tokenStore.validToken
     if (token) {
-      options.header.Authorization = `Bearer ${token}`
+      options.header["Authorization"] = `Bearer ${token}`
     }
     return options
   },
@@ -77,7 +77,7 @@ export const httpInterceptor: RequestInterceptor = {
       const dataObj = parse<any>(data)
       if (dataObj) {
         responseCode = dataObj?.errorCode ?? dataObj?.code ?? -1
-        responseMsg = dataObj?.errorMsg ?? dataObj?.message ?? ''
+        responseMsg = dataObj?.errorMsg ?? dataObj?.message ?? '业务异常'
         responseData.data = parse(dataObj?.data)
       }
     } else {

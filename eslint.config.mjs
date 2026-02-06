@@ -3,7 +3,6 @@ import eslintPluginPrettier from 'eslint-plugin-prettier/recommended'
 
 export default uni({
   extends: [eslintPluginPrettier],
-  unocss: true,
   vue: true,
   markdown: false,
   ignores: [
@@ -121,6 +120,8 @@ export default uni({
     // ==================== 其他规则 ====================
     'antfu/if-newline': 'off', // 禁用 if 换行检查，避免与 Prettier 冲突
     'antfu/curly': 'off', // 禁用强制大括号检查，允许单行 if 语句
+    'antfu/top-level-function': 'off', // 禁用顶层函数必须使用 function 关键字的检查
+    'object-shorthand': 'off', // 禁用属性简写检查（Expected property shorthand.）
     'eslint-comments/no-unlimited-disable': 'error',
     'eslint-comments/require-description': 'error',
     'generator-star-spacing': ['error', { before: true, after: true }],
