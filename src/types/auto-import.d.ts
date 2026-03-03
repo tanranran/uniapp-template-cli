@@ -242,7 +242,6 @@ declare module 'vue' {
     readonly getCurrentPath: UnwrapRef<typeof import('../router/index')['getCurrentPath']>
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
     readonly getCurrentWatcher: UnwrapRef<typeof import('vue')['getCurrentWatcher']>
-    readonly getGraphemeLength: UnwrapRef<typeof import('../utils/string')['getGraphemeLength']>
     readonly getLastPage: UnwrapRef<typeof import('../router/index')['getLastPage']>
     readonly getValue: UnwrapRef<typeof import('../utils/object')['getValue']>
     readonly h: UnwrapRef<typeof import('vue')['h']>

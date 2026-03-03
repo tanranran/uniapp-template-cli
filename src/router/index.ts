@@ -16,7 +16,7 @@ export function setupRoute(app: App<Element>) {
 export function getCurrentPath() {
   const pages = getCurrentPages()
   const currentPage = pages[pages.length - 1]
-  return currentPage.route || ''
+  return currentPage?.route || ''
 }
 
 export function getLastPage() {
@@ -76,7 +76,9 @@ export function parseUrlToObj(url: string) {
   queryStr.split('&').forEach((item) => {
     const [key, value] = item.split('=')
     // console.log(key, value)
-    query[key] = ensureDecodeURIComponent(value) // 这里需要统一 decodeURIComponent 一下，可以兼容h5和微信y
+    if (key && value) {
+      query[key] = ensureDecodeURIComponent(value) // 这里需要统一 decodeURIComponent 一下，可以兼容h5和微信
+    }
   })
   return { path, query }
 }

@@ -56,7 +56,7 @@ export const httpInterceptor: RequestInterceptor = {
     const tokenStore = useToken()
     const token = tokenStore.validToken
     if (token) {
-      options.header["Authorization"] = `Bearer ${token}`
+      options.header['Authorization'] = `Bearer ${token}`
     }
     return options
   },

@@ -31,7 +31,7 @@ import { AutoVersion } from './vite-plugins/vite-plugin-auto-version'
 
 // https://vitejs.dev/config/
 export default async ({ mode }: ConfigEnv) => {
-  const { UNI_PLATFORM, VITE_USER_NODE_ENV } = process.env
+  const { UNI_PLATFORM, VITE_USER_NODE_ENV, SKIP_OPEN_DEVTOOLS } = process.env
   const env = loadEnv(mode, path.resolve(process.cwd(), 'env'))
   const { VITE_APP_PORT, VITE_SERVER_BASEURL, VITE_APP_TITLE, VITE_DELETE_CONSOLE, VITE_APP_PUBLIC_BASE, VITE_APP_PROXY_ENABLE, VITE_APP_PROXY_PREFIX } = env
   const isBuild = VITE_USER_NODE_ENV === 'production'
@@ -174,7 +174,8 @@ export default async ({ mode }: ConfigEnv) => {
           brotliSize: true
         }),
       // 自动打开开发者工具插件 (必须修改 .env 文件中的 VITE_WX_APPID)
-      openDevTools({ mode }),
+      // 上传时通过 SKIP_OPEN_DEVTOOLS=true 跳过
+      SKIP_OPEN_DEVTOOLS !== 'true' && openDevTools({ mode }),
     ],
     define: {
       __UNI_PLATFORM__: JSON.stringify(UNI_PLATFORM),
@@ -203,8 +204,9 @@ export default async ({ mode }: ConfigEnv) => {
               target: VITE_SERVER_BASEURL,
               changeOrigin: true,
               // 后端有/api前缀则不做处理，没有则需要去掉
-              rewrite: (path) => path.replace(new RegExp(`^${VITE_APP_PROXY_PREFIX}`), '')
-            }
+              rewrite: (path) =>
+                path.replace(new RegExp(`^${VITE_APP_PROXY_PREFIX}`), ''),
+            },
           }
         : undefined,
       // 预热文件以降低启动期间的初始页面加载时长

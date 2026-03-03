@@ -34,7 +34,7 @@ export function throttle<T extends (...args: any[]) => any>(fn: T, delay: number
 
   return (...args: Parameters<T>): void => {
     if (timer === null) {
-      timer = window.setTimeout(() => {
+      timer = setTimeout(() => {
         fn(...args)
         timer = null
       }, delay) as unknown as number

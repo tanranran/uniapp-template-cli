@@ -27,7 +27,7 @@ export const navigateToInterceptor = {
     FG_LOG_ENABLE && console.log('路由拦截器 2: path->', path, ', _query ->', _query)
     FG_LOG_ENABLE && console.log('路由拦截器 3: myQuery ->', myQuery)
     // 处理相对路径
-    if (!path.startsWith('/')) {
+    if (!path?.startsWith('/')) {
       const currentPath = getLastPage()?.route || ''
       const normalizedCurrentPath = currentPath.startsWith('/') ? currentPath : `/${currentPath}`
       const baseDir = normalizedCurrentPath.substring(0, normalizedCurrentPath.lastIndexOf('/'))
@@ -46,8 +46,8 @@ export const navigateToInterceptor = {
       if (path !== LOGIN_PAGE) {
         return true // 明确表示允许路由继续执行
       } else {
-        console.log('已经登录，但是还在登录页', myQuery.redirect)
-        const url = myQuery.redirect || HOME_PAGE
+        console.log('已经登录，但是还在登录页', myQuery['redirect'])
+        const url = myQuery['redirect'] || HOME_PAGE
         uni.navigateTo({ url }).then()
         return false // 明确表示阻止原路由继续执行
       }

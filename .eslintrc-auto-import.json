@@ -60,7 +60,6 @@
     "getCurrentPath": true,
     "getCurrentScope": true,
     "getCurrentWatcher": true,
-    "getGraphemeLength": true,
     "getLastPage": true,
     "getValue": true,
     "h": true,
