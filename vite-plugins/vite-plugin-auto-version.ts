@@ -140,8 +140,12 @@ export function AutoVersion(options: AutoVersionPluginOptions = {}): Plugin {
  * @returns 递增后的新版本号字符串
  */
 function IncrementVersionName(version: string, type: 'patch' | 'minor' | 'major', endVersionCode: string): string {
-  // 解析版本号为数字数组
-  const [major, minor, patch] = version.split('.').map(Number)
+  // 解析版本号为数字数组，提供默认值 0
+  const parts = version.split('.').map(Number)
+  const major = parts[0] ?? 0
+  const minor = parts[1] ?? 0
+  const patch = parts[2] ?? 0
+
   switch (type) {
     case 'major':
       // 主版本号递增，次版本号重置为0，补丁版本号使用新值
@@ -208,14 +212,18 @@ function replaceManifest(manifest: string, path: string, value: string) {
   const len = arr.length
   const lastItem = arr[len - 1]
 
+  if (!lastItem) {
+    return manifest
+  }
+
   let i = 0
   const manifestArr = manifest.split(/\n/)
 
   // 遍历manifest的每一行，查找并替换指定路径的值
   for (let index = 0; index < manifestArr.length; index++) {
     const item = manifestArr[index]
-    if (new RegExp(`"${arr[i]}"`).test(item)) ++i
-    if (i === len) {
+    if (item && new RegExp(`"${arr[i]}"`).test(item)) ++i
+    if (i === len && item) {
       // 检查当前行是否有逗号，用于保持原有的格式
       const hasComma = /,/.test(item)
       manifestArr[index] = item.replace(new RegExp(`"${lastItem}"[\\s\\S]*:[\\s\\S]*`), `"${lastItem}": ${value}${hasComma ? ',' : ''}`)
