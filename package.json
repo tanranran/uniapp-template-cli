@@ -70,7 +70,8 @@
     "format": "prettier --write \"**/*.{js,ts,tsx,vue,json,css,scss,md}\"",
     "format:check": "prettier --check \"**/*.{js,ts,tsx,vue,json,css,scss,md}\"",
     "lint": "prettier . --write && eslint .",
-    "lint:fix": "prettier . --write && eslint . --fix"
+    "lint:fix": "prettier . --write && eslint . --fix",
+    "prepare": "husky"
   },
   "dependencies": {
     "@dcloudio/uni-app": "3.0.0-alpha-4080720251125001",
@@ -92,12 +93,13 @@
     "pinia": "3.0.3",
     "pinia-plugin-persistedstate": "^4.7.1",
     "vue": "^3.4.21",
-    "vue-i18n": "^9.14.5",
     "wot-design-uni": "^1.13.0",
     "z-paging": "2.8.8"
   },
   "devDependencies": {
     "@binbinji/unplugin-compress-json": "^0.1.1",
+    "@commitlint/cli": "^20.4.4",
+    "@commitlint/config-conventional": "^20.4.4",
     "@dcloudio/types": "^3.4.8",
     "@dcloudio/uni-automator": "3.0.0-alpha-4080720251125001",
     "@dcloudio/uni-cli-shared": "3.0.0-alpha-4080720251125001",
@@ -121,6 +123,8 @@
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.5",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
     "miniprogram-api-typings": "^5.0.0",
     "miniprogram-ci": "^2.1.26",
     "prettier": "^3.8.1",
@@ -137,5 +141,14 @@
     "vite-plugin-restart": "^1.0.0",
     "vite-plugin-vue-devtools": "^8.0.5",
     "vue-tsc": "^3.1.8"
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx,vue}": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "*.{json,css,scss,md}": [
+      "prettier --write"
+    ]
   }
 }

@@ -22,7 +22,6 @@ export const useToken = defineStore(
       // 计算并存储过期时间
       const now = Date.now()
       const expireTime = now + val.expiresIn * 1000
-      console.log('有效期', expireTime)
       uni.setStorageSync('accessTokenExpireTime', expireTime)
     }
 
@@ -35,7 +34,6 @@ export const useToken = defineStore(
       }
       const now = Date.now()
       const expireTime = uni.getStorageSync('accessTokenExpireTime')
-      console.log('时间差', `${now - expireTime}`)
       if (!expireTime) return true
       return now >= expireTime
     }
@@ -62,7 +60,6 @@ export const useToken = defineStore(
     const login = async (loginForm: ILoginForm) => {
       try {
         const res = await _login(loginForm)
-        console.log('普通登录-res: ', res)
         await _postLogin(res)
         uni.showToast({
           title: '登录成功',
@@ -89,9 +86,7 @@ export const useToken = defineStore(
       try {
         // 获取微信小程序登录的code
         const code = await getWxCode()
-        console.log('微信登录-code: ', code)
         const res = await _wxLogin(code)
-        console.log('微信登录-res: ', res)
         await _postLogin(res)
         uni.showToast({
           title: '登录成功',
@@ -122,7 +117,6 @@ export const useToken = defineStore(
         // 清除存储的过期时间
         uni.removeStorageSync('accessTokenExpireTime')
         uni.removeStorageSync('refreshTokenExpireTime')
-        console.log('退出登录-清除用户信息')
         tokenInfo.value = { ...tokenInfoState }
         uni.removeStorageSync('token')
         const userStore = useUserStore()

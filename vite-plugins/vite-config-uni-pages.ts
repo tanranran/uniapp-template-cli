@@ -5,7 +5,7 @@ import * as prettier from 'prettier'
 
 export function handlePageName(ctx: PageContext, inKey: string) {
   if (!(inKey in ctx)) return
-    (ctx[inKey as keyof PageContext] as any[]).forEach((page: any) => {
+  ;(ctx[inKey as keyof PageContext] as any[]).forEach((page: any) => {
     // 配置优先级高于自动生成
     if (page.name) return
     // 将路径中的 /.- 替换为下划线，并转换为大写，作为路由名称

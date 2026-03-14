@@ -151,7 +151,7 @@ export default async ({ mode }: ConfigEnv) => {
       CompressJson(),
       ViteRestart({
         // 通过这个插件，在修改vite.config.js文件则不需要重新运行也生效配置
-        restart: ['vite.config.js']
+        restart: ['vite.config.ts']
       }),
       // 点击页面上的 DOM，它能够自动打开你的 IDE 并将光标定位到 DOM 对应的源代码位置。[Mac 系统默认组合键是 Option + Shift；Window 的默认组合键是 Alt + Shift，在浏览器控制台会输出相关组合键提示]
       codeInspectorPlugin({
@@ -175,7 +175,7 @@ export default async ({ mode }: ConfigEnv) => {
         }),
       // 自动打开开发者工具插件 (必须修改 .env 文件中的 VITE_WX_APPID)
       // 上传时通过 SKIP_OPEN_DEVTOOLS=true 跳过
-      SKIP_OPEN_DEVTOOLS !== 'true' && openDevTools({ mode }),
+      SKIP_OPEN_DEVTOOLS !== 'true' && openDevTools({ mode })
     ],
     define: {
       __UNI_PLATFORM__: JSON.stringify(UNI_PLATFORM),
@@ -204,9 +204,8 @@ export default async ({ mode }: ConfigEnv) => {
               target: VITE_SERVER_BASEURL,
               changeOrigin: true,
               // 后端有/api前缀则不做处理，没有则需要去掉
-              rewrite: (path) =>
-                path.replace(new RegExp(`^${VITE_APP_PROXY_PREFIX}`), ''),
-            },
+              rewrite: (path) => path.replace(new RegExp(`^${VITE_APP_PROXY_PREFIX}`), '')
+            }
           }
         : undefined,
       // 预热文件以降低启动期间的初始页面加载时长
@@ -216,7 +215,7 @@ export default async ({ mode }: ConfigEnv) => {
       }
     },
     esbuild: {
-      drop: VITE_DELETE_CONSOLE === 'true' ? ['console', 'debugger'] : ['debugger']
+      drop: ['debugger']
     },
     build: {
       sourcemap: !isBuild,

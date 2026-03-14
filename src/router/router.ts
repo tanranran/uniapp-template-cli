@@ -70,16 +70,6 @@ export default {
       url: NOT_FOUND_PAGE
     })
   },
-  showTestA() {
-    this.push({
-      url: '/pages/index/testA'
-    })
-  },
-  showTestB() {
-    this.push({
-      url: '/pages/index/testB'
-    })
-  },
   /**
    * 查询参数
    * @example '?redirect=/pages/home/index'

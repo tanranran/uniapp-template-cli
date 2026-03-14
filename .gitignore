@@ -22,4 +22,13 @@ dist
 *.njsproj
 *.sln
 *.sw?
-/pnpm-lock.yaml
+
+# Auto-generated type files
+src/types/auto-import.d.ts
+src/types/components.d.ts
+src/types/uni-pages.d.ts
+src/types/async-import.d.ts
+src/types/async-component.d.ts
+
+# Local env overrides
+env/.env.*.local

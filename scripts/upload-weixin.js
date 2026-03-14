@@ -35,8 +35,7 @@ function getPackageVersion() {
     const pkgPath = path.resolve(ROOT_DIR, 'package.json')
     const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'))
     return pkg.version || '1.0.0'
-  }
-  catch {
+  } catch {
     return '1.0.0'
   }
 }
@@ -47,11 +46,10 @@ function getGitCommitMessage() {
     // 获取最新 commit 的作者和标题
     const message = execSync('git log -1 --pretty="%an: %s"', {
       cwd: ROOT_DIR,
-      encoding: 'utf-8',
+      encoding: 'utf-8'
     }).trim()
     return message || null
-  }
-  catch {
+  } catch {
     return null
   }
 }
@@ -73,17 +71,15 @@ function parseArgs() {
   const params = {
     version: null, // 稍后设置，优先级：命令行 > package.json
     desc: null, // 稍后设置，优先级：命令行 > Git commit > 默认
-    robot: 1, // 机器人编号 1-30
+    robot: 1 // 机器人编号 1-30
   }
 
   args.forEach((arg) => {
     if (arg.startsWith('--version=')) {
       params.version = arg.split('=')[1]
-    }
-    else if (arg.startsWith('--desc=')) {
+    } else if (arg.startsWith('--desc=')) {
       params.desc = arg.split('=')[1]
-    }
-    else if (arg.startsWith('--robot=')) {
+    } else if (arg.startsWith('--robot=')) {
       params.robot = Number.parseInt(arg.split('=')[1], 10)
     }
   })
@@ -116,7 +112,10 @@ function loadEnvFile(mode = 'production') {
       if (trimmed && !trimmed.startsWith('#')) {
         const [key, ...valueParts] = trimmed.split('=')
         if (key) {
-          envContent[key.trim()] = valueParts.join('=').trim().replace(/^['"]|['"]$/g, '')
+          envContent[key.trim()] = valueParts
+            .join('=')
+            .trim()
+            .replace(/^['"]|['"]$/g, '')
         }
       }
     })
@@ -130,7 +129,10 @@ function loadEnvFile(mode = 'production') {
       if (trimmed && !trimmed.startsWith('#')) {
         const [key, ...valueParts] = trimmed.split('=')
         if (key) {
-          envContent[key.trim()] = valueParts.join('=').trim().replace(/^['"]|['"]$/g, '')
+          envContent[key.trim()] = valueParts
+            .join('=')
+            .trim()
+            .replace(/^['"]|['"]$/g, '')
         }
       }
     })
@@ -142,10 +144,7 @@ function loadEnvFile(mode = 'production') {
 // 获取私钥路径
 function getPrivateKeyPath(appid) {
   // 查找私钥文件
-  const keyPatterns = [
-    `private.${appid}.key`,
-    'private.key',
-  ]
+  const keyPatterns = [`private.${appid}.key`, 'private.key']
 
   for (const pattern of keyPatterns) {
     const keyPath = path.resolve(ROOT_DIR, pattern)
@@ -186,11 +185,10 @@ async function main() {
       stdio: 'inherit',
       env: {
         ...process.env,
-        SKIP_OPEN_DEVTOOLS: 'true', // 上传时跳过打开开发者工具
-      },
+        SKIP_OPEN_DEVTOOLS: 'true' // 上传时跳过打开开发者工具
+      }
     })
-  }
-  catch (error) {
+  } catch (error) {
     console.error('❌ 构建失败:', error.message)
     process.exit(1)
   }
@@ -211,7 +209,7 @@ async function main() {
     type: 'miniProgram',
     projectPath,
     privateKeyPath,
-    ignores: ['node_modules/**/*'],
+    ignores: ['node_modules/**/*']
   })
 
   try {
@@ -228,13 +226,13 @@ async function main() {
         autoPrefixWXSS: true,
         minifyWXML: true,
         minifyWXSS: true,
-        minifyJS: true,
+        minifyJS: true
       },
       onProgressUpdate: (task) => {
         if (task._status === 'done') {
           console.log(`  ✅ ${task._msg}`)
         }
-      },
+      }
     })
 
     console.log('\n✅ 上传成功!')
@@ -250,8 +248,7 @@ async function main() {
     console.log('  4. 点击 "选为体验版" 按钮\n')
 
     return uploadResult
-  }
-  catch (error) {
+  } catch (error) {
     console.error('\n❌ 上传失败:', error.message)
     if (error.message.includes('privateKeyPath')) {
       console.log('\n💡 提示: 请确保已在微信公众平台配置代码上传密钥')

@@ -1,7 +1,7 @@
 import type { RequestConfig, RequestInterceptor, RequestMeta, RequestOptions, ResponseResult } from '@/http/types.ts'
 import { ResponseData } from '@/http/types.ts'
 import { useToken } from '@/stores/useToken.ts'
-import { parse } from '@/utils/json.ts'
+import { parse, stringify } from '@/utils/json.ts'
 
 // 请求基准地址
 const baseUrl = import.meta.env.VITE_SERVER_BASEURL
@@ -32,7 +32,7 @@ export const httpRequestConfig: RequestConfig = {
   },
   timeout: 60000,
   meta: {
-    originalData: true,
+    originalData: false,
     toast: true,
     loading: true
   }
@@ -62,18 +62,33 @@ export const httpInterceptor: RequestInterceptor = {
   },
   // 响应拦截器
   response: async <T>(options: RequestOptions, response: ResponseResult) => {
-    console.log('响应拦截器', response)
     const meta: RequestMeta = response.config?.meta || {}
     meta.loading && removeLoading()
     pendingRequests.delete(meta.requestKey ?? '')
     if (options.cancelFlag) {
       return new ResponseData<T>(-1, '取消请求')
     }
-    const { statusCode, errMsg, data } = response
+    const { statusCode, data } = response
     const responseData = new ResponseData<T>()
     let responseMsg = ''
     let responseCode = -1
-    if ([200, 401].includes(statusCode)) {
+
+    // 401 未授权：清除登录状态并跳转登录页
+    if (statusCode === 401) {
+      const tokenStore = useToken()
+      await tokenStore.logout()
+      uni.navigateTo({ url: '/pages-sub/login/login' })
+      return new ResponseData<T>(-1, '登录已过期，请重新登录')
+    }
+
+    if (statusCode === 200) {
+      // originalData 模式：直接返回原始响应数据，不做业务码解析
+      if (meta['originalData']) {
+        responseData.code = 0
+        responseData.data = parse<T>(data as string) ?? undefined
+        responseData.request = options
+        return responseData
+      }
       const dataObj = parse<any>(data)
       if (dataObj) {
         responseCode = dataObj?.errorCode ?? dataObj?.code ?? -1
@@ -86,6 +101,12 @@ export const httpInterceptor: RequestInterceptor = {
     responseData.code = responseCode
     responseData.msg = responseMsg
     responseData.request = options
+
+    // toast 模式：业务码非成功时自动提示错误信息
+    if (meta['toast'] && responseCode !== 0 && responseMsg) {
+      Apis.showToast({ icon: 'error', title: responseMsg })
+    }
+
     return responseData
   }
 }

@@ -20,7 +20,7 @@ export const useThemeStore = defineStore('theme', {
       darkColor: '#ffffff',
       darkColor2: '#e0e0e0',
       darkColor3: '#a0a0a0',
-      colorTheme: themeColorOptions[0].primary
+      colorTheme: themeColorOptions[0]?.primary ?? '#0957DE'
     }
   }),
 
@@ -52,5 +52,6 @@ export const useThemeStore = defineStore('theme', {
       const systemTheme = this.getSystemTheme()
       this.theme = systemTheme
     }
-  }
+  },
+  persist: true
 })

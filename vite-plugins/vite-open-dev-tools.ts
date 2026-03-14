@@ -92,6 +92,6 @@ export default function openDevTools(options: OpenDevToolsOptions = {}) {
         isFirstBuild = false
         _openDevTools(env)
       }
-    },
+    }
   }
 }

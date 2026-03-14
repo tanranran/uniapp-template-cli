@@ -11,7 +11,7 @@ const { VITE_APP_TITLE, VITE_UNI_APPID, VITE_WX_APPID, VITE_APP_PUBLIC_BASE, VIT
 const isBuild = VITE_USER_NODE_ENV === 'production'
 
 export default defineManifestConfig({
-  'name': `${VITE_APP_TITLE}-${isBuild ? 'debug' : 'release'}`,
+  'name': `${VITE_APP_TITLE}-${isBuild ? 'release' : 'debug'}`,
   'appid': `${VITE_UNI_APPID}`,
   'description': packageJson?.description ?? '',
   'versionName': packageJson?.version ?? '1.0.0',
@@ -110,7 +110,7 @@ export default defineManifestConfig({
   /* 小程序特有相关 */
   'mp-weixin': {
     appid: VITE_WX_APPID,
-    projectname: `${VITE_APP_TITLE}-${isBuild ? 'debug' : 'release'}`,
+    projectname: `${VITE_APP_TITLE}-${isBuild ? 'release' : 'debug'}`,
     setting: {
       urlCheck: false,
       minified: isBuild, // 上传代码时是否自动压缩脚本文件
